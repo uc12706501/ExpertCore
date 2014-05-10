@@ -45,9 +45,33 @@ namespace ExpertChooseCore
             m8.DisplayMatrix(MatrixHelper.ConsoloOutput);
             int x8, y8;
             double m8max = m8.GetMaxValue(out x8,out y8);
-            Console.WriteLine(string.Format("最大值坐标是第{0}行第{1}列，为{2}",x8+1,y8+1,m8max));
+            Console.WriteLine(string.Format("最大值坐标是第{0}行第{1}列，为{2}\n",x8+1,y8+1,m8max));
 
-            Console.WriteLine("HelloWorld");
+            //求m8中所有元素之和
+            double sumRow1 = m8.GetSum(0,0,0,3);
+            Console.WriteLine(string.Format("矩阵m8中第一行值之和为{0}", sumRow1));
+            double sumColumn1 = m8.GetSum(0,0,3,0);
+            Console.WriteLine(string.Format("矩阵m8中第一列值之和为{0}", sumColumn1));
+            double sum = m8.GetSum();
+            Console.WriteLine("矩阵m8中所有值之和{0}\n",sum);
+
+            //获得m8的一个子矩阵(0,0)->(2,1)
+            Matrix m9 = m8.GetSubMatrix(0,0,2,1);
+            m9.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m9 = m8.GetSubMatrix(0, 2, 3, 2);
+            m9.DisplayMatrix(MatrixHelper.ConsoloOutput);
+
+            //获得m8的归一化矩阵
+            Matrix m10 = m8.GetNormalized();
+            m10.DisplayMatrix(MatrixHelper.ConsoloOutput);
+
+            //获取m11的转置矩阵
+            Matrix m11 = new Matrix(4, 2, "m11");
+            m11.InsertDataFromList(new List<double>() { 1, 2, 4, 7, 6, 7, 8, 7, 9, 8, 7, 15, 4, 5, 8, 8, 9, 45, 5 });
+            m11.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            Matrix m12 = m11.GetTranspose();
+            m12.DisplayMatrix(MatrixHelper.ConsoloOutput);
+
             Console.ReadKey();
         }
     }

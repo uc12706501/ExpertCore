@@ -56,14 +56,26 @@ namespace AHP.Core
         /// <param name="matrix">要输出的矩阵</param>
         public static void ConsoloOutput(Matrix matrix)
         {
-            Console.WriteLine(matrix.Name??"#未命名矩阵");
+            Console.WriteLine(matrix.Name ?? "#未命名矩阵");
+            for (int i = 0; i < matrix.Y; i++)
+            {
+                Console.Write(new string('-',16));
+            }
+            Console.WriteLine();
+            
             for (int i = 0; i < matrix.X; i++)
             {
+                Console.Write("|");
                 for (int j = 0; j < matrix.Y; j++)
                 {
-                    Console.Write(matrix[i, j]+"\t");
+                    Console.Write(string.Format("{0,8:G4}\t", matrix[i, j]));
                 }
-                Console.WriteLine();
+                Console.WriteLine("|");
+            }
+
+            for (int i = 0; i < matrix.Y; i++)
+            {
+                Console.Write(new string('-', 16));
             }
             Console.WriteLine();
         }
