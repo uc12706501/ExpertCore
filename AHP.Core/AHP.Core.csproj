@@ -41,6 +41,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Matrix.cs" />
+    <Compile Include="MatrixCalExcetpion.cs" />
     <Compile Include="MatrixInputOutput.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

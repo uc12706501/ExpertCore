@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AHP.Core
 {
-    class MatrixCalExcetpion:Exception
+    public class MatrixCalExcetpion:Exception
     {
         private string errorMessage;
 

@@ -65,6 +65,7 @@ namespace AHP.Core
                 }
                 Console.WriteLine();
             }
+            Console.WriteLine();
         }
     }
 }
