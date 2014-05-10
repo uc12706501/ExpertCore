@@ -14,11 +14,16 @@ namespace AHP.Core
 
     public class Matrix
     {
+        #region 静态成员
+
         //置矩阵的最大维数为50*50
         public static int MaxX = 50;
         public static int MaxY = 50;
 
-        #region 定义矩阵的行(X)和列(Y)
+        #endregion
+
+        #region 字段和属性
+
         private readonly int x;
         private readonly int y;
 
@@ -37,7 +42,7 @@ namespace AHP.Core
         {
             get { return y; }
         }
-        #endregion
+
 
         //定义一个二维列表，用来存储实际的数据，所有的操作都是围绕这
         private List<List<double>> innerData;
@@ -48,6 +53,10 @@ namespace AHP.Core
             get { return _name; }
             set { _name = value; }
         }
+
+        #endregion
+
+        #region 构造函数
 
         /// <summary>
         /// 构造函数，设置矩阵矩阵的维数，矩阵的维数设置之后，就不可以再修改了
@@ -69,10 +78,14 @@ namespace AHP.Core
         /// <param name="x">矩阵的行数</param>
         /// <param name="y">矩阵的列数</param>
         /// <param name="name">矩阵的名字</param>
-        public Matrix(int x, int y, string name):this(x,y)
+        public Matrix(int x, int y, string name) : this(x, y)
         {
             Name = name;
         }
+
+        #endregion
+
+        #region 矩阵的基本操作，包括初始化、设置单个值、插入矩阵、输出矩阵
 
         /// <summary>
         /// 初始化，将矩阵全都值为0
@@ -119,5 +132,100 @@ namespace AHP.Core
             outputer(this);
         }
 
+        #endregion
+
+        #region 矩阵运算，包括相加、点乘、矩阵相加、获得最大值、求和、子集、计算特征值、转置
+
+        /// <summary>
+        /// 矩阵相加
+        /// </summary>
+        /// <param name="other">另一个相加的矩阵</param>
+        /// <returns>相加后的结果</returns>
+        public Matrix Add(Matrix other)
+        {
+        }
+
+        /// <summary>
+        /// 矩阵点乘
+        /// </summary>
+        /// <param name="multiplier">相乘的数</param>
+        /// <returns>点乘后的结果</returns>
+        public Matrix DotMultiply(double multiplier)
+        {
+        }
+
+        /// <summary>
+        /// 向量的左乘
+        /// </summary>
+        /// <param name="rightMatrix">另一个相乘的矩阵</param>
+        /// <returns>向量左乘的结果</returns>
+        public Matrix LeftMultipy(Matrix rightMatrix)
+        {
+        }
+
+        /// <summary>
+        /// 获取指定区域内的最大值
+        /// </summary>
+        /// <param name="x">返回最大值的x</param>
+        /// <param name="y">返回最大值的y</param>
+        /// <param name="xStart">区域起始点x</param>
+        /// <param name="xEnd">区域结束点x</param>
+        /// <param name="yStart">区域起始点y</param>
+        /// <param name="yEnd">区域结束点y</param>
+        /// <returns>指定区域中的最大值</returns>
+        public double GetMaxValue(out int x, out int y, int xStart, int xEnd, int yStart, int yEnd)
+        {
+        }
+
+        /// <summary>
+        /// 获取指定区域内元素的和
+        /// </summary>
+        /// <param name="xStart">区域起始点x</param>
+        /// <param name="xEnd">区域结束点x</param>
+        /// <param name="yStart">区域起始点y</param>
+        /// <param name="yEnd">区域结束点y</param>
+        /// <returns>指定区域中元素的和</returns>
+        public double GetMaxValue(int xStart, int xEnd, int yStart, int yEnd)
+        {
+        }
+
+        /// <summary>
+        /// 获取指定区域内的子矩阵
+        /// </summary>
+        /// <param name="xStart">区域起始点x</param>
+        /// <param name="xEnd">区域结束点x</param>
+        /// <param name="yStart">区域起始点y</param>
+        /// <param name="yEnd">区域结束点y</param>
+        /// <returns>指定区域中元素的子矩阵</returns>
+        public double GetSubMatrix(int xStart, int xEnd, int yStart, int yEnd)
+        {
+        }
+
+        /// <summary>
+        /// 计算矩阵的最大特征值
+        /// </summary>
+        /// <param name="eigenVector">输出矩阵的特征向量</param>
+        /// <returns>矩阵的最大特征值</returns>
+        public double Power(out Matrix eigenVector)
+        {
+        }
+
+        /// <summary>
+        /// 获得矩阵的归一化矩阵
+        /// </summary>
+        /// <returns>归一化的矩阵</returns>
+        public Matrix Normalized()
+        {
+        }
+
+        /// <summary>
+        /// 矩阵转置
+        /// </summary>
+        /// <returns>转置后的矩阵</returns>
+        public Matrix Transpose()
+        {
+        }
+
+        #endregion
     }
 }
