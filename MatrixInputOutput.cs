@@ -8,6 +8,10 @@ namespace ExpertChooseCore
 {
     public class MatrixHelper
     {
+        /// <summary>
+        /// 从控制台输入矩阵
+        /// </summary>
+        /// <param name="matrix">需要填充的矩阵</param>
         public static void ConsoloInput(Matrix matrix)
         {
             for (int i = 0; i < matrix.X; i++)
@@ -31,6 +35,10 @@ namespace ExpertChooseCore
 
         }
 
+        /// <summary>
+        /// 默认填充矩阵
+        /// </summary>
+        /// <param name="matrix">需要填充的矩阵</param>
         public static void DefaultInput(Matrix matrix)
         {
             for (int i = 0; i < matrix.X; i++)

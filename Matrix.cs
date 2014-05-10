@@ -12,7 +12,6 @@ namespace ExpertChooseCore
 
     #endregion
 
-
     public class Matrix
     {
         //置矩阵的最大维数为50*50
