@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AHP.Core;
 
 namespace ExpertChooseCore
 {
@@ -12,9 +13,7 @@ namespace ExpertChooseCore
             Matrix m=new Matrix(3,3);
             
             m.InsertMatrix(MatrixHelper.DefaultInput);
-
-            Console.WriteLine(m[0,1]);
-            Console.WriteLine(m[1,1]);
+            m.DisplayMatrix(MatrixHelper.ConsoloOutput);
 
             Console.WriteLine("HelloWorld");
             Console.ReadKey();

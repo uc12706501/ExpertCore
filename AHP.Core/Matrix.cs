@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ExpertChooseCore
+namespace AHP.Core
 {
     #region 输入输出委托定义
 
@@ -42,8 +42,15 @@ namespace ExpertChooseCore
         //定义一个二维列表，用来存储实际的数据，所有的操作都是围绕这
         private List<List<double>> innerData;
 
+        private string _name;
+        public string Name
+        {
+            get { return _name; }
+            set { _name = value; }
+        }
+
         /// <summary>
-        /// 构造函数，用设置矩阵矩阵的维数，矩阵的维数设置之后，就不可以再修改了
+        /// 构造函数，设置矩阵矩阵的维数，矩阵的维数设置之后，就不可以再修改了
         /// </summary>
         /// <param name="x">矩阵的行数</param>
         /// <param name="y">矩阵的列数</param>
@@ -54,6 +61,17 @@ namespace ExpertChooseCore
 
             innerData = new List<List<double>>();
             Init();
+        }
+
+        /// <summary>
+        /// 构造函数，设置矩阵矩阵的维数，矩阵的维数设置之后，就不可以再修改了
+        /// </summary>
+        /// <param name="x">矩阵的行数</param>
+        /// <param name="y">矩阵的列数</param>
+        /// <param name="name">矩阵的名字</param>
+        public Matrix(int x, int y, string name):this(x,y)
+        {
+            Name = name;
         }
 
         /// <summary>
