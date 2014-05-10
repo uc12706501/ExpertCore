@@ -11,7 +11,7 @@ namespace ExpertChooseCore
         {
             Matrix m=new Matrix(3,3);
             
-            m.InsertMatrix(new ConsoloMatrixInputer());
+            m.InsertMatrix(MatrixHelper.DefaultInput);
 
             Console.WriteLine(m[0,1]);
             Console.WriteLine(m[1,1]);

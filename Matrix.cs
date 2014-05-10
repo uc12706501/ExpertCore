@@ -5,6 +5,14 @@ using System.Text;
 
 namespace ExpertChooseCore
 {
+    #region 输入输出委托定义
+
+    public delegate void MatrixInputer(Matrix matrix);
+    public delegate void MatrixOutputer(Matrix matrix);
+
+    #endregion
+
+
     public class Matrix
     {
         //置矩阵的最大维数为50*50
@@ -45,7 +53,7 @@ namespace ExpertChooseCore
             this.x = x;
             this.y = y;
 
-            innerData=new List<List<double>>();
+            innerData = new List<List<double>>();
             Init();
         }
 
@@ -56,7 +64,7 @@ namespace ExpertChooseCore
         {
             for (int i = 0; i < x; i++)
             {
-                List<double> temp=new List<double>();
+                List<double> temp = new List<double>();
                 for (int j = 0; j < y; j++)
                 {
                     temp.Add(0);
@@ -71,7 +79,8 @@ namespace ExpertChooseCore
         /// <param name="x">矩阵行</param>
         /// <param name="y">矩阵列</param>
         /// <returns></returns>
-        public double this[int x, int y] {
+        public double this[int x, int y]
+        {
             get { return innerData[x][y]; }
             set { innerData[x][y] = value; }
         }
@@ -79,18 +88,19 @@ namespace ExpertChooseCore
         /// <summary>
         /// 输入数组数据
         /// </summary>
-        /// <param name="inputer">数组输入接口的实现</param>
-        public void InsertMatrix(IMatrixInputer inputer)
+        /// <param name="inputer">数组输入接口的委托</param>
+        public void InsertMatrix(MatrixInputer inputer)
         {
-            inputer.InsertData(this);
+            inputer(this);
         }
 
         /// <summary>
         /// 显示数组
         /// </summary>
-        public void DisplayMatrix()
+        public void DisplayMatrix(MatrixOutputer outputer)
         {
-
+            outputer(this);
         }
+
     }
 }
