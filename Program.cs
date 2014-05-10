@@ -72,6 +72,15 @@ namespace ExpertChooseCore
             Matrix m12 = m11.GetTranspose();
             m12.DisplayMatrix(MatrixHelper.ConsoloOutput);
 
+            //获取m13的转置矩阵
+            Matrix m13 = new Matrix(3, 3, "m13");
+            m13.InsertDataFromList(new List<double>() { -1,1,0,-4,3,0,1,0,2 });
+            m13.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            double eiginvalue;
+            Matrix m14= m11.Power(out eiginvalue);
+            Console.WriteLine(string.Format("矩阵m14对应的最大特征值为{0}",eiginvalue));
+            m14.DisplayMatrix(MatrixHelper.ConsoloOutput);
+
             Console.ReadKey();
         }
     }

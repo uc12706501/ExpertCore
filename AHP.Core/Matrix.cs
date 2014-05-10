@@ -19,6 +19,7 @@ namespace AHP.Core
         //置矩阵的最大维数为50*50
         public static int MaxX = 50;
         public static int MaxY = 50;
+        public readonly double Epsilon = 0.000001;
 
         #endregion
 
@@ -376,41 +377,8 @@ namespace AHP.Core
         /// </summary>
         /// <param name="eigenVector">输出矩阵的特征向量</param>
         /// <returns>矩阵的最大特征值</returns>
-        public double Power(out Matrix eigenVector)
+        public Matrix Power(out double eigenValue)
         {
-            //            Matrix xk = GetSubMatrix(0,0,0,X);
-            //            double c = 0;
-            //            Matrix yk = new Matrix(xk.X, xk.Y); Matrix yk = Matrix();
-            //            //迭代次数
-            //            int count = 50;
-            //            Matrix old_xk = xk;
-            //
-            //            while (count > 0)
-            //            {
-            //                yk = LeftMultipy(xk);
-            //                c = xk.GetMaxValue();
-            //                xk = yk.dotProduct(1 / c);
-            //
-            //                //以下代码有问题，当差很小，计算出来的epsilon总是很大
-            //                double epsilon = 0.0;
-            //                for (int i = 0; i < xx; i++)
-            //                {
-            //                    double cha = xk.getValue(i, 0) - old_xk.getValue(i, 0);
-            //                    epsilon = epsilon + pow(cha, 2);
-            //                }
-            //                old_xk = xk;
-            //                if (sqrt(epsilon) < EPSILON)
-            //                {
-            //                    break;
-            //                }
-            //                count--;
-            //            }
-            //
-            //            eigenValue = c;
-            //            eigenVector = &xk;
-
-            eigenVector = null;
-            return 0;
         }
 
         /// <summary>
@@ -419,18 +387,7 @@ namespace AHP.Core
         /// <returns>归一化的矩阵</returns>
         public Matrix GetNormalized(string resultName = null)
         {
-            //设置结果矩阵的名字
-            string name = resultName ?? string.Format("{0}的归一化矩阵)", Name);
-            Matrix result = new Matrix(X, Y, name);
-            for (int i = 0; i < X; i++)
-            {
-                double columnSum = GetSum(0, i, X - 1, i);
-                for (int j = 0; j < Y; j++)
-                {
-                    result[i, j] = this[i, j] / columnSum;
-                }
-            }
-            return result;
+
         }
 
         /// <summary>
@@ -440,7 +397,7 @@ namespace AHP.Core
         public Matrix GetTranspose(string resultName = null)
         {
             //设置结果矩阵的名字
-            string name = resultName ?? string.Format("{0}的转置矩阵)", Name);
+            string name = resultName ?? string.Format("{0}的转置矩阵", Name);
             Matrix result = new Matrix(Y, X, name);
             for (int i = 0; i < Y; i++)
             {
