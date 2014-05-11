@@ -16,24 +16,21 @@ namespace AHP.Core
     {
         #region 静态成员
 
-        //置矩阵的最大维数为50*50
-        public static int MaxX = 50;
-        public static int MaxY = 50;
         public readonly double Epsilon = 0.000001;
 
         #endregion
 
         #region 字段和属性
 
-        private readonly int x;
-        private readonly int y;
+        protected readonly int _x;
+        protected readonly int _y;
 
         /// <summary>
         /// 获得矩阵的行
         /// </summary>
         public int X
         {
-            get { return x; }
+            get { return _x; }
         }
 
         /// <summary>
@@ -41,14 +38,13 @@ namespace AHP.Core
         /// </summary>
         public int Y
         {
-            get { return y; }
+            get { return _y; }
         }
 
-
         //定义一个二维列表，用来存储实际的数据，所有的操作都是围绕这
-        private List<List<double>> innerData;
+        protected List<List<double>> innerData;
 
-        private string _name;
+        protected string _name;
         public string Name
         {
             get { return _name; }
@@ -66,8 +62,8 @@ namespace AHP.Core
         /// <param name="y">矩阵的列数</param>
         public Matrix(int x, int y)
         {
-            this.x = x;
-            this.y = y;
+            this._x = x;
+            this._y = y;
 
             innerData = new List<List<double>>();
             Init();
@@ -94,10 +90,10 @@ namespace AHP.Core
         /// </summary>
         public void Init()
         {
-            for (int i = 0; i < x; i++)
+            for (int i = 0; i < _x; i++)
             {
                 List<double> temp = new List<double>();
-                for (int j = 0; j < y; j++)
+                for (int j = 0; j < _y; j++)
                 {
                     temp.Add(0);
                 }
@@ -420,14 +416,14 @@ namespace AHP.Core
         /// <summary>
         /// 计算矩阵的最大特征值和特征向量
         /// </summary>
-        /// <param name="eigenVector">输出矩阵的特征向量</param>
+        /// <param name="eigenValue">输出矩阵的特征值</param>
         /// <param name="resultName">特征矩阵的名字</param>
         /// <returns>矩阵的最大特征值</returns>
         public Matrix Power(out double eigenValue, string resultName = null)
         {
             if (X != Y)
             {
-                throw new MatrixCalExcetpion("必须为n*n的矩阵才可以求特征值和特征向量！");
+                throw new MatrixCalExcetpion("方阵才可以使用幂法求特征值和特征向量！");
             }
             string name = resultName ?? string.Format("{0}的主特征向量为", Name);
 
@@ -441,7 +437,7 @@ namespace AHP.Core
             {
                 count--;
                 c = xk.GetMaxAbsoluteValue();
-                xk = LeftMultipy(xk).DotMultiply(1 / c);
+                xk = LeftMultipy(xk).DotMultiply(1.0 / c);
 
                 //计算误差大小
                 double epsilon = 0.0;
@@ -450,12 +446,12 @@ namespace AHP.Core
                     double differ = xk[i, 0] - oldXk[i, 0];
                     epsilon += Math.Pow(differ, 2);
                 }
-                oldXk = xk;
-
-                if (Math.Sqrt(epsilon) < Epsilon)
+                if (Math.Sqrt(epsilon) < Epsilon) //如果误差足够小，就跳出循环
                     break;
+
+                oldXk = xk;
             }
-            xk.Name = name;
+            xk.Name = name; //设置结果矩阵的名字
 
             eigenValue = c;
             return xk;
@@ -465,18 +461,18 @@ namespace AHP.Core
         /// 获得矩阵的归一化矩阵
         /// </summary>
         /// <returns>归一化的矩阵</returns>
-        public Matrix GetNormalized(string resultName = null)
-        {
-            Matrix result = new Matrix(X, Y, string.Format("矩阵{0}的归一化矩阵", Name));
-            for (int i = 0; i < X; i++)
-            {
-                for (int j = 0; j < Y; j++)
-                {
-                    result[i, j] = this[i, j] / GetMaxAbsoluteValue();
-                }
-            }
-            return result;
-        }
+        //public Matrix GetNormalized(string resultName = null)
+        //{
+        //    Matrix result = new Matrix(X, Y, string.Format("矩阵{0}的归一化矩阵", Name));
+        //    for (int i = 0; i < X; i++)
+        //    {
+        //        for (int j = 0; j < Y; j++)
+        //        {
+        //            result[i, j] = this[i, j] / GetMaxAbsoluteValue();
+        //        }
+        //    }
+        //    return result;
+        //}
 
         /// <summary>
         /// 矩阵转置
