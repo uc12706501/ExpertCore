@@ -15,7 +15,7 @@ namespace AHP.Core
         {
             for (int i = 0; i < matrix.X; i++)
             {
-                Console.WriteLine(string.Format("请输入数组第{0}行的{1}个数据，以空格分隔", i + 1));
+                Console.WriteLine(string.Format("请输入数组第{0}行的{1}个数据，以空格分隔", i + 1,matrix.Y));
                 //读入控制台的一行数据
                 string inputString = Console.ReadLine();
                 //如果不为空
@@ -68,7 +68,7 @@ namespace AHP.Core
                 Console.Write("|");
                 for (int j = 0; j < matrix.Y; j++)
                 {
-                    Console.Write(string.Format("{0,8:G4}\t", matrix[i, j]));
+                    Console.Write(string.Format("{0,8:F3}\t", matrix[i, j]));
                 }
                 Console.WriteLine("|");
             }

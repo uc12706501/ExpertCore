@@ -373,12 +373,92 @@ namespace AHP.Core
         }
 
         /// <summary>
+        /// 获得指定区域内的绝对值最大的元素
+        /// </summary>
+        /// <param name="mx">绝对值最大元素的行</param>
+        /// <param name="my">绝对值最大元素的列</param>
+        /// <param name="xStart">上边界</param>
+        /// <param name="yStart">左边界</param>
+        /// <param name="xEnd">下边界</param>
+        /// <param name="yEnd">右边界</param>
+        /// <returns>最大绝对值</returns>
+        public double GetMaxAbsoluteValue(out int mx, out int my, int xStart, int yStart, int xEnd, int yEnd)
+        {
+            //先将矩阵中所有值转换为绝对值
+            Matrix absoluteMatrix = new Matrix(X, Y, string.Format("{0}的绝对值向量", Name));
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    absoluteMatrix[i, j] = Math.Abs(this[i, j]);
+                }
+            }
+            return absoluteMatrix.GetMaxValue(out mx, out my, xStart, yStart, xEnd, yEnd);
+        }
+
+        /// <summary>
+        /// 获取矩阵中所有值的最大值
+        /// </summary>
+        /// <param name="mx">绝对值最大元素的行</param>
+        /// <param name="my">绝对值最大元素的列</param>
+        /// <returns>最大的绝对值</returns>
+        public double GetMaxAbsoluteValue(out int mx, out int my)
+        {
+            return GetMaxAbsoluteValue(out mx, out my, 0, 0, X - 1, Y - 1);
+        }
+
+        /// <summary>
+        /// 获取矩阵所有元素的最大绝对值
+        /// </summary>
+        /// <returns>最大绝对值</returns>
+        public double GetMaxAbsoluteValue()
+        {
+            int tempa, tempb;
+            return GetMaxAbsoluteValue(out tempa, out tempb, 0, 0, X - 1, Y - 1);
+        }
+
+        /// <summary>
         /// 计算矩阵的最大特征值和特征向量
         /// </summary>
         /// <param name="eigenVector">输出矩阵的特征向量</param>
+        /// <param name="resultName">特征矩阵的名字</param>
         /// <returns>矩阵的最大特征值</returns>
-        public Matrix Power(out double eigenValue)
+        public Matrix Power(out double eigenValue, string resultName = null)
         {
+            if (X != Y)
+            {
+                throw new MatrixCalExcetpion("必须为n*n的矩阵才可以求特征值和特征向量！");
+            }
+            string name = resultName ?? string.Format("{0}的主特征向量为", Name);
+
+            //迭代次数
+            int count = 50;
+            //取第一列为xk
+            Matrix xk = GetSubMatrix(0, 0, X - 1, 0);
+            Matrix oldXk = xk;
+            double c = 0;
+            while (count > 0)
+            {
+                count--;
+                c = xk.GetMaxAbsoluteValue();
+                xk = LeftMultipy(xk).DotMultiply(1 / c);
+
+                //计算误差大小
+                double epsilon = 0.0;
+                for (int i = 0; i < X - 1; i++)
+                {
+                    double differ = xk[i, 0] - oldXk[i, 0];
+                    epsilon += Math.Pow(differ, 2);
+                }
+                oldXk = xk;
+
+                if (Math.Sqrt(epsilon) < Epsilon)
+                    break;
+            }
+            xk.Name = name;
+
+            eigenValue = c;
+            return xk;
         }
 
         /// <summary>
@@ -387,7 +467,15 @@ namespace AHP.Core
         /// <returns>归一化的矩阵</returns>
         public Matrix GetNormalized(string resultName = null)
         {
-
+            Matrix result = new Matrix(X, Y, string.Format("矩阵{0}的归一化矩阵", Name));
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    result[i, j] = this[i, j] / GetMaxAbsoluteValue();
+                }
+            }
+            return result;
         }
 
         /// <summary>
