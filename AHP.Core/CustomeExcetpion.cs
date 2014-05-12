@@ -5,6 +5,7 @@ using System.Text;
 
 namespace AHP.Core
 {
+    //todo:考虑增加特定的异常类型，例如矩阵维数不匹配等
     public class CustomeExcetpion:Exception
     {
         private string errorMessage;

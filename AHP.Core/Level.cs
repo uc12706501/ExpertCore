@@ -76,14 +76,19 @@ namespace AHP.Core
 
         #region 构造函数
 
+        //因为不提供对外修改的接口，所以只能通过构造函数输入所有的数据
         /// <summary>
         /// 构造函数
         /// </summary>
         /// <param name="parent">本层次的上一层次，必须指定，如果是顶层则为null</param>
-        public Level(Level parent)
+        private Level(Level parent)
         {
-            //todo:关系矩阵的初始化
             _parent = parent;
+        }
+
+        public Level(Level parent, List<Factor> factors, Matrix relationMatrix, List<JudgeMatrix> judgeMatrices)
+        {
+
         }
 
         #endregion
@@ -95,7 +100,7 @@ namespace AHP.Core
         /// </summary>
         /// <param name="relationMatrix">关系矩阵</param>
         /// <returns>是否设置成功</returns>
-        public void SetRelation(Matrix relationMatrix)
+        private void SetRelation(Matrix relationMatrix)
         {
             if (Factors.Count <= 0)
                 throw new CustomeExcetpion("还没有设置本层次的元素，请先添加本层次的元素");
@@ -118,43 +123,56 @@ namespace AHP.Core
             UpdateJudgeMatrices();
         }
 
+        //todo:重要 不使用这两个方法对各层次的因素进行管理，而是使用构造函数，直接传入值，同时不提供修改的接口
         #region  Add/Remove Factor
 
         /// <summary>
         /// 为本层次添加因素
         /// </summary>
         /// <param name="factor">加入到本层次的因素</param>
-        public void AddFactor(Factor factor)
+        private void AddFactor(Factor factor)
         {
             _factors.Add(factor);
 
             //添加一个因素之后，修改本层次的关系矩阵
-            _relationMatrix.InsertRowAfter(_relationMatrix.X - 1);
+            //如果关系矩阵为空，说明还没有初始化过
+            if (_relationMatrix == null)
+                _relationMatrix = new Matrix(1, Parent.FactorCount);
+            else
+            {
+                //如果不为空，但是没有元素，说明全部都被移除了
+                //因为矩阵是不可变的，所以不能通过矩阵的方法来进行插入行，只能通过重新构造一个关系矩阵，并将原来的数据复制进去
+                var relationData = _relationMatrix.ExportToList();
+                Matrix newRelationMatrix = new Matrix(_relationMatrix.X + 1, _relationMatrix.Y);
+                newRelationMatrix.InsertDataFromList(relationData);
+            }
+            //todo:因为加入的新的元素并没有跟上下层建立关系，所以不需要更新相关属性
             //同时重新生成判断矩阵序列
-            UpdateJudgeMatrices();
-
+            //UpdateJudgeMatrices();
             //通知下一层更改
-            OnFactorChanged("Factors", FactorChangedEventArgs.ChangeType.Add, factor);
+            //OnFactorChanged("Factors", FactorChangedEventArgs.ChangeType.Add, factor);
         }
 
         /// <summary>
         /// 为本层次添加因素
         /// </summary>
         /// <param name="factors">加入到本层次的因素</param>
-        public void AddFactors(IList<Factor> factors)
+        private void AddFactors(IList<Factor> factors)
         {
-            //每添加一个因素，都需要执行一些刷新工作，为了出现不一致的问题，挨个添加并刷新
+            //每添加一个因素，都需要执行一些刷新工作，为了出现不一致的问题，依次添加并刷新
             foreach (var factor in factors)
             {
                 AddFactor(factor);
             }
         }
 
+        //todo:回调方法，用来处理上一层元素增删的事件
+
         /// <summary>
         /// 删除指定序数的因素
         /// </summary>
         /// <param name="id">要删除因素的索引号</param>
-        public bool RemoveFactor(int id)
+        private bool RemoveFactor(int id)
         {
             var factor = Factors.SingleOrDefault(x => x.Id == id);
             if (factor == null)
@@ -167,7 +185,7 @@ namespace AHP.Core
         /// 删除指定名称的因素
         /// </summary>
         /// <param name="name">要删除因素的名称</param>
-        public bool RemoveFactor(string name)
+        private bool RemoveFactor(string name)
         {
             var factor = Factors.SingleOrDefault(x => x.Name == name);
             if (factor == null)
@@ -180,7 +198,7 @@ namespace AHP.Core
         /// 根据id
         /// </summary>
         /// <returns></returns>
-        public bool RemoveFactorByIndex(int index)
+        private bool RemoveFactorByIndex(int index)
         {
             if (index > Factors.Count) return false;
 
@@ -193,7 +211,7 @@ namespace AHP.Core
         /// </summary>
         /// <param name="factor">要删除的因素</param>
         /// <returns>是否成功删除</returns>
-        public bool RemoveFactor(Factor factor)
+        private bool RemoveFactor(Factor factor)
         {
             var index = Factors.IndexOf(factor);
             if (index != -1)
@@ -216,7 +234,7 @@ namespace AHP.Core
         /// </summary>
         /// <param name="parentFactor"></param>
         /// <param name="judgeMatrix"></param>
-        public void SetJudgeMatrix(Factor parentFactor, JudgeMatrix judgeMatrix)
+        private void SetJudgeMatrix(Factor parentFactor, JudgeMatrix judgeMatrix)
         {
             //检查parentFactor是否为上一层次总的因素
             if (!Parent.Factors.Contains(parentFactor))
@@ -285,7 +303,7 @@ namespace AHP.Core
         {
             get
             {
-                int parentFactorCount = Parent.Factors.Count;
+                int parentFactorCount = Parent.FactorCount;
                 IList<double> ciList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
                 {
@@ -306,7 +324,7 @@ namespace AHP.Core
         {
             get
             {
-                int parentFactorCount = Parent.Factors.Count;
+                int parentFactorCount = Parent.FactorCount;
                 IList<double> riList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
                 {
@@ -327,7 +345,7 @@ namespace AHP.Core
         {
             get
             {
-                int parentFactorCount = Parent.Factors.Count;
+                int parentFactorCount = Parent.FactorCount;
                 IList<double> crList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
                 {
