@@ -56,7 +56,8 @@ namespace AHP.Core
         /// <param name="matrix">要输出的矩阵</param>
         public static void ConsoloOutput(Matrix matrix)
         {
-            Console.WriteLine(matrix.Name ?? "#未命名矩阵");
+            string matrixName = matrix.Name ?? "#未命名矩阵";
+            Console.WriteLine("{0}#{1}",matrixName,matrix.Id);
             for (int i = 0; i < matrix.Y; i++)
             {
                 Console.Write(new string('-',16));

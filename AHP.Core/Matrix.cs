@@ -12,7 +12,7 @@ namespace AHP.Core
 
     #endregion
 
-    public class Matrix
+    public class Matrix : Identified
     {
         #region 静态成员
 
@@ -61,6 +61,7 @@ namespace AHP.Core
         /// <param name="x">矩阵的行数</param>
         /// <param name="y">矩阵的列数</param>
         public Matrix(int x, int y)
+            : base()
         {
             this._x = x;
             this._y = y;
@@ -134,6 +135,62 @@ namespace AHP.Core
 
         #region 矩阵运算，包括相加、点乘、矩阵相加、获得最大值、求和、子集、计算特征值、转置
 
+        #region 插入一行或者一列
+
+        //todo:矩阵行和列的插入和删除
+        public Matrix InsertRowAfter(int row)
+        {
+            return null;
+        }
+
+        public Matrix InsertRowBefore(int row)
+        {
+            return null;
+        }
+
+        public Matrix RemoveRow(int row)
+        {
+            return null;
+        }
+
+        public Matrix InsertColumnAfter(int column)
+        {
+            return null;
+        }
+
+        public Matrix InsertColumnBefore(int column)
+        {
+            return null;
+        }
+
+        public Matrix RemoveColumn(int column)
+        {
+            return null;
+        }
+
+        #endregion
+
+        /// <summary>
+        /// 从一个向同行相同两列的矩阵复制数据
+        /// </summary>
+        /// <param name="copyfrom">源矩阵</param>
+        public void InsertFromMatrix(Matrix copyfrom)
+        {
+            if (copyfrom.X != X || copyfrom.Y != Y)
+            {
+                throw new CustomeExcetpion("操作的两个矩阵的维数不相同，不能进行复制");
+            }
+
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    this[i, j] = copyfrom[i, j];
+                }
+            }
+        }
+        //todo:考虑一个是否更加通用的拷贝函数
+
         /// <summary>
         /// 导入数据源
         /// </summary>
@@ -154,7 +211,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new MatrixCalExcetpion("数据源的没有足够数量的数据用来构建矩阵");
+                throw new CustomeExcetpion("数据源的没有足够数量的数据用来构建矩阵");
             }
         }
 
@@ -182,7 +239,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new MatrixCalExcetpion("两个相加的矩阵必须有相同的维数");
+                throw new CustomeExcetpion("两个相加的矩阵必须有相同的维数");
             }
             return result;
         }
@@ -239,7 +296,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new MatrixCalExcetpion("相乘两个矩阵中，左边矩阵的列数必须与右边矩阵的行数相等");
+                throw new CustomeExcetpion("相乘两个矩阵中，左边矩阵的列数必须与右边矩阵的行数相等");
             }
             return result;
         }
@@ -258,7 +315,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new MatrixCalExcetpion("请输入一个有效区域");
+                throw new CustomeExcetpion("请输入一个有效区域");
             }
             mx = xStart;
             my = yStart;
@@ -312,7 +369,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new MatrixCalExcetpion("请输入一个有效区域");
+                throw new CustomeExcetpion("请输入一个有效区域");
             }
             double sum = 0;
             for (int i = xStart; i <= xEnd; i++)
@@ -347,7 +404,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new MatrixCalExcetpion("请输入一个有效区域");
+                throw new CustomeExcetpion("请输入一个有效区域");
             }
             //设置结果矩阵的名字
             string name = resultName ?? string.Format("{0}的子矩阵 ({1},{2})->({3},{4})", Name, xStart, yStart, xEnd, yEnd);
@@ -423,7 +480,7 @@ namespace AHP.Core
         {
             if (X != Y)
             {
-                throw new MatrixCalExcetpion("方阵才可以使用幂法求特征值和特征向量！");
+                throw new CustomeExcetpion("方阵才可以使用幂法求特征值和特征向量！");
             }
             string name = resultName ?? string.Format("{0}的主特征向量为", Name);
 
@@ -440,14 +497,14 @@ namespace AHP.Core
                 xk = LeftMultipy(xk).DotMultiply(1.0 / c);
 
                 //计算误差大小
-                double epsilon = 0.0;
-                for (int i = 0; i < X - 1; i++)
-                {
-                    double differ = xk[i, 0] - oldXk[i, 0];
-                    epsilon += Math.Pow(differ, 2);
-                }
-                if (Math.Sqrt(epsilon) < Epsilon) //如果误差足够小，就跳出循环
-                    break;
+                //double epsilon = 0.0;
+                //for (int i = 0; i < X - 1; i++)
+                //{
+                //    double differ = xk[i, 0] - oldXk[i, 0];
+                //    epsilon += Math.Pow(differ, 2);
+                //}
+                //if (Math.Sqrt(epsilon) < Epsilon) //如果误差足够小，就跳出循环
+                //    break;
 
                 oldXk = xk;
             }

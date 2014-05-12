@@ -5,11 +5,11 @@ using System.Text;
 
 namespace AHP.Core
 {
-    public class MatrixCalExcetpion:Exception
+    public class CustomeExcetpion:Exception
     {
         private string errorMessage;
 
-        public MatrixCalExcetpion(string errorMessage)
+        public CustomeExcetpion(string errorMessage)
         {
             this.errorMessage = errorMessage;
         }
