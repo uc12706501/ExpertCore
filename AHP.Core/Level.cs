@@ -93,7 +93,7 @@ namespace AHP.Core
             {
                 _factors = factors;
             }
-                //否则就需要社会自factors，relationMatrix，judgeMatrices
+            //否则就需要社会自factors，relationMatrix，judgeMatrices
             else
             {
                 //todo:设置之前必须检查是否符合要求啊
@@ -113,6 +113,122 @@ namespace AHP.Core
         /// </summary>
         /// <param name="relationMatrix">关系矩阵</param>
         /// <returns>是否设置成功</returns>
+
+
+        /// <summary>
+        /// 获取本层次各个元素对于上一层次各个元素的排序向量
+        /// </summary>
+        /// <returns></returns>
+        public Matrix GetWeightMatrix()
+        {
+            //定义权重矩阵的维数
+            int wx = FactorCount;
+            int wy = Parent.FactorCount;
+            Matrix wightMatrix = new Matrix(wx, wy);
+
+            //依次权重矩阵计算每一列的值
+            for (int j = 0; j < wy; j++)
+            {
+                //todo:考虑提取一个公用方法
+                //获得当前的列，也就是上层的某个因素
+                Factor currentParentFactor = Parent.Factors[j];
+                //获得对应该因素的判断矩阵
+                var currentJudgeMatrix = JudgeMatrices[currentParentFactor];
+                //通过判断矩阵计算层次单排序权重
+                var currentWightVect = currentJudgeMatrix.SingleFactorWightVect();
+                //设置到权重向量中
+                int pointer = 0;
+                for (int i = 0; i < wx; i++)
+                {
+                    //如果关系矩阵的对应位置不为0，就设置该位置的权重
+                    if (_relationMatrix[i, j] != 0)
+                        wightMatrix[i, j] = currentWightVect[pointer++, 0];
+                }
+            }
+            return wightMatrix;
+        }
+
+        /// <summary>
+        /// 获取本层次的层次总排序权重向量
+        /// </summary>
+        /// <returns></returns>
+        public Matrix GetTotalWeightVect()
+        {
+            //如果是第二次，则返回该层次元素的层次单排序权重向量
+            if (LevelCount == 2)
+                return _judgeMatrices[Parent.Factors[0]].SingleFactorWightVect();
+
+            return GetWeightMatrix().LeftMultipy(Parent.GetTotalWeightVect());
+        }
+
+        /// <summary>
+        /// 本层次总排序的CI
+        /// </summary>
+        public double LevelCI
+        {
+            get
+            {
+                int parentFactorCount = Parent.FactorCount;
+                IList<double> ciList = new List<double>();
+                for (int i = 0; i < parentFactorCount; i++)
+                {
+                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
+                    ciList.Add(currentJudgeMatrix.CI);
+                }
+                Matrix ciVect = new Matrix(1, parentFactorCount);
+                ciVect.InsertDataFromList(ciList);
+                Matrix totalci = ciVect.LeftMultipy(GetTotalWeightVect());
+                return totalci[0, 0];
+            }
+        }
+
+        /// <summary>
+        /// 本层次总排序的RI
+        /// </summary>
+        public double LevelRI
+        {
+            get
+            {
+                int parentFactorCount = Parent.FactorCount;
+                IList<double> riList = new List<double>();
+                for (int i = 0; i < parentFactorCount; i++)
+                {
+                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
+                    riList.Add(currentJudgeMatrix.RI);
+                }
+                Matrix riVect = new Matrix(1, parentFactorCount);
+                riVect.InsertDataFromList(riList);
+                Matrix totalRi = riVect.LeftMultipy(GetTotalWeightVect());
+                return totalRi[0, 0];
+            }
+        }
+
+        /// <summary>
+        /// 本层次总排序的CR
+        /// </summary>
+        public double LevelCR
+        {
+            get
+            {
+                int parentFactorCount = Parent.FactorCount;
+                IList<double> crList = new List<double>();
+                for (int i = 0; i < parentFactorCount; i++)
+                {
+                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
+                    crList.Add(currentJudgeMatrix.CR);
+                }
+                Matrix crVect = new Matrix(1, parentFactorCount);
+                crVect.InsertDataFromList(crList);
+                Matrix totalCr = crVect.LeftMultipy(GetTotalWeightVect());
+                return totalCr[0, 0];
+            }
+        }
+
+        #endregion
+
+        //todo:暂不是实现
+        #region 暂不实现的功能，主要是对Level状态的修改
+
         private void SetRelation(Matrix relationMatrix)
         {
             if (Factors.Count <= 0)
@@ -136,7 +252,6 @@ namespace AHP.Core
             UpdateJudgeMatrices();
         }
 
-        //todo:重要 不使用这两个方法对各层次的因素进行管理，而是使用构造函数，直接传入值，同时不提供修改的接口
         #region  Add/Remove Factor
 
         /// <summary>
@@ -261,119 +376,6 @@ namespace AHP.Core
             //设置
             JudgeMatrices.Add(parentFactor, judgeMatrix);
         }
-
-        /// <summary>
-        /// 获取本层次各个元素对于上一层次各个元素的排序向量
-        /// </summary>
-        /// <returns></returns>
-        public Matrix GetWeightMatrix()
-        {
-            //定义权重矩阵的维数
-            int wx = FactorCount;
-            int wy = Parent.FactorCount;
-            Matrix wightMatrix = new Matrix(wx, wy);
-
-            //依次权重矩阵计算每一列的值
-            for (int j = 0; j < wy; j++)
-            {
-                //todo:考虑提取一个公用方法
-                //获得当前的列，也就是上层的某个因素
-                Factor currentParentFactor = Parent.Factors[j];
-                //获得对应该因素的判断矩阵
-                var currentJudgeMatrix = JudgeMatrices[currentParentFactor];
-                //通过判断矩阵计算层次单排序权重
-                var currentWightVect = currentJudgeMatrix.SingleFactorWightVect();
-                //设置到权重向量中
-                int pointer = 0;
-                for (int i = 0; i < wx; i++)
-                {
-                    //如果关系矩阵的对应位置不为0，就设置该位置的权重
-                    if (_relationMatrix[i, j] != 0)
-                        wightMatrix[i, j] = currentWightVect[pointer++, 0];
-                }
-            }
-            return wightMatrix;
-        }
-
-        /// <summary>
-        /// 获取本层次的层次总排序权重向量
-        /// </summary>
-        /// <returns></returns>
-        public Matrix GetTotalWeightVect()
-        {
-            //如果是第二次，则返回该层次元素的层次单排序权重向量
-            if (LevelCount == 2)
-                return _judgeMatrices[Parent.Factors[0]].SingleFactorWightVect();
-
-            return GetWeightMatrix().LeftMultipy(Parent.GetTotalWeightVect());
-        }
-
-        /// <summary>
-        /// 本层次总排序的CI
-        /// </summary>
-        public double LevelCI
-        {
-            get
-            {
-                int parentFactorCount = Parent.FactorCount;
-                IList<double> ciList = new List<double>();
-                for (int i = 0; i < parentFactorCount; i++)
-                {
-                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
-                    ciList.Add(currentJudgeMatrix.CI);
-                }
-                Matrix ciVect = new Matrix(1, parentFactorCount);
-                ciVect.InsertDataFromList(ciList);
-                Matrix totalci = ciVect.LeftMultipy(GetTotalWeightVect());
-                return totalci[0, 0];
-            }
-        }
-
-        /// <summary>
-        /// 本层次总排序的RI
-        /// </summary>
-        public double LevelRI
-        {
-            get
-            {
-                int parentFactorCount = Parent.FactorCount;
-                IList<double> riList = new List<double>();
-                for (int i = 0; i < parentFactorCount; i++)
-                {
-                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
-                    riList.Add(currentJudgeMatrix.RI);
-                }
-                Matrix riVect = new Matrix(1, parentFactorCount);
-                riVect.InsertDataFromList(riList);
-                Matrix totalRi = riVect.LeftMultipy(GetTotalWeightVect());
-                return totalRi[0, 0];
-            }
-        }
-
-        /// <summary>
-        /// 本层次总排序的CR
-        /// </summary>
-        public double LevelCR
-        {
-            get
-            {
-                int parentFactorCount = Parent.FactorCount;
-                IList<double> crList = new List<double>();
-                for (int i = 0; i < parentFactorCount; i++)
-                {
-                    JudgeMatrix currentJudgeMatrix = JudgeMatrices[Parent.Factors[i]];
-                    crList.Add(currentJudgeMatrix.CR);
-                }
-                Matrix crVect = new Matrix(1, parentFactorCount);
-                crVect.InsertDataFromList(crList);
-                Matrix totalCr = crVect.LeftMultipy(GetTotalWeightVect());
-                return totalCr[0, 0];
-            }
-        }
-
-        #endregion
-
-        #region private成员函数
 
         /// <summary>
         /// 根据关系矩阵生成空的判断矩阵，每一次关系矩阵修改，都必须调用这个函数
