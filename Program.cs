@@ -11,7 +11,8 @@ namespace ExpertChooseCore
         static void Main(string[] args)
         {
             //Tester.JudgeMatrixTest();
-            Tester.MatrixTest();
+            //Tester.MatrixTest();
+            Tester.AhpModelTest();
             Console.ReadKey();
         }
     }

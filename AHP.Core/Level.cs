@@ -7,7 +7,7 @@ using AHP.Core.Annotations;
 
 namespace AHP.Core
 {
-    public class Level : Identified, IFactorChanged
+    public class Level : Identified
     {
 
         #region 字段和属性
@@ -86,9 +86,22 @@ namespace AHP.Core
             _parent = parent;
         }
 
-        public Level(Level parent, List<Factor> factors, Matrix relationMatrix, List<JudgeMatrix> judgeMatrices)
+        public Level(Level parent, IList<Factor> factors, Matrix relationMatrix, Dictionary<Factor, JudgeMatrix> judgeMatrices)
         {
-
+            //如果parent为null，说明是顶层元素，只需要设置factors即可
+            if (parent == null)
+            {
+                _factors = factors;
+            }
+                //否则就需要社会自factors，relationMatrix，judgeMatrices
+            else
+            {
+                //todo:设置之前必须检查是否符合要求啊
+                _parent = parent;
+                _factors = factors;
+                _relationMatrix = relationMatrix;
+                _judgeMatrices = judgeMatrices;
+            }
         }
 
         #endregion
@@ -220,7 +233,6 @@ namespace AHP.Core
             //先移除因素
             Factors.Remove(factor);
             //修改关系矩阵
-            _relationMatrix.RemoveRow(index);
 
             //刷新判断矩阵序列
             UpdateJudgeMatrices();
@@ -389,19 +401,19 @@ namespace AHP.Core
 
         #endregion
 
-        #region 实现IFactorChanged接口，提供属性更改通知
+        //#region 实现IFactorChanged接口，提供属性更改通知
 
-        //当Factor集合更改时，提供通知。本层次重新刷新关系矩阵，通知下一层次刷新
-        public event FactorChangedEventHandler FactorChaged;
+        ////当Factor集合更改时，提供通知。本层次重新刷新关系矩阵，通知下一层次刷新
+        //public event FactorChangedEventHandler FactorChaged;
 
-        protected virtual void OnFactorChanged(string propertyName, FactorChangedEventArgs.ChangeType factorChangeType, Factor changedFactor
-            )
-        {
-            FactorChangedEventHandler handler = FactorChaged;
-            if (handler != null) handler(this, new FactorChangedEventArgs(propertyName, factorChangeType, changedFactor));
-        }
+        //protected virtual void OnFactorChanged(string propertyName, FactorChangedEventArgs.ChangeType factorChangeType, Factor changedFactor
+        //    )
+        //{
+        //    FactorChangedEventHandler handler = FactorChaged;
+        //    if (handler != null) handler(this, new FactorChangedEventArgs(propertyName, factorChangeType, changedFactor));
+        //}
 
-        #endregion
+        //#endregion
 
     }
 }

@@ -40,6 +40,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AhpModel.cs" />
     <Compile Include="Factor.cs" />
     <Compile Include="IFactorChanged.cs" />
     <Compile Include="Identified.cs" />

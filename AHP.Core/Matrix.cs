@@ -12,6 +12,7 @@ namespace AHP.Core
 
     #endregion
 
+    //todo:考虑解决name混乱的问题
     public class Matrix : Identified
     {
         #region 静态成员

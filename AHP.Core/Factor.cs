@@ -7,9 +7,8 @@ namespace AHP.Core
 {
     public class Factor
     {
-        public Factor(int id, string name, FactorDirection direction)
+        public Factor(string name, FactorDirection direction)
         {
-            Id = id;
             Name = name;
             Direction = direction;
         }
