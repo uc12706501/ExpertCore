@@ -104,6 +104,18 @@ namespace AHP.Core
             }
         }
 
+        public Level(LevelDataModel dataModel)
+        {
+            if (!dataModel.Check())
+            {
+                throw new CustomeExcetpion("数据不符合要求！");
+            }
+            _parent = dataModel.Parent;
+            _factors = dataModel.Factors;
+            _relationMatrix = dataModel.RelationMatrix;
+            _judgeMatrices = dataModel.JudgeMatrices;
+        }
+
         #endregion
 
         #region 层次的主要函数
@@ -154,7 +166,7 @@ namespace AHP.Core
         /// <returns></returns>
         public Matrix GetTotalWeightVect()
         {
-            //如果是第二次，则返回该层次元素的层次单排序权重向量
+            //如果是第二层，则返回该层次元素的层次单排序权重向量
             if (LevelCount == 2)
                 return _judgeMatrices[Parent.Factors[0]].SingleFactorWightVect();
 
@@ -226,7 +238,7 @@ namespace AHP.Core
 
         #endregion
 
-        //todo:暂不是实现
+        //todo:暂不实现
         #region 暂不实现的功能，主要是对Level状态的修改
 
         private void SetRelation(Matrix relationMatrix)

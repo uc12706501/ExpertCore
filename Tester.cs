@@ -8,8 +8,11 @@ namespace ExpertChooseCore
 {
     public static class Tester
     {
+        #region 固定测试数据
+
         public static void MatrixTest()
-        { //创建一个3*3的矩阵，并通过List赋值
+        {
+            //创建一个3*3的矩阵，并通过List赋值
             Matrix m1 = new Matrix(3, 3, "m1");
             IList<double> listsource = new List<double>() { 3, 2, 1, 4, 5, 6, 7, 8, 9, 11 };
             m1.InsertDataFromList(listsource);
@@ -82,13 +85,33 @@ namespace ExpertChooseCore
             //m13.InsertDataFromList(new List<double>() { 2, 2, -2, 2, 5, -4, -2, -4, 5 }); 
             //m13.InsertDataFromList(new List<double>() {4,2,-5,6,4,-9,5,3,-7 }); //结果为1，(1,1,1)
             m13.InsertDataFromList(new List<double>
-                    {
-                        1, 0.5, 4, 3, 3, 
-                        2, 1, 7, 5, 5, 
-                        1 / 4.0, 1 / 7.0, 1, 1 / 2.0, 1/3.0,
-                        1 / 3.0, 1 / 5.0, 2, 1, 1, 
-                        1 / 3.0, 1 / 5.0, 3, 1, 1
-                    });
+                {
+                    1,
+                    0.5,
+                    4,
+                    3,
+                    3,
+                    2,
+                    1,
+                    7,
+                    5,
+                    5,
+                    1/4.0,
+                    1/7.0,
+                    1,
+                    1/2.0,
+                    1/3.0,
+                    1/3.0,
+                    1/5.0,
+                    2,
+                    1,
+                    1,
+                    1/3.0,
+                    1/5.0,
+                    3,
+                    1,
+                    1
+                });
             //m13.InsertMatrix(MatrixHelper.ConsoloInput);
             m13.DisplayMatrix(MatrixHelper.ConsoloOutput);
             double eiginvalue;
@@ -103,11 +126,31 @@ namespace ExpertChooseCore
             jm1.InsertDataFromList(
                 new List<double>
                     {
-                        1, 0.5, 4, 3, 3, 
-                        2, 1, 7, 5, 5, 
-                        1 / 4.0, 1 / 7.0, 1, 1 / 2.0, 1 / 3.0,
-                        1 / 3.0, 1 / 5.0, 2, 1, 1, 
-                        1 / 3.0, 1 / 5.0, 3, 1, 1
+                        1,
+                        0.5,
+                        4,
+                        3,
+                        3,
+                        2,
+                        1,
+                        7,
+                        5,
+                        5,
+                        1/4.0,
+                        1/7.0,
+                        1,
+                        1/2.0,
+                        1/3.0,
+                        1/3.0,
+                        1/5.0,
+                        2,
+                        1,
+                        1,
+                        1/3.0,
+                        1/5.0,
+                        3,
+                        1,
+                        1
                     });
             jm1.DisplayMatrix(MatrixHelper.ConsoloOutput);
             double eiginValue;
@@ -126,13 +169,14 @@ namespace ExpertChooseCore
 
             //构造第二层
             //第二层因素
-            IList<Factor> factors2 = new List<Factor> { 
-                new Factor("A1"), 
-                new Factor("A2"), 
-                new Factor("A3"), 
-                new Factor("A4"), 
-                new Factor("A")
-            };
+            IList<Factor> factors2 = new List<Factor>
+                {
+                    new Factor("A1"),
+                    new Factor("A2"),
+                    new Factor("A3"),
+                    new Factor("A4"),
+                    new Factor("A")
+                };
             //第二层关系矩阵
             Matrix level2Relation = new Matrix(5, 1);
             level2Relation.InsertDataFromList(new List<double> { 1, 1, 1, 1, 1 });
@@ -140,11 +184,31 @@ namespace ExpertChooseCore
             JudgeMatrix level2JudugeMatrix1 = new JudgeMatrix(5);
             level2JudugeMatrix1.InsertDataFromList(new List<double>
                 {
-                    1,1/2.0,4,3,3,
-                    2,1,7,5,5,
-                    1/4,1/7,1,1/2.0,1/3.0,
-                    1/3.0,1/5.0,2,1,1,
-                    1/3.0,1/5.0,3,1,1
+                    1,
+                    1/2.0,
+                    4,
+                    3,
+                    3,
+                    2,
+                    1,
+                    7,
+                    5,
+                    5,
+                    1/4,
+                    1/7,
+                    1,
+                    1/2.0,
+                    1/3.0,
+                    1/3.0,
+                    1/5.0,
+                    2,
+                    1,
+                    1,
+                    1/3.0,
+                    1/5.0,
+                    3,
+                    1,
+                    1
                 });
             //加入到判断矩阵序列
             Dictionary<Factor, JudgeMatrix> level2Judges = new Dictionary<Factor, JudgeMatrix>();
@@ -154,54 +218,97 @@ namespace ExpertChooseCore
             ahpModel.PushLevel(level2);
 
             //构造第三层次
-            IList<Factor> factors3 = new List<Factor> { 
-                new Factor("B1"), 
-                new Factor("B2"), 
-                new Factor("B3"), 
-            };
+            IList<Factor> factors3 = new List<Factor>
+                {
+                    new Factor("B1"),
+                    new Factor("B2"),
+                    new Factor("B3"),
+                };
             //第三层关系矩阵
             Matrix level3Relation = new Matrix(3, 5);
-            level3Relation.InsertDataFromList(new List<double> 
-            { 
-                1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1,
-                1, 1, 1, 1, 1 
-            });
+            level3Relation.InsertDataFromList(new List<double>
+                {
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1,
+                    1
+                });
             //第三层判断矩阵
             JudgeMatrix level3JudugeMatrix1 = new JudgeMatrix(3);
             level3JudugeMatrix1.InsertDataFromList(new List<double>
                 {
-                    1,2,5,
-                    1/2.0,1,2,
-                    1/5.0,1/2.0,1
+                    1,
+                    2,
+                    5,
+                    1/2.0,
+                    1,
+                    2,
+                    1/5.0,
+                    1/2.0,
+                    1
                 });
             JudgeMatrix level3JudugeMatrix2 = new JudgeMatrix(3);
             level3JudugeMatrix2.InsertDataFromList(new List<double>
                 {
-                    1,1/3.0,1/8.0,
-                    3,1,1/3.0,
-                    8,3,1
+                    1,
+                    1/3.0,
+                    1/8.0,
+                    3,
+                    1,
+                    1/3.0,
+                    8,
+                    3,
+                    1
                 });
             JudgeMatrix level3JudugeMatrix3 = new JudgeMatrix(3);
             level3JudugeMatrix3.InsertDataFromList(new List<double>
                 {
-                    1,1,3,
-                    1,1,3,
-                    1/3.0,1/3.0,1
+                    1,
+                    1,
+                    3,
+                    1,
+                    1,
+                    3,
+                    1/3.0,
+                    1/3.0,
+                    1
                 });
             JudgeMatrix level3JudugeMatrix4 = new JudgeMatrix(3);
             level3JudugeMatrix4.InsertDataFromList(new List<double>
                 {
-                    1,3,4,
-                    1/3.0,1,1,
-                    1/4.0,1,1
+                    1,
+                    3,
+                    4,
+                    1/3.0,
+                    1,
+                    1,
+                    1/4.0,
+                    1,
+                    1
                 });
             JudgeMatrix level3JudugeMatrix5 = new JudgeMatrix(3);
             level3JudugeMatrix5.InsertDataFromList(new List<double>
                 {
-                    1,1,1/4.0,
-                    1,1,1/4.0,
-                    4,4,1
+                    1,
+                    1,
+                    1/4.0,
+                    1,
+                    1,
+                    1/4.0,
+                    4,
+                    4,
+                    1
                 });
             //加入到判断矩阵序列
             Dictionary<Factor, JudgeMatrix> level3Judges = new Dictionary<Factor, JudgeMatrix>();
@@ -216,6 +323,151 @@ namespace ExpertChooseCore
 
             //测试数据
             ahpModel.GetLevelInfo(3).GetTotalWeightVect().DisplayMatrix(MatrixHelper.ConsoloOutput);
+        }
+
+        #endregion
+
+        public static void AhpModelSample()
+        {
+            //创建第一层
+            Level topLevel = new Level(null,
+                new List<Factor> { new Factor("Z") },
+                null,
+                null);
+            //实例化一个AhpModel，并设置第一层对象
+            AhpModel ahpModel = new AhpModel(topLevel);
+
+            //插入一个层次，直到用户表示不再增减
+            while (true)
+            {
+                //默认插入第二层
+                InsertLevel(ahpModel);
+
+                //然后询问是否继续插入其他层次
+                var ifAddLevel = ReadBool("是否插入一个层次");
+                if (!ifAddLevel)
+                    break;
+            }
+
+            //打印层次结构模型中的相关信息
+            DisplayInfoOfAhpModel(ahpModel);
+
+            //todo:询问建立决策矩阵，然后根据决策矩阵打印出计算结果
+        }
+
+        //为传入的AhpModel加入一个层次
+        private static Level InsertLevel(AhpModel model)
+        {
+            LevelDataModel dataModel = new LevelDataModel();
+
+            //循环输入因素
+            while (true)
+            {
+                dataModel.Factors.Add(GetFactor());
+
+                var ifAddFactor = ReadBool("是否继续添加一个因素");
+                if (!ifAddFactor)
+                    break;
+            }
+
+            //输入关系矩阵
+            //设置当前model中的最后一个层次为新插入层次的
+            dataModel.Parent = model.GetLastLevel();
+            Matrix relationMatrix = new Matrix(dataModel.Factors.Count, dataModel.Parent.Factors.Count);
+            relationMatrix.InsertMatrix(MatrixHelper.ConsoloInput);
+
+            //设置判断矩阵
+            Dictionary<Factor, JudgeMatrix> judgeMatrices = new Dictionary<Factor, JudgeMatrix>();
+            var judges = GetJudgeMatrices(relationMatrix);
+            for (int i = 0; i < relationMatrix.Y; i++)
+            {
+
+                judgeMatrices.Add(model.GetLastLevel().Factors[i], judges[i]);
+            }
+            dataModel.JudgeMatrices = judgeMatrices;
+
+            //创建一个新的层次，并加入层次结构模型中
+            Level newLevel = new Level(dataModel);
+            model.PushLevel(newLevel);
+
+            return model.GetLastLevel();
+        }
+
+        //根据关系矩阵构造判断矩阵
+        public static IList<JudgeMatrix> GetJudgeMatrices(Matrix relationMatrix)
+        {
+            IList<JudgeMatrix> judgeMatrices = new List<JudgeMatrix>();
+            for (int i = 0; i < relationMatrix.Y; i++)
+            {
+                var affectcount = 0;
+                for (int j = 0; j < relationMatrix.X; j++)
+                    affectcount++;
+                JudgeMatrix judgeMatrix = new JudgeMatrix(affectcount);
+                judgeMatrix.InsertMatrix(MatrixHelper.ConsoloInput);
+                judgeMatrices.Add(judgeMatrix);
+            }
+            return judgeMatrices;
+        }
+
+        //获取一个Factor
+        public static Factor GetFactor()
+        {
+            var name = ReadString("请输入层次的名称");
+            return new Factor(name);
+        }
+
+
+        //打印出AhpModel的基本信息
+        private static void DisplayInfoOfAhpModel(AhpModel model)
+        {
+            Console.WriteLine("************以下是层次结构模型的主要信息*************");
+            for (int i = 0; i < model.Levels.Count; i++)
+            {
+                if (i > 0)
+                {
+                    var level = model.GetLevelInfo(i);
+                    level.GetTotalWeightVect().DisplayMatrix(MatrixHelper.ConsoloOutput);
+                }
+                else
+                {
+                    Console.WriteLine("顶层木有数据%>_<%");
+                }
+                Console.WriteLine("-------------------第{0}层---------------------", i+1);
+            }
+        }
+
+
+        //从键盘读入Y/N
+        private static bool ReadBool(string message)
+        {
+            while (true)
+            {
+                Console.WriteLine(message + "[y/n]");
+                var readkey = Console.ReadLine().ToLower();
+                if (readkey == "y")
+                {
+                    return true;
+                }
+                if (readkey == "n")
+                {
+                    return false;
+                }
+                Console.WriteLine("请输入Y或者N");
+            }
+        }
+
+        //从键盘读入一个不为空的值
+        public static string ReadString(string message)
+        {
+            string readkey;
+            while (true)
+            {
+                Console.WriteLine(message);
+                readkey = Console.ReadLine();
+                if (!(readkey == null))
+                    break;
+            }
+            return readkey;
         }
     }
 }

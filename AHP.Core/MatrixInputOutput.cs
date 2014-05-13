@@ -13,6 +13,7 @@ namespace AHP.Core
         /// <param name="matrix">需要填充的矩阵</param>
         public static void ConsoloInput(Matrix matrix)
         {
+            Console.WriteLine("请输入一个{0}行{1}列的矩阵",matrix.X,matrix.Y);
             for (int i = 0; i < matrix.X; i++)
             {
                 Console.WriteLine(string.Format("请输入数组第{0}行的{1}个数据，以空格分隔", i + 1,matrix.Y));

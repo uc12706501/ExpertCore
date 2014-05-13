@@ -9,9 +9,9 @@ using System.Windows.Forms;
 
 namespace AhpModelSystem
 {
-    public partial class Form1 : Form
+    public partial class FactorAddForm : Form
     {
-        public Form1()
+        public FactorAddForm()
         {
             InitializeComponent();
         }

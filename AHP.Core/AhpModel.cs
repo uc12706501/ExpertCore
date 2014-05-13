@@ -40,7 +40,13 @@ namespace AHP.Core
         //获得指定层的信息
         public Level GetLevelInfo(int index)
         {
-            return Levels[index - 1];
+            return Levels[index];
+        }
+
+        //取得层次结构模型中的最后一个层次
+        public Level GetLastLevel()
+        {
+            return Levels.Last();
         }
     }
 }
