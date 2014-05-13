@@ -363,9 +363,12 @@ namespace ExpertChooseCore
             //循环输入因素
             while (true)
             {
-                dataModel.Factors.Add(GetFactor());
+                foreach (var factor in GetFactors())
+                {
+                    dataModel.Factors.Add(factor);
+                }
 
-                var ifAddFactor = ReadBool("是否继续添加一个因素");
+                var ifAddFactor = ReadBool("是否继续添加因素");
                 if (!ifAddFactor)
                     break;
             }
@@ -410,10 +413,15 @@ namespace ExpertChooseCore
         }
 
         //获取一个Factor
-        public static Factor GetFactor()
+        public static IList<Factor> GetFactors()
         {
-            var name = ReadString("请输入层次的名称");
-            return new Factor(name);
+            var names = ReadString("请输入因素的名称，以空格分隔");
+            IList<Factor> factors = new List<Factor>();
+            foreach (var name in names)
+            {
+                factors.Add(new Factor(name));
+            }
+            return factors;
         }
 
 
@@ -432,7 +440,7 @@ namespace ExpertChooseCore
                 {
                     Console.WriteLine("顶层木有数据%>_<%");
                 }
-                Console.WriteLine("-------------------第{0}层---------------------", i+1);
+                Console.WriteLine("-------------------第{0}层---------------------", i + 1);
             }
         }
 
@@ -443,31 +451,35 @@ namespace ExpertChooseCore
             while (true)
             {
                 Console.WriteLine(message + "[y/n]");
-                var readkey = Console.ReadLine().ToLower();
-                if (readkey == "y")
+                var readLine = Console.ReadLine();
+                if (readLine != null)
                 {
-                    return true;
-                }
-                if (readkey == "n")
-                {
-                    return false;
+                    var readkey = readLine.ToLower();
+                    if (readkey == "y")
+                    {
+                        return true;
+                    }
+                    if (readkey == "n")
+                    {
+                        return false;
+                    }
                 }
                 Console.WriteLine("请输入Y或者N");
             }
         }
 
         //从键盘读入一个不为空的值
-        public static string ReadString(string message)
+        public static IList<string> ReadString(string message)
         {
             string readkey;
             while (true)
             {
                 Console.WriteLine(message);
                 readkey = Console.ReadLine();
-                if (!(readkey == null))
+                if (readkey != null)
                     break;
             }
-            return readkey;
+            return readkey.Split(' ');
         }
     }
 }
