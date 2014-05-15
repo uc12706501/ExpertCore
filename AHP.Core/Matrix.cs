@@ -281,6 +281,68 @@ namespace AHP.Core
         }
 
         /// <summary>
+        /// 获取指定列的最大值
+        /// </summary>
+        /// <param name="column">列</param>
+        /// <returns>指定列的最大值</returns>
+        public double GetColumnMaxValue(int column)
+        {
+            int tempa; int tempb;
+            return GetMaxValue(out tempa, out tempb, 0, column, X - 1, column);
+        }
+
+        /// <summary>
+        /// 获得指定列的最小值
+        /// </summary>
+        /// <param name="column">列</param>
+        /// <returns>指定列的最小值</returns>
+        public double GetColumnMinValue(int column)
+        {
+            int tempa; int tempb;
+            return GetMinValue(out tempa, out tempb, 0, column, X - 1, column);
+        }
+
+        public double GetColumnSum(int column)
+        {
+            return GetSum(0, column, X - 1, column);
+        }
+
+        /// <summary>
+        /// 获取指定区域内的最小值
+        /// </summary>
+        /// <param name="mx">返回最小值的x</param>
+        /// <param name="my">返回最小值的y</param>
+        /// <param name="xStart">区域起始点x</param>
+        /// <param name="xEnd">区域结束点x</param>
+        /// <param name="yStart">区域起始点y</param>
+        /// <param name="yEnd">区域结束点y</param>
+        /// <returns>指定区域中的最小值</returns>
+        public double GetMinValue(out int mx, out int my, int xStart, int yStart, int xEnd, int yEnd)
+        {
+            if (!RegionCheck(xStart, yStart, xEnd, yEnd))
+            {
+                throw new CustomeExcetpion("请输入一个有效区域");
+            }
+            mx = xStart;
+            my = yStart;
+            double minValue = innerData[xStart][yStart];
+            for (int i = xStart; i <= xEnd; i++)
+            {
+                for (int j = yStart; j <= yEnd; j++)
+                {
+                    if (innerData[i][j] < minValue)
+                    {
+                        mx = i;
+                        my = j;
+                        minValue = innerData[i][j];
+                    }
+                }
+            }
+            return minValue;
+        }
+
+
+        /// <summary>
         /// 获取指定区域内的最大值
         /// </summary>
         /// <param name="mx">返回最大值的x</param>

@@ -344,7 +344,7 @@ namespace ExpertChooseCore
                 InsertLevel(ahpModel);
 
                 //然后询问是否继续插入其他层次
-                var ifAddLevel = ReadBool("是否插入一个层次");
+                var ifAddLevel = MatrixHelper.ReadBool("是否插入一个层次");
                 if (!ifAddLevel)
                     break;
             }
@@ -353,6 +353,19 @@ namespace ExpertChooseCore
             DisplayInfoOfAhpModel(ahpModel);
 
             //todo:询问建立决策矩阵，然后根据决策矩阵打印出计算结果
+            //选择用以生成决策矩阵的层次
+            //读入的数要-1
+            int selectLevel = MatrixHelper.ReadValus<int>(string.Format("请从第2层到第{0}层中选择一层来创建决策矩阵", ahpModel.Levels.Count + 1))[0] - 1;
+            //选择待评价的元素
+            int elementCount = MatrixHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
+            //建立空的决策矩阵
+            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount);
+            //读入决策矩阵数据
+            decisionMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
+            //获得决策向量
+            var decisionVect = decisionMatrix.GetDecisionVect(new ApprovedNormalizer());
+            //打印决策结果
+            decisionVect.DisplayMatrix(MatrixHelper.ConsoloOutput);
         }
 
         //为传入的AhpModel加入一个层次
@@ -368,7 +381,7 @@ namespace ExpertChooseCore
                     dataModel.Factors.Add(factor);
                 }
 
-                var ifAddFactor = ReadBool("是否继续添加因素");
+                var ifAddFactor = MatrixHelper.ReadBool("是否继续添加因素");
                 if (!ifAddFactor)
                     break;
             }
@@ -377,7 +390,7 @@ namespace ExpertChooseCore
             //设置当前model中的最后一个层次为新插入层次的
             dataModel.Parent = model.GetLastLevel();
             Matrix relationMatrix = new Matrix(dataModel.Factors.Count, dataModel.Parent.Factors.Count);
-            relationMatrix.InsertMatrix(MatrixHelper.ConsoloInput);
+            relationMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
 
             //设置判断矩阵
             Dictionary<Factor, JudgeMatrix> judgeMatrices = new Dictionary<Factor, JudgeMatrix>();
@@ -406,16 +419,17 @@ namespace ExpertChooseCore
                 for (int j = 0; j < relationMatrix.X; j++)
                     affectcount++;
                 JudgeMatrix judgeMatrix = new JudgeMatrix(affectcount);
-                judgeMatrix.InsertMatrix(MatrixHelper.ConsoloInput);
+                judgeMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
                 judgeMatrices.Add(judgeMatrix);
             }
             return judgeMatrices;
         }
 
-        //获取一个Factor
+        //获取Factor
         public static IList<Factor> GetFactors()
         {
-            var names = ReadString("请输入因素的名称，以空格分隔");
+            //todo:输入时可以设置Factor的正向还是逆向
+            var names = MatrixHelper.ReadStrings("请输入因素的名称，以空格分隔");
             IList<Factor> factors = new List<Factor>();
             foreach (var name in names)
             {
@@ -442,44 +456,6 @@ namespace ExpertChooseCore
                 }
                 Console.WriteLine("-------------------第{0}层---------------------", i + 1);
             }
-        }
-
-
-        //从键盘读入Y/N
-        private static bool ReadBool(string message)
-        {
-            while (true)
-            {
-                Console.WriteLine(message + "[y/n]");
-                var readLine = Console.ReadLine();
-                if (readLine != null)
-                {
-                    var readkey = readLine.ToLower();
-                    if (readkey == "y")
-                    {
-                        return true;
-                    }
-                    if (readkey == "n")
-                    {
-                        return false;
-                    }
-                }
-                Console.WriteLine("请输入Y或者N");
-            }
-        }
-
-        //从键盘读入一个不为空的值
-        public static IList<string> ReadString(string message)
-        {
-            string readkey;
-            while (true)
-            {
-                Console.WriteLine(message);
-                readkey = Console.ReadLine();
-                if (readkey != null)
-                    break;
-            }
-            return readkey.Split(' ');
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1">
-  <Class Name="AHP.Core.AhpModel" Collapsed="true">
+  <Class Name="AHP.Core.AhpModel">
     <Position X="9" Y="2" Width="1.5" />
     <TypeIdentifier>
       <HashCode>IAAAAAAAAAAAAAEAAAAAAAAAIAAAEQABAAAAAAAAAAA=</HashCode>
@@ -8,14 +8,14 @@
     </TypeIdentifier>
   </Class>
   <Class Name="AHP.Core.Factor">
-    <Position X="9" Y="3" Width="1.5" />
+    <Position X="9" Y="5.25" Width="1.5" />
     <TypeIdentifier>
       <HashCode>AAACAAAAAAAAAAAAACAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Factor.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="AHP.Core.Matrix">
-    <Position X="1.75" Y="2" Width="2" />
+    <Position X="1" Y="2" Width="2.75" />
     <TypeIdentifier>
       <HashCode>AAIGIACIAIQAAACASAAAAAYAAAAQBIABAAAiBAIAYAg=</HashCode>
       <FileName>Matrix.cs</FileName>
