@@ -352,7 +352,6 @@ namespace ExpertChooseCore
             //打印层次结构模型中的相关信息
             DisplayInfoOfAhpModel(ahpModel);
 
-            //todo:询问建立决策矩阵，然后根据决策矩阵打印出计算结果
             //选择用以生成决策矩阵的层次
             //读入的数要-1
             int selectLevel = MatrixHelper.ReadValus<int>(string.Format("请从第2层到第{0}层中选择一层来创建决策矩阵", ahpModel.Levels.Count + 1))[0] - 1;
@@ -371,6 +370,7 @@ namespace ExpertChooseCore
         //为传入的AhpModel加入一个层次
         private static Level InsertLevel(AhpModel model)
         {
+            //创建一个Level所必须的数据
             LevelDataModel dataModel = new LevelDataModel();
 
             //循环输入因素
@@ -387,17 +387,17 @@ namespace ExpertChooseCore
             }
 
             //输入关系矩阵
-            //设置当前model中的最后一个层次为新插入层次的
+            //设置当前model中的最后一个层次为新插入层次的Parent
             dataModel.Parent = model.GetLastLevel();
             Matrix relationMatrix = new Matrix(dataModel.Factors.Count, dataModel.Parent.Factors.Count);
             relationMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
 
             //设置判断矩阵
             Dictionary<Factor, JudgeMatrix> judgeMatrices = new Dictionary<Factor, JudgeMatrix>();
-            var judges = GetJudgeMatrices(relationMatrix);
+            //此处可以选择使用那种方式输入判断矩阵
+            var judges = GetJudgeMatrices(relationMatrix, dataModel.Parent.Factors, dataModel.Factors);
             for (int i = 0; i < relationMatrix.Y; i++)
             {
-
                 judgeMatrices.Add(model.GetLastLevel().Factors[i], judges[i]);
             }
             dataModel.JudgeMatrices = judgeMatrices;
@@ -413,15 +413,109 @@ namespace ExpertChooseCore
         public static IList<JudgeMatrix> GetJudgeMatrices(Matrix relationMatrix)
         {
             IList<JudgeMatrix> judgeMatrices = new List<JudgeMatrix>();
-            for (int i = 0; i < relationMatrix.Y; i++)
+            for (int j = 0; j < relationMatrix.Y; j++)
             {
                 var affectcount = 0;
-                for (int j = 0; j < relationMatrix.X; j++)
-                    affectcount++;
+                for (int i = 0; i < relationMatrix.X; i++)
+                {
+                    if (Math.Abs(relationMatrix[i, j] - 0) > 0.00001)
+                        affectcount++;
+                }
                 JudgeMatrix judgeMatrix = new JudgeMatrix(affectcount);
+                //可以选择判断矩阵的构造方式
                 judgeMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
                 judgeMatrices.Add(judgeMatrix);
             }
+            return judgeMatrices;
+        }
+
+        //使用改进的方法构造判断矩阵
+        public static IList<JudgeMatrix> GetJudgeMatrices(Matrix relationMatrix, IList<Factor> parentFactors, IList<Factor> currentFacors)
+        {
+            IList<JudgeMatrix> judgeMatrices = new List<JudgeMatrix>();
+
+            //按照上一层中的各个因素逐个处理
+            for (int j = 0; j < relationMatrix.Y; j++)
+            {
+                //获得上层某因素影响的下层因素
+                IList<Factor> affectedFactors = new List<Factor>();
+                for (int i = 0; i < relationMatrix.X; i++)
+                {
+                    if (Math.Abs(relationMatrix[i, j] - 0) > 0.00001)
+                        affectedFactors.Add(currentFacors[i]);
+                }
+                //构造一个空的判断矩阵，
+                int affectedCount = affectedFactors.Count;
+                JudgeMatrix judgeMatrix = new JudgeMatrix(affectedCount);
+
+                #region 然后使用改进的构造方法构造判断矩阵
+
+                //打印提示信息
+                Console.WriteLine("请输入因素{0}影响的{1}个因素的重要性排序，\n同时给出最重要与最不重要的因素比率", parentFactors[j].Name, affectedCount);
+                Console.Write("被影响的因素包括：");
+                for (int i = 0; i < affectedCount; i++)
+                {
+                    Console.Write("{0} {1}，", i, affectedFactors[i].Name);
+                }
+                Console.WriteLine();
+                //各个专家给出的排序的表
+                IList<IList<int>> rateTable = new List<IList<int>>();
+                IList<int> pList = new List<int>();
+                //表示第几个专家给出的排序
+                int rateCount = 0;
+                //循环读取专家的建议排序，然后放入rateTable中
+                while (true)
+                {
+                    rateCount++;
+                    //获取排序
+                    var readRate = MatrixHelper.ReadValus<int>(string.Format("请输入第{0}个专家的排序，从0开始！", rateCount), affectedCount);
+                    rateTable.Add(readRate);
+                    //获取p
+                    int p = MatrixHelper.ReadValus<int>(string.Format("请输入第{0}个专家的的最重要与最不重要的因素比率", rateCount), 1)[0];
+                    pList.Add(p);
+                    //是否继续添加，如果不添加了，就跳出
+                    if (!MatrixHelper.ReadBool("是否要继续添加重要性排序？"))
+                        break;
+                }
+                //计算根据rateTable和pList构造判断矩阵
+                double pAvg = pList.Average();
+                IList<double> aList = new List<double>();
+                //对被影响的因素逐个处理，生成各个被影响因素的平均赋权值
+                for (int i = 0; i < affectedCount; i++)
+                {
+                    int sumIndex = 0, avgIndex = 0, pow = 0;
+                    for (int k = 0; k < rateCount; k++)
+                    {
+                        sumIndex += (rateTable[k].IndexOf(i) + 1);
+                    }
+                    avgIndex = sumIndex / rateCount;
+                    pow = affectedCount - avgIndex + 1;
+                    aList.Add(pow);
+                }
+                //对判断矩阵逐个处理插入值
+                for (int m = 0; m < affectedCount; ++m)
+                {
+                    for (int n = 0; n < affectedCount; ++n)
+                    {
+                        if (aList[m] >= aList[n])
+                        {
+                            var numerator = aList[m] - aList[n];
+                            var denominator = aList.Max() - aList.Min();
+                            judgeMatrix[m, n] = numerator / denominator * (pAvg - 1) + 1;
+                        }
+                        else
+                        {
+                            var numerator = aList[n] - aList[m];
+                            var denominator = aList.Max() - aList.Min();
+                            judgeMatrix[m, n] = 1 / (numerator / denominator * (pAvg - 1) + 1);
+                        }
+                    }
+                }
+                #endregion
+
+                judgeMatrices.Add(judgeMatrix);
+            }
+
             return judgeMatrices;
         }
 

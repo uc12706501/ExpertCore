@@ -43,6 +43,7 @@ namespace AHP.Core
 
         #endregion
 
+        //决策矩阵的标准化
         public DecisionMatrix Standardize(IStandardizer standardizer)
         {
             return standardizer.Standardize(this);

@@ -18,6 +18,7 @@ namespace AHP.Core
             standardized.InsertFromMatrix(toBeStandardize);
 
             var factors = toBeStandardize.Level.Factors;
+            int m = standardized.X;
             //标准化按照指标值，逐列进行的
             for (int j = 0; j < factors.Count; j++)
             {
@@ -54,14 +55,14 @@ namespace AHP.Core
                 }
 
                 //3. 执行标准的归一化操作
+                //考虑到如果m太大，会造成标准化之太小，所以统一都乘以m
                 double columnSum = standardized.GetColumnSum(j);
                 for (int i = 0; i < standardized.X; i++)
                 {
-                    standardized[i, j] = standardized[i, j]/columnSum;
+                    standardized[i, j] = (standardized[i, j] / columnSum) * m;
                 }
             }
 
-            //todo:当m太大时的处理
             return standardized;
         }
     }
