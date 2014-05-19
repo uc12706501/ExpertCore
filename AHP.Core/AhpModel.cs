@@ -48,5 +48,30 @@ namespace AHP.Core
         {
             return Levels.Last();
         }
+
+        public void DisplayModelInfo()
+        {
+            Console.WriteLine("************以下是层次结构模型的主要信息*************");
+            for (int i = 0; i < this.Levels.Count; i++)
+            {
+                if (i > 0)
+                {
+                    var level = this.GetLevelInfo(i);
+                    foreach (var judgeMatrix in level.JudgeMatrices)
+                    {
+                        Console.WriteLine("{0}的判断矩阵", judgeMatrix.Key.Name);
+                        judgeMatrix.Value.DisplayMatrix(DataHelper.ConsoloOutput);
+                    }
+                    level.GetTotalWeightVect().DisplayMatrix(DataHelper.ConsoloOutput);
+                    Console.WriteLine("CI={0},RI={1},CR={2}", level.LevelCI, level.LevelRI, level.LevelCR);
+                }
+                else
+                {
+                    Console.WriteLine("顶层没有数据");
+                }
+                Console.WriteLine("-------------------第{0}层---------------------", i + 1);
+            }
+
+        }
     }
 }

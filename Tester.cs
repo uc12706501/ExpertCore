@@ -16,35 +16,35 @@ namespace ExpertChooseCore
             Matrix m1 = new Matrix(3, 3, "m1");
             IList<double> listsource = new List<double>() { 3, 2, 1, 4, 5, 6, 7, 8, 9, 11 };
             m1.InsertDataFromList(listsource);
-            m1.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m1.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //创建一个3*3矩阵，然后通过默认方法赋值
             Matrix m2 = new Matrix(3, 3, "m2");
-            m2.InsertMatrix(MatrixHelper.DefaultInput);
-            m2.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m2.InsertMatrix(DataHelper.DefaultInput);
+            m2.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //m1+m2，然后赋值给m3
             Matrix m3 = m1.Add(m2);
-            m3.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m3.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //m1*4
             Matrix m4 = m2.DotMultiply(4);
-            m4.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m4.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //m5与m6相乘
             Matrix m5 = new Matrix(2, 2, "m5");
             m5.InsertDataFromList(new List<double>() { 1, 1, -1, -1 });
-            m5.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m5.DisplayMatrix(DataHelper.ConsoloOutput);
             Matrix m6 = new Matrix(2, 2, "m6");
             m6.InsertDataFromList(new List<double>() { -1, 2, 3, 0 });
-            m6.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m6.DisplayMatrix(DataHelper.ConsoloOutput);
             Matrix m7 = m5.LeftMultipy(m6);
-            m7.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m7.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //找出m8中最大的值
             Matrix m8 = new Matrix(4, 4, "m8");
             m8.InsertDataFromList(new List<double>() { 1, 2, 4, 7, 6, 7, 8, 7, 9, 8, 7, 15, 4, 5, 8, 8, 9, 45, 5 });
-            m8.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m8.DisplayMatrix(DataHelper.ConsoloOutput);
             int x8, y8;
             double m8max = m8.GetMaxValue(out x8, out y8);
             Console.WriteLine(string.Format("最大值坐标是第{0}行第{1}列，为{2}\n", x8 + 1, y8 + 1, m8max));
@@ -64,20 +64,20 @@ namespace ExpertChooseCore
 
             //获得m8的一个子矩阵(0,0)->(2,1)
             Matrix m9 = m8.GetSubMatrix(0, 0, 2, 1);
-            m9.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m9.DisplayMatrix(DataHelper.ConsoloOutput);
             m9 = m8.GetSubMatrix(0, 2, 3, 2);
-            m9.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m9.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //获得m8的归一化矩阵
             //Matrix m10 = m8.GetNormalized();
-            //m10.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            //m10.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //获取m11的转置矩阵
             Matrix m11 = new Matrix(4, 2, "m11");
             m11.InsertDataFromList(new List<double>() { 1, 2, 4, 7, 6, 7, 8, 7, 9, 8, 7, 15, 4, 5, 8, 8, 9, 45, 5 });
-            m11.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m11.DisplayMatrix(DataHelper.ConsoloOutput);
             Matrix m12 = m11.GetTranspose();
-            m12.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m12.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //获取m13的转置矩阵
             Matrix m13 = new Matrix(5, 5, "m13");
@@ -112,12 +112,12 @@ namespace ExpertChooseCore
                     1,
                     1
                 });
-            //m13.InsertMatrix(MatrixHelper.ConsoloInput);
-            m13.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            //m13.InsertMatrix(DataHelper.ConsoloInput);
+            m13.DisplayMatrix(DataHelper.ConsoloOutput);
             double eiginvalue;
             Matrix m14 = m13.Power(out eiginvalue);
             Console.WriteLine(string.Format("矩阵m14对应的最大特征值为{0}", eiginvalue));
-            m14.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            m14.DisplayMatrix(DataHelper.ConsoloOutput);
         }
 
         public static void JudgeMatrixTest()
@@ -152,10 +152,10 @@ namespace ExpertChooseCore
                         1,
                         1
                     });
-            jm1.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            jm1.DisplayMatrix(DataHelper.ConsoloOutput);
             double eiginValue;
             var vect1 = jm1.SingleFactorWightVect(out eiginValue);
-            vect1.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            vect1.DisplayMatrix(DataHelper.ConsoloOutput);
             Console.WriteLine("测试矩阵的\n特征值={3},\nCI={0},\nRI={1},\nCR={2}", jm1.CI, jm1.RI, jm1.CR, eiginValue);
         }
 
@@ -322,7 +322,7 @@ namespace ExpertChooseCore
             ahpModel.PushLevel(level3);
 
             //测试数据
-            ahpModel.GetLevelInfo(3).GetTotalWeightVect().DisplayMatrix(MatrixHelper.ConsoloOutput);
+            ahpModel.GetLevelInfo(3).GetTotalWeightVect().DisplayMatrix(DataHelper.ConsoloOutput);
         }
 
         #endregion
@@ -344,27 +344,33 @@ namespace ExpertChooseCore
                 InsertLevel(ahpModel);
 
                 //然后询问是否继续插入其他层次
-                var ifAddLevel = MatrixHelper.ReadBool("是否插入一个层次");
+                var ifAddLevel = DataHelper.ReadBool("是否插入一个层次");
                 if (!ifAddLevel)
                     break;
             }
 
             //打印层次结构模型中的相关信息
-            DisplayInfoOfAhpModel(ahpModel);
+            ahpModel.DisplayModelInfo();
 
             //选择用以生成决策矩阵的层次
             //读入的数要-1
-            int selectLevel = MatrixHelper.ReadValus<int>(string.Format("请从第2层到第{0}层中选择一层来创建决策矩阵", ahpModel.Levels.Count + 1))[0] - 1;
+            int selectLevel = DataHelper.ReadValus<int>(string.Format("请从第1层到第{0}层中选择一层来创建决策矩阵", ahpModel.Levels.Count))[0] - 1;
             //选择待评价的元素
-            int elementCount = MatrixHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
+            int elementCount = DataHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
             //建立空的决策矩阵
-            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount);
+            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount,"决策矩阵");
             //读入决策矩阵数据
-            decisionMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
+            decisionMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
+            //打印决策矩阵
+            decisionMatrix.DisplayMatrix(DataHelper.ConsoloOutput);
+            //获得并打印标准化矩阵
+            var nor = decisionMatrix.GetStandardized(Standardizer.ApprovedNormalize);
+            nor.Name = "决策矩阵的标准化矩阵";
+            nor.DisplayMatrix(DataHelper.ConsoloOutput);
             //获得决策向量
-            var decisionVect = decisionMatrix.GetDecisionVect(new ApprovedNormalizer());
+            var decisionVect = decisionMatrix.GetDecisionVect(Standardizer.ApprovedNormalize);
             //打印决策结果
-            decisionVect.DisplayMatrix(MatrixHelper.ConsoloOutput);
+            decisionVect.DisplayMatrix(DataHelper.ConsoloOutput);
         }
 
         //为传入的AhpModel加入一个层次
@@ -381,21 +387,57 @@ namespace ExpertChooseCore
                     dataModel.Factors.Add(factor);
                 }
 
-                var ifAddFactor = MatrixHelper.ReadBool("是否继续添加因素");
+                var ifAddFactor = DataHelper.ReadBool("是否继续添加因素");
                 if (!ifAddFactor)
                     break;
             }
+            //读入并设置指标的方向
+            while (true)
+            {
+                //首先读入一定数量的数据
+                var tags = DataHelper.ReadValus<string>("请输入指标各个指标的方向，+ 代表正向，- 代表逆向", dataModel.Factors.Count);
+                //表示是否获得真确的
+                bool readSuccess = true;
+
+                //依次设置Factor的正向还是逆向
+                for (int i = 0; i < tags.Count; i++)
+                {
+                    //如果是正向，就继续，因为默认是正向
+                    if (tags[i] == "+")
+                        continue;
+                    //如果是逆向，就设置
+                    if (tags[i] == "-")
+                    {
+                        dataModel.Factors[i].Direction = FactorDirection.Negative;
+                    }
+                    //如果到这一步，说明有 +/- 以外的字符，则表示读入的数据错误，报错，并跳出循环，再重新读
+                    else
+                    {
+                        readSuccess = false;
+                        break;
+                    }
+                }
+                if (readSuccess)
+                    break;
+
+                Console.WriteLine("输入的数据中包含无法识别的字符，请重新输入");
+            }
+
 
             //输入关系矩阵
             //设置当前model中的最后一个层次为新插入层次的Parent
             dataModel.Parent = model.GetLastLevel();
             Matrix relationMatrix = new Matrix(dataModel.Factors.Count, dataModel.Parent.Factors.Count);
-            relationMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
+            Console.WriteLine("请输入关系矩阵");
+            relationMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
+            //relationMatrix.InsertMatrix(DataHelper.ConsoloInput);
+            dataModel.RelationMatrix = relationMatrix;
 
             //设置判断矩阵
             Dictionary<Factor, JudgeMatrix> judgeMatrices = new Dictionary<Factor, JudgeMatrix>();
             //此处可以选择使用那种方式输入判断矩阵
             var judges = GetJudgeMatrices(relationMatrix, dataModel.Parent.Factors, dataModel.Factors);
+            //var judges = GetJudgeMatrices(relationMatrix);
             for (int i = 0; i < relationMatrix.Y; i++)
             {
                 judgeMatrices.Add(model.GetLastLevel().Factors[i], judges[i]);
@@ -423,7 +465,7 @@ namespace ExpertChooseCore
                 }
                 JudgeMatrix judgeMatrix = new JudgeMatrix(affectcount);
                 //可以选择判断矩阵的构造方式
-                judgeMatrix.InsertMatrix(MatrixHelper.ConsoleArrayInput);
+                judgeMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
                 judgeMatrices.Add(judgeMatrix);
             }
             return judgeMatrices;
@@ -468,13 +510,13 @@ namespace ExpertChooseCore
                 {
                     rateCount++;
                     //获取排序
-                    var readRate = MatrixHelper.ReadValus<int>(string.Format("请输入第{0}个专家的排序，从0开始！", rateCount), affectedCount);
+                    var readRate = DataHelper.ReadValus<int>(string.Format("请输入第{0}个专家的排序，从0开始！", rateCount), affectedCount);
                     rateTable.Add(readRate);
                     //获取p
-                    int p = MatrixHelper.ReadValus<int>(string.Format("请输入第{0}个专家的的最重要与最不重要的因素比率", rateCount), 1)[0];
+                    int p = DataHelper.ReadValus<int>(string.Format("请输入第{0}个专家的的最重要与最不重要的因素比率", rateCount), 1)[0];
                     pList.Add(p);
                     //是否继续添加，如果不添加了，就跳出
-                    if (!MatrixHelper.ReadBool("是否要继续添加重要性排序？"))
+                    if (!DataHelper.ReadBool("是否要继续添加重要性排序？"))
                         break;
                 }
                 //计算根据rateTable和pList构造判断矩阵
@@ -522,8 +564,7 @@ namespace ExpertChooseCore
         //获取Factor
         public static IList<Factor> GetFactors()
         {
-            //todo:输入时可以设置Factor的正向还是逆向
-            var names = MatrixHelper.ReadStrings("请输入因素的名称，以空格分隔");
+            var names = DataHelper.ReadValus<string>("请输入因素的名称，以空格分隔");
             IList<Factor> factors = new List<Factor>();
             foreach (var name in names)
             {
@@ -534,22 +575,28 @@ namespace ExpertChooseCore
 
 
         //打印出AhpModel的基本信息
-        private static void DisplayInfoOfAhpModel(AhpModel model)
-        {
-            Console.WriteLine("************以下是层次结构模型的主要信息*************");
-            for (int i = 0; i < model.Levels.Count; i++)
-            {
-                if (i > 0)
-                {
-                    var level = model.GetLevelInfo(i);
-                    level.GetTotalWeightVect().DisplayMatrix(MatrixHelper.ConsoloOutput);
-                }
-                else
-                {
-                    Console.WriteLine("顶层木有数据%>_<%");
-                }
-                Console.WriteLine("-------------------第{0}层---------------------", i + 1);
-            }
-        }
+        //private static void DisplayInfoOfAhpModel(AhpModel model)
+        //{
+        //    Console.WriteLine("************以下是层次结构模型的主要信息*************");
+        //    for (int i = 0; i < model.Levels.Count; i++)
+        //    {
+        //        if (i > 0)
+        //        {
+        //            var level = model.GetLevelInfo(i);
+        //            foreach (var judgeMatrix in level.JudgeMatrices)
+        //            {
+        //                Console.WriteLine("{0}的判断矩阵", judgeMatrix.Key.Name);
+        //                judgeMatrix.Value.DisplayMatrix(DataHelper.ConsoloOutput);
+        //            }
+        //            level.GetTotalWeightVect().DisplayMatrix(DataHelper.ConsoloOutput);
+        //            Console.WriteLine("CI={0},RI={1},CR={2}", level.LevelCI, level.LevelRI, level.LevelCR);
+        //        }
+        //        else
+        //        {
+        //            Console.WriteLine("顶层木有数据%>_<%");
+        //        }
+        //        Console.WriteLine("-------------------第{0}层---------------------", i + 1);
+        //    }
+        //}
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AHP.Core
 {
-    public class MatrixHelper
+    public class DataHelper
     {
         /// <summary>
         /// 从控制台输入矩阵
@@ -143,8 +143,9 @@ namespace AHP.Core
                 {
                     Console.WriteLine(message);
                     readLine = Console.ReadLine();
-                    if (readLine != null)
+                    if (!string.IsNullOrEmpty(readLine))
                         break;
+                    Console.WriteLine("请输入非空的字符！");
                 }
                 var stringArray = readLine.Split(' ');
 

@@ -5,15 +5,14 @@ using System.Text;
 
 namespace AHP.Core
 {
-    /// <summary>
-    /// 改进的归一化方法
-    /// </summary>
-    public class ApprovedNormalizer : IStandardizer
+    public delegate DecisionMatrix Standardize(DecisionMatrix toBeStandardize);
+
+    public class Standardizer
     {
-        public DecisionMatrix Standardize(DecisionMatrix toBeStandardize)
+        public static DecisionMatrix ApprovedNormalize(DecisionMatrix toBeStandardize)
         {
             //归一化之后的矩阵
-            DecisionMatrix standardized = new DecisionMatrix(toBeStandardize.Level, toBeStandardize.Y);
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardize.Level, toBeStandardize.X);
             //将原始数据头填充到新数据中，所有操作都不改变原来的判断矩阵
             standardized.InsertFromMatrix(toBeStandardize);
 
@@ -63,6 +62,28 @@ namespace AHP.Core
                 }
             }
 
+            return standardized;
+
+        }
+
+        public static DecisionMatrix Normalize(DecisionMatrix toBeStandardize)
+        {
+            //归一化之后的矩阵
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardize.Level, toBeStandardize.X);
+            //将原始数据头填充到新数据中，所有操作都不改变原来的判断矩阵
+            standardized.InsertFromMatrix(toBeStandardize);
+
+            var factors = toBeStandardize.Level.Factors;
+            for (int j = 0; j < factors.Count; j++)
+            {
+                //执行标准的归一化操作
+                //获取一列的和
+                double columnSum = standardized.GetColumnSum(j);
+                for (int i = 0; i < standardized.X; i++)
+                {
+                    standardized[i, j] = (standardized[i, j] / columnSum);
+                }
+            }
             return standardized;
         }
     }

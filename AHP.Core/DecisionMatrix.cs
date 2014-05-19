@@ -44,15 +44,15 @@ namespace AHP.Core
         #endregion
 
         //决策矩阵的标准化
-        public DecisionMatrix Standardize(IStandardizer standardizer)
+        public DecisionMatrix GetStandardized(Standardize standardizer)
         {
-            return standardizer.Standardize(this);
+            return standardizer(this);
         }
 
         //获取决策向量
-        public Matrix GetDecisionVect(IStandardizer standardizer)
+        public Matrix GetDecisionVect(Standardize standardizer)
         {
-            return Standardize(standardizer).LeftMultipy(level.GetTotalWeightVect());
+            return standardizer(this).LeftMultipy(level.GetTotalWeightVect());
         }
 
     }

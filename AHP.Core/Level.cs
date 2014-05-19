@@ -180,6 +180,9 @@ namespace AHP.Core
         {
             get
             {
+                if (LevelCount == 2)
+                    return _judgeMatrices[Parent.Factors[0]].CI;
+
                 int parentFactorCount = Parent.FactorCount;
                 IList<double> ciList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
@@ -189,7 +192,7 @@ namespace AHP.Core
                 }
                 Matrix ciVect = new Matrix(1, parentFactorCount);
                 ciVect.InsertDataFromList(ciList);
-                Matrix totalci = ciVect.LeftMultipy(GetTotalWeightVect());
+                Matrix totalci = ciVect.LeftMultipy(Parent.GetTotalWeightVect());
                 return totalci[0, 0];
             }
         }
@@ -201,6 +204,9 @@ namespace AHP.Core
         {
             get
             {
+                if (LevelCount == 2)
+                    return _judgeMatrices[Parent.Factors[0]].RI;
+
                 int parentFactorCount = Parent.FactorCount;
                 IList<double> riList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
@@ -210,7 +216,7 @@ namespace AHP.Core
                 }
                 Matrix riVect = new Matrix(1, parentFactorCount);
                 riVect.InsertDataFromList(riList);
-                Matrix totalRi = riVect.LeftMultipy(GetTotalWeightVect());
+                Matrix totalRi = riVect.LeftMultipy(Parent.GetTotalWeightVect());
                 return totalRi[0, 0];
             }
         }
@@ -222,6 +228,9 @@ namespace AHP.Core
         {
             get
             {
+                if (LevelCount == 2)
+                    return _judgeMatrices[Parent.Factors[0]].CR;
+
                 int parentFactorCount = Parent.FactorCount;
                 IList<double> crList = new List<double>();
                 for (int i = 0; i < parentFactorCount; i++)
@@ -231,7 +240,7 @@ namespace AHP.Core
                 }
                 Matrix crVect = new Matrix(1, parentFactorCount);
                 crVect.InsertDataFromList(crList);
-                Matrix totalCr = crVect.LeftMultipy(GetTotalWeightVect());
+                Matrix totalCr = crVect.LeftMultipy(Parent.GetTotalWeightVect());
                 return totalCr[0, 0];
             }
         }

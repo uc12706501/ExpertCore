@@ -40,7 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApprovedNormalizer.cs" />
     <Compile Include="DecisionMatrix.cs" />
     <Compile Include="LevelDataModel.cs" />
     <Compile Include="AhpModel.cs" />
@@ -51,10 +50,11 @@
     <Compile Include="Level.cs" />
     <Compile Include="Matrix.cs" />
     <Compile Include="CustomeExcetpion.cs" />
-    <Compile Include="MatrixInputOutput.cs" />
+    <Compile Include="DataHelper.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="IStandardizer.cs" />
+    <Compile Include="Standardize.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Design\Design.cd" />
