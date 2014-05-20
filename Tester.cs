@@ -358,17 +358,28 @@ namespace ExpertChooseCore
             //选择待评价的元素
             int elementCount = DataHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
             //建立空的决策矩阵
-            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount,"决策矩阵");
+            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount, "决策矩阵");
             //读入决策矩阵数据
             decisionMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
             //打印决策矩阵
             decisionMatrix.DisplayMatrix(DataHelper.ConsoloOutput);
+            //使用改进的标准化方法处理决策矩阵
+            Console.WriteLine("使用改进的归一化法对决策矩阵进行标准化法");
+            ManipulateDecisionMatrix(decisionMatrix, Standardizer.ApprovedNormalize);
+            //使用常规归一化法处理决策矩阵
+            Console.WriteLine("使用常规的归一化法对决策矩阵进行标准化");
+            ManipulateDecisionMatrix(decisionMatrix, Standardizer.Normalize);
+        }
+
+        //处理决策矩阵，打印出决策矩阵的标准化值，以及最终的决策向量
+        public static void ManipulateDecisionMatrix(DecisionMatrix decisionMatrix, Standardize standardize)
+        {
             //获得并打印标准化矩阵
-            var nor = decisionMatrix.GetStandardized(Standardizer.ApprovedNormalize);
-            nor.Name = "决策矩阵的标准化矩阵";
-            nor.DisplayMatrix(DataHelper.ConsoloOutput);
+            var standardized = decisionMatrix.GetStandardized(standardize);
+            standardized.Name = "决策矩阵的标准化矩阵";
+            standardized.DisplayMatrix(DataHelper.ConsoloOutput);
             //获得决策向量
-            var decisionVect = decisionMatrix.GetDecisionVect(Standardizer.ApprovedNormalize);
+            var decisionVect = decisionMatrix.GetDecisionVect(standardize);
             //打印决策结果
             decisionVect.DisplayMatrix(DataHelper.ConsoloOutput);
         }
@@ -449,6 +460,18 @@ namespace ExpertChooseCore
             model.PushLevel(newLevel);
 
             return model.GetLastLevel();
+        }
+
+        //获取Factor
+        public static IList<Factor> GetFactors()
+        {
+            var names = DataHelper.ReadValus<string>("请输入因素的名称，以空格分隔");
+            IList<Factor> factors = new List<Factor>();
+            foreach (var name in names)
+            {
+                factors.Add(new Factor(name));
+            }
+            return factors;
         }
 
         //根据关系矩阵构造判断矩阵
@@ -560,19 +583,6 @@ namespace ExpertChooseCore
 
             return judgeMatrices;
         }
-
-        //获取Factor
-        public static IList<Factor> GetFactors()
-        {
-            var names = DataHelper.ReadValus<string>("请输入因素的名称，以空格分隔");
-            IList<Factor> factors = new List<Factor>();
-            foreach (var name in names)
-            {
-                factors.Add(new Factor(name));
-            }
-            return factors;
-        }
-
 
         //打印出AhpModel的基本信息
         //private static void DisplayInfoOfAhpModel(AhpModel model)
