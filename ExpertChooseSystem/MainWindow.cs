@@ -25,6 +25,12 @@ namespace ExpertChooseSystem
             InitModel();
             //初始化决策矩阵
             _decisionMatrix = new DecisionMatrix(_ahpModel.Levels[2], 0);
+
+            Pen pen1 = new Pen(Color.Green, 2);
+            Graphics g1 = this.CreateGraphics();
+            PointF p1 = new PointF(0, 0);
+            PointF p2 = new PointF(100, 100);
+            g1.DrawLine(pen1, p1, p2);
         }
 
         private void dcsSetBtn_Click(object sender, EventArgs e)
@@ -123,5 +129,27 @@ namespace ExpertChooseSystem
         {
             _decisionMatrix = decisionMatrix;
         }
+
+        //label的单击处理事件
+        private void InfoLabelClick(object sender, EventArgs e)
+        {
+            Label label = sender as Label;
+            MessageBox.Show("Test "+label.Name);
+        }
+
+        //点击创建判断矩阵
+        private void JudgeMatrixButtonClick(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            MessageBox.Show("judge "+button.Name);
+        }
+
+        //点击显示层次信息
+        private void LevelInfoButtonClick(object sender, EventArgs e)
+        {
+            Button button = sender as Button;
+            MessageBox.Show("LevelInfo "+button.Name);
+        }
+
     }
 }
