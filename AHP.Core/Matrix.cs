@@ -155,8 +155,6 @@ namespace AHP.Core
                 }
             }
         }
-        //todo:考虑一个是否更加通用的拷贝函数
-
         /// <summary>
         /// 导入数据源
         /// </summary>

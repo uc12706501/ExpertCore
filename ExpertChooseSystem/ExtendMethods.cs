@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using AHP.Core;
@@ -12,9 +14,9 @@ namespace ExpertChooseSystem
         public static IList<ExpertModel> ToExpertList(this DecisionMatrix decisionMatrix)
         {
             //如果判断矩阵为空，就构造一个空的列表返回
-            if (decisionMatrix == null||decisionMatrix.X==0)
-            { 
-                return new List<ExpertModel>(){new ExpertModel()};
+            if (decisionMatrix == null || decisionMatrix.X == 0)
+            {
+                return new List<ExpertModel>() { new ExpertModel() };
             }
 
             //检测维数
@@ -71,6 +73,42 @@ namespace ExpertChooseSystem
             }
 
             return newDecisionMatrix;
+        }
+
+        //将矩阵转化成DataTable
+        public static DataTable ToDataTable(this Matrix matrix)
+        {
+            DataTable table = new DataTable();
+            for (int i = 0; i < matrix.Y; i++)
+            {
+                table.Columns.Add(i.ToString(), typeof(double));
+            }
+            for (int i = 0; i < matrix.X; i++)
+            {
+                object[] values = new object[matrix.Y];
+                for (int j = 0; j < matrix.Y; j++)
+                {
+                    values[j] = matrix[i, j];
+                }
+                table.Rows.Add(values);
+            }
+            return table;
+        }
+
+        //将判断矩阵设置到对应的层次
+        public static void SetJudgeMatrices(this IList<JudgeMatrixPair> judgeMatrixPairs, Level level, bool isApproved)
+        {
+            Factor currentFactor;
+            foreach (var judgeMatrixPair in judgeMatrixPairs)
+            {
+                currentFactor = judgeMatrixPair.AffectedFactor;
+                if (level.JudgeMatrices.ContainsKey(currentFactor))
+                {
+                    level.JudgeMatrices[currentFactor] = isApproved
+                                                             ? judgeMatrixPair.ApprovedGen
+                                                             : judgeMatrixPair.NormalGen;
+                }
+            }
         }
     }
 }

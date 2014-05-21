@@ -76,7 +76,7 @@ namespace ExpertChooseSystem
         private void saveBtn_Click(object sender, EventArgs e)
         {
             _decisionMatrix = _decisionMatrix.SetDecisionMatrix(_experts);
-            SaveEvent(_decisionMatrix);
+            DecisionMatrixSave(_decisionMatrix);
             Close();
         }
 
@@ -93,9 +93,7 @@ namespace ExpertChooseSystem
             dataGrid.DataSource = _experts;
         }
 
-        public delegate void SaveEventHandler(DecisionMatrix decisionMatrix);
-
-        public event SaveEventHandler SaveEvent;
+        public event DecisionMatrixSaveHandler DecisionMatrixSave;
     }
 
     public class A

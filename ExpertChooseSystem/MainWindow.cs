@@ -16,29 +16,36 @@ namespace ExpertChooseSystem
         private AhpModel _ahpModel;
         //决策矩阵
         private DecisionMatrix _decisionMatrix;
-
+        //判断矩阵集合
+        private IList<JudgeMatrixPair> _judgeMatrixPairs;
+        //指示是否使用改造的方法
+        private bool isApproved;
         //构造函数
         public MainWindow()
         {
             InitializeComponent();
+            //默认不使用改进的方式
+            isApproved = false;
+            judgeMatrixSwitchBtn.Text = "常规构造";
+
             //初始化层次结构模型
             InitModel();
             //初始化决策矩阵
             _decisionMatrix = new DecisionMatrix(_ahpModel.Levels[2], 0);
-
-            Pen pen1 = new Pen(Color.Green, 2);
-            Graphics g1 = this.CreateGraphics();
-            PointF p1 = new PointF(0, 0);
-            PointF p2 = new PointF(100, 100);
-            g1.DrawLine(pen1, p1, p2);
+            //初始化判断矩阵
+            InitJudgeMatrixPairs();
+            //更新模型中的判断矩阵
+            UpdateJudgeMatrix();
         }
 
         private void dcsSetBtn_Click(object sender, EventArgs e)
         {
             DecisionMatrixForm decisionMatrixForm = new DecisionMatrixForm(_decisionMatrix);
-            decisionMatrixForm.SaveEvent += OnDcsMatrixUpdate;
+            decisionMatrixForm.DecisionMatrixSave += OnDcsMatrixUpdate;
             decisionMatrixForm.ShowDialog();
         }
+
+        #region 初始化操作
 
         /// <summary>
         /// 初始化决策模型
@@ -91,14 +98,69 @@ namespace ExpertChooseSystem
                     new Factor("B14"),
                 };
             //第三层关系矩阵
-            Matrix level3Relation = new Matrix(3, 5);
+            Matrix level3Relation = new Matrix(14, 4);
             level3Relation.InsertDataFromList(new List<double>
                 {
-                    1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,0,1,0,0,0,1,0,0,0,1,0,0,0,1
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1,
+                    0,
+                    0,
+                    0,
+                    1
                 });
             //第三层判断矩阵
             JudgeMatrix level3JudugeMatrix1 = new JudgeMatrix(3);
-            JudgeMatrix level3JudugeMatrix2 = new JudgeMatrix(5);
+            JudgeMatrix level3JudugeMatrix2 = new JudgeMatrix(4);
             JudgeMatrix level3JudugeMatrix3 = new JudgeMatrix(3);
             JudgeMatrix level3JudugeMatrix4 = new JudgeMatrix(4);
             //加入到判断矩阵序列
@@ -112,6 +174,45 @@ namespace ExpertChooseSystem
             _ahpModel.PushLevel(level3);
         }
 
+        private void InitJudgeMatrixPairs()
+        {
+            _judgeMatrixPairs = new List<JudgeMatrixPair>()
+                {
+                    new JudgeMatrixPair()
+                        {
+                            AffectedFactor = _ahpModel.Levels[0].Factors[0],
+                            NormalGen = new JudgeMatrix(4),
+                            ApprovedGen = new JudgeMatrix(4)
+                        },
+                    new JudgeMatrixPair()
+                        {
+                            AffectedFactor = _ahpModel.Levels[1].Factors[0],
+                            NormalGen = new JudgeMatrix(3),
+                            ApprovedGen = new JudgeMatrix(3)
+                        },
+                    new JudgeMatrixPair()
+                        {
+                            AffectedFactor = _ahpModel.Levels[1].Factors[1],
+                            NormalGen = new JudgeMatrix(4),
+                            ApprovedGen = new JudgeMatrix(4)
+                        },
+                    new JudgeMatrixPair()
+                        {
+                            AffectedFactor = _ahpModel.Levels[1].Factors[2],
+                            NormalGen = new JudgeMatrix(3),
+                            ApprovedGen = new JudgeMatrix(3)
+                        },
+                    new JudgeMatrixPair()
+                        {
+                            AffectedFactor = _ahpModel.Levels[1].Factors[3],
+                            NormalGen = new JudgeMatrix(4),
+                            ApprovedGen = new JudgeMatrix(4)
+                        },
+                };
+        }
+
+        #endregion
+
         //显示测试信息
         private void testBtn_Click(object sender, EventArgs e)
         {
@@ -124,32 +225,173 @@ namespace ExpertChooseSystem
             MessageBox.Show(message.ToString());
         }
 
-        //响应决策矩阵的修改
-        private void OnDcsMatrixUpdate(DecisionMatrix decisionMatrix)
-        {
-            _decisionMatrix = decisionMatrix;
-        }
-
         //label的单击处理事件
         private void InfoLabelClick(object sender, EventArgs e)
         {
             Label label = sender as Label;
-            MessageBox.Show("Test "+label.Name);
+            var factor = GetFactorByLabelName(label.Name);
+            var judgeMatrix = GetJudgeMatrix(factor);
+            //使用改进的方法
+            if (isApproved)
+            {
+
+            }
+            //否则使用常规方法
+            else
+            {
+                JudgeMatrixDisplayForm judgeMatrixDisplayForm = new JudgeMatrixDisplayForm(judgeMatrix);
+                judgeMatrixDisplayForm.ShowDialog();
+            }
+
         }
 
         //点击创建判断矩阵
         private void JudgeMatrixButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            MessageBox.Show("judge "+button.Name);
+            //如果确认了，则使用改进的方法
+            if (isApproved)
+            {
+
+            }
+            //否则使用常规方法
+            else
+            {
+                var factor = GetFacotrByButtonName(button.Name);
+                NormalGenFrom normalGenFrom = new NormalGenFrom(_judgeMatrixPairs.Single(x => x.AffectedFactor == factor));
+                normalGenFrom.JudgeMatrixSave += OnNormalGenFinish;
+                normalGenFrom.ShowDialog();
+            }
         }
 
         //点击显示层次信息
         private void LevelInfoButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;
-            MessageBox.Show("LevelInfo "+button.Name);
+            Level level = GetLevelByButtonName(button.Name);
+            LevelDisplayForm levelDisplayForm = new LevelDisplayForm(level);
+            levelDisplayForm.ShowDialog();
         }
+
+        //使用归一化法进行标准化处理，打印相关信息
+        private void GetDcsBtnClick(object sender, EventArgs e)
+        {
+            var button = sender as Button;
+            DecisionMatrixDisplayForm displayForm;
+            if (button.Name == "getDcsBtn1")
+                displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.Normalize);
+            else
+                displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.ApprovedNormalize);
+
+            displayForm.Show();
+        }
+
+        //切换当前的模式
+        private void judgeMatrixSwitchBtn_Click(object sender, EventArgs e)
+        {
+            isApproved = !isApproved;
+            judgeMatrixSwitchBtn.Text = isApproved ? "改进构造" : "常规构造";
+            //每次切换之后都需要刷新模型中的判断矩阵
+            UpdateJudgeMatrix();
+        }
+
+        //根据因素和当前的模式，返回判断矩阵
+        private JudgeMatrix GetJudgeMatrix(Factor factor)
+        {
+            if (isApproved)
+                return _judgeMatrixPairs.Single(x => x.AffectedFactor == factor).ApprovedGen;
+            return _judgeMatrixPairs.Single(x => x.AffectedFactor == factor).NormalGen;
+        }
+
+        #region 根据控件的名称，返回操作的对象
+
+        private Factor GetFacotrByButtonName(string buttonName)
+        {
+            switch (buttonName)
+            {
+                case "judgeBtnZ":
+                    return _ahpModel.Levels[0].Factors[0];
+                case "judgeBtnA1":
+                    return _ahpModel.Levels[1].Factors[0];
+                case "judgeBtnA2":
+                    return _ahpModel.Levels[1].Factors[1];
+                case "judgeBtnA3":
+                    return _ahpModel.Levels[1].Factors[2];
+                case "judgeBtnA4":
+                    return _ahpModel.Levels[1].Factors[3];
+                default:
+                    return null;
+            }
+        }
+
+        private Factor GetFactorByLabelName(string labelName)
+        {
+            switch (labelName)
+            {
+                case "labelZ":
+                    return _ahpModel.Levels[0].Factors[0];
+                case "labelA1":
+                    return _ahpModel.Levels[1].Factors[0];
+                case "labelA2":
+                    return _ahpModel.Levels[1].Factors[1];
+                case "labelA3":
+                    return _ahpModel.Levels[1].Factors[2];
+                case "labelA4":
+                    return _ahpModel.Levels[1].Factors[3];
+                default:
+                    return null;
+            }
+        }
+
+        private Level GetLevelByButtonName(string buttonName)
+        {
+            switch (buttonName)
+            {
+                case "levelInfoBtn1":
+                    return _ahpModel.Levels[1];
+                case "levelInfoBtn2":
+                    return _ahpModel.Levels[2];
+                default:
+                    return null;
+            }
+
+        }
+
+        #endregion
+
+        //更新model中所有的判断矩阵
+        private void UpdateJudgeMatrix()
+        {
+            //更新第一层的判断矩阵
+            _judgeMatrixPairs.SetJudgeMatrices(_ahpModel.Levels[1], isApproved);
+            //更新第二层的判断矩阵
+            _judgeMatrixPairs.SetJudgeMatrices(_ahpModel.Levels[2], isApproved);
+        }
+
+        #region 事件处理函数
+
+        //响应决策矩阵的修改
+        private void OnDcsMatrixUpdate(DecisionMatrix decisionMatrix)
+        {
+            _decisionMatrix = decisionMatrix;
+        }
+
+        //响应常规判断矩阵构造完成时间
+        private void OnNormalGenFinish(JudgeMatrixPair judgeMatrixPair)
+        {
+            var thePair = _judgeMatrixPairs.Single(x => x.AffectedFactor == judgeMatrixPair.AffectedFactor);
+            thePair.NormalGen = judgeMatrixPair.NormalGen;
+            UpdateJudgeMatrix();
+        }
+        //响应改进判断矩阵构造完成时间
+        private void OnApprovedGenFinish(JudgeMatrixPair judgeMatrixPair)
+        {
+            var thePair = _judgeMatrixPairs.Single(x => x.AffectedFactor == judgeMatrixPair.AffectedFactor);
+            thePair.ApprovedGen = judgeMatrixPair.ApprovedGen;
+            UpdateJudgeMatrix();
+        }
+
+        #endregion
 
     }
 }

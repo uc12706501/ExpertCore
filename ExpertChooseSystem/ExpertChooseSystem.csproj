@@ -46,27 +46,71 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApprovedGenForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ApprovedGenForm.Designer.cs">
+      <DependentUpon>ApprovedGenForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DecisionMatrixDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DecisionMatrixDisplayForm.Designer.cs">
+      <DependentUpon>DecisionMatrixDisplayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="DecisionMatrixForm.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="DecisionMatrixForm.Designer.cs">
       <DependentUpon>DecisionMatrixForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="EventHandler.cs" />
     <Compile Include="ExpertModel.cs" />
     <Compile Include="ExtendMethods.cs" />
+    <Compile Include="JudgeMatrixDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="JudgeMatrixDisplayForm.Designer.cs">
+      <DependentUpon>JudgeMatrixDisplayForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="JudgeMatrixPair.cs" />
+    <Compile Include="LevelDisplayForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LevelDisplayForm.Designer.cs">
+      <DependentUpon>LevelDisplayForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="NormalGenFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="NormalGenFrom.Designer.cs">
+      <DependentUpon>NormalGenFrom.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="DecisionMatrixDisplayForm.resx">
+      <DependentUpon>DecisionMatrixDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DecisionMatrixForm.resx">
       <DependentUpon>DecisionMatrixForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="JudgeMatrixDisplayForm.resx">
+      <DependentUpon>JudgeMatrixDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LevelDisplayForm.resx">
+      <DependentUpon>LevelDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="NormalGenFrom.resx">
+      <DependentUpon>NormalGenFrom.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

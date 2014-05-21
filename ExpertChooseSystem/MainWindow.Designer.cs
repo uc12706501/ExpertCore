@@ -31,6 +31,8 @@
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.dcsSetBtn = new System.Windows.Forms.Button();
             this.testBtn = new System.Windows.Forms.Button();
+            this.getDcsBtn1 = new System.Windows.Forms.Button();
+            this.getDcsBtn2 = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
             this.contentTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -67,6 +69,7 @@
             this.labelA2 = new System.Windows.Forms.Label();
             this.labelA1 = new System.Windows.Forms.Label();
             this.labelZ = new System.Windows.Forms.Label();
+            this.judgeMatrixSwitchBtn = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.contentTable.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -81,6 +84,9 @@
             this.flowLayoutPanel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.flowLayoutPanel1.Controls.Add(this.dcsSetBtn);
             this.flowLayoutPanel1.Controls.Add(this.testBtn);
+            this.flowLayoutPanel1.Controls.Add(this.getDcsBtn1);
+            this.flowLayoutPanel1.Controls.Add(this.getDcsBtn2);
+            this.flowLayoutPanel1.Controls.Add(this.judgeMatrixSwitchBtn);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 358);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(577, 33);
@@ -105,6 +111,26 @@
             this.testBtn.Text = "显示测试信息";
             this.testBtn.UseVisualStyleBackColor = true;
             this.testBtn.Click += new System.EventHandler(this.testBtn_Click);
+            // 
+            // getDcsBtn1
+            // 
+            this.getDcsBtn1.Location = new System.Drawing.Point(206, 3);
+            this.getDcsBtn1.Name = "getDcsBtn1";
+            this.getDcsBtn1.Size = new System.Drawing.Size(100, 30);
+            this.getDcsBtn1.TabIndex = 2;
+            this.getDcsBtn1.Text = "获得决策值#1";
+            this.getDcsBtn1.UseVisualStyleBackColor = true;
+            this.getDcsBtn1.Click += new System.EventHandler(this.GetDcsBtnClick);
+            // 
+            // getDcsBtn2
+            // 
+            this.getDcsBtn2.Location = new System.Drawing.Point(312, 3);
+            this.getDcsBtn2.Name = "getDcsBtn2";
+            this.getDcsBtn2.Size = new System.Drawing.Size(87, 30);
+            this.getDcsBtn2.TabIndex = 3;
+            this.getDcsBtn2.Text = "获得决策值#2";
+            this.getDcsBtn2.UseVisualStyleBackColor = true;
+            this.getDcsBtn2.Click += new System.EventHandler(this.GetDcsBtnClick);
             // 
             // labelTitle
             // 
@@ -325,7 +351,7 @@
             // 
             this.label11.AutoSize = true;
             this.label11.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label11.Location = new System.Drawing.Point(318, 206);
+            this.label11.Location = new System.Drawing.Point(321, 206);
             this.label11.MaximumSize = new System.Drawing.Size(25, 2);
             this.label11.MinimumSize = new System.Drawing.Size(2, 90);
             this.label11.Name = "label11";
@@ -337,7 +363,7 @@
             // 
             this.label10.AutoSize = true;
             this.label10.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label10.Location = new System.Drawing.Point(414, 206);
+            this.label10.Location = new System.Drawing.Point(410, 206);
             this.label10.MaximumSize = new System.Drawing.Size(25, 2);
             this.label10.MinimumSize = new System.Drawing.Size(2, 90);
             this.label10.Name = "label10";
@@ -349,7 +375,7 @@
             // 
             this.label22.AutoSize = true;
             this.label22.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label22.Location = new System.Drawing.Point(53, 206);
+            this.label22.Location = new System.Drawing.Point(46, 206);
             this.label22.MaximumSize = new System.Drawing.Size(20, 2);
             this.label22.MinimumSize = new System.Drawing.Size(2, 90);
             this.label22.Name = "label22";
@@ -361,7 +387,7 @@
             // 
             this.label21.AutoSize = true;
             this.label21.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label21.Location = new System.Drawing.Point(76, 206);
+            this.label21.Location = new System.Drawing.Point(71, 206);
             this.label21.MaximumSize = new System.Drawing.Size(20, 2);
             this.label21.MinimumSize = new System.Drawing.Size(2, 90);
             this.label21.Name = "label21";
@@ -469,7 +495,7 @@
             // 
             this.label9.AutoSize = true;
             this.label9.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.label9.Location = new System.Drawing.Point(30, 206);
+            this.label9.Location = new System.Drawing.Point(21, 206);
             this.label9.MaximumSize = new System.Drawing.Size(20, 2);
             this.label9.MinimumSize = new System.Drawing.Size(2, 90);
             this.label9.Name = "label9";
@@ -534,6 +560,16 @@
             this.labelZ.TabIndex = 0;
             this.labelZ.Text = "总目标Z";
             this.labelZ.Click += new System.EventHandler(this.InfoLabelClick);
+            // 
+            // judgeMatrixSwitchBtn
+            // 
+            this.judgeMatrixSwitchBtn.Location = new System.Drawing.Point(405, 3);
+            this.judgeMatrixSwitchBtn.Name = "judgeMatrixSwitchBtn";
+            this.judgeMatrixSwitchBtn.Size = new System.Drawing.Size(75, 28);
+            this.judgeMatrixSwitchBtn.TabIndex = 4;
+            this.judgeMatrixSwitchBtn.Text = "button1";
+            this.judgeMatrixSwitchBtn.UseVisualStyleBackColor = true;
+            this.judgeMatrixSwitchBtn.Click += new System.EventHandler(this.judgeMatrixSwitchBtn_Click);
             // 
             // MainWindow
             // 
@@ -600,6 +636,9 @@
         private System.Windows.Forms.Button judgeBtnA4;
         private System.Windows.Forms.Button judgeBtnA3;
         private System.Windows.Forms.Button judgeBtnA1;
+        private System.Windows.Forms.Button getDcsBtn1;
+        private System.Windows.Forms.Button getDcsBtn2;
+        private System.Windows.Forms.Button judgeMatrixSwitchBtn;
 
     }
 }
