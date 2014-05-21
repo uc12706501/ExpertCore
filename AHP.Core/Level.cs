@@ -9,7 +9,6 @@ namespace AHP.Core
 {
     public class Level : Identified
     {
-
         #region 字段和属性
 
         /// <summary>
@@ -390,10 +389,7 @@ namespace AHP.Core
                 throw new CustomeExcetpion("上一层不包含指定的因素");
             }
             //检查传入的判断矩阵是否符合要求
-            if (!judgeMatrix.CheckJudgeMatrix())
-            {
-                throw new CustomeExcetpion("传入的判断矩阵不满足判断矩阵的基本要求");
-            }
+            judgeMatrix.CheckJudgeMatrix();
             //设置
             JudgeMatrices.Add(parentFactor, judgeMatrix);
         }
@@ -423,6 +419,26 @@ namespace AHP.Core
         }
 
         #endregion
+
+        public void CheckJudgeMatrices()
+        {
+            foreach (var judgeMatrix in JudgeMatrices)
+            {
+                try
+                {
+                    if (Parent.JudgeMatrices != null && (Parent.JudgeMatrices != null || Parent.JudgeMatrices.Count != 0))
+                        Parent.CheckJudgeMatrices();
+
+                    judgeMatrix.Value.CheckJudgeMatrix();
+                }
+                catch (JudgeMatrixInvalidException e)
+                {
+                    string message = string.Format(
+                        "上层因素{0}对应的判断矩阵不满足运算条件，具体信息如下\n{1}\n行={2}\t列={3}", judgeMatrix.Key.Name, e.Message, e.X, e.Y);
+                    throw new LevelJudgeMatrixInvaliException(message, e, judgeMatrix.Key);
+                }
+            }
+        }
 
         //#region 实现IFactorChanged接口，提供属性更改通知
 

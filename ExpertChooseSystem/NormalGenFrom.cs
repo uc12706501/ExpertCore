@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
+using AHP.Core;
 
 namespace ExpertChooseSystem
 {
@@ -64,24 +65,42 @@ namespace ExpertChooseSystem
         //点击保存按钮
         private void saveBtn_Click(object sender, EventArgs e)
         {
-            //将数据读取到矩阵中
-            ReadDataToMatrix();
-            OnJudgeMatrixSave(_judgeMatrixPair);
-            Close();
+
+            //检测数据
+            try
+            {
+                //将数据读取到临时矩阵中
+                var tempMatrix = ReadDataToMatrix();
+                //检测矩阵是否有误
+                tempMatrix.CheckJudgeMatrix();
+                //如果如果顺利执行到这一步，说明正确
+                _judgeMatrixPair.NormalGen = tempMatrix;
+                OnJudgeMatrixSave(_judgeMatrixPair);
+                Close();
+            }
+            catch (JudgeMatrixInvalidException ex)
+            {
+                string message = string.Format("{0}\n错误在：{1}行{2}列", ex.Message, ex.X+1, ex.Y+1);
+                MessageBox.Show(message);
+                return;
+            }
+
         }
 
         //将表格中的数据读取到判断矩阵中
-        private void ReadDataToMatrix()
+        private JudgeMatrix ReadDataToMatrix()
         {
             int n = _judgeMatrixPair.NormalGen.X;
+            JudgeMatrix temp = new JudgeMatrix(n);
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    double temp = double.Parse(dataGrid.Rows[i].Cells[j].Value.ToString());
-                    _judgeMatrixPair.NormalGen[i, j] = temp;
+                    double d = double.Parse(dataGrid.Rows[i].Cells[j].Value.ToString());
+                    temp[i, j] = d;
                 }
             }
+            return temp;
         }
 
         //点击取消按钮

@@ -40,9 +40,17 @@ namespace ExpertChooseSystem
 
         private void dcsSetBtn_Click(object sender, EventArgs e)
         {
-            DecisionMatrixForm decisionMatrixForm = new DecisionMatrixForm(_decisionMatrix);
-            decisionMatrixForm.DecisionMatrixSave += OnDcsMatrixUpdate;
-            decisionMatrixForm.ShowDialog();
+            try
+            {
+                _ahpModel.Levels[2].CheckJudgeMatrices();
+                DecisionMatrixForm decisionMatrixForm = new DecisionMatrixForm(_decisionMatrix);
+                decisionMatrixForm.DecisionMatrixSave += OnDcsMatrixUpdate;
+                decisionMatrixForm.ShowDialog();
+            }
+            catch (LevelJudgeMatrixInvaliException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         #region 初始化操作
@@ -267,10 +275,18 @@ namespace ExpertChooseSystem
         //点击显示层次信息
         private void LevelInfoButtonClick(object sender, EventArgs e)
         {
-            Button button = sender as Button;
-            Level level = GetLevelByButtonName(button.Name);
-            LevelDisplayForm levelDisplayForm = new LevelDisplayForm(level);
-            levelDisplayForm.ShowDialog();
+            try
+            {
+                Button button = sender as Button;
+                Level level = GetLevelByButtonName(button.Name);
+                level.CheckJudgeMatrices();
+                LevelDisplayForm levelDisplayForm = new LevelDisplayForm(level);
+                levelDisplayForm.ShowDialog();
+            }
+            catch (LevelJudgeMatrixInvaliException ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
 
         //使用归一化法进行标准化处理，打印相关信息

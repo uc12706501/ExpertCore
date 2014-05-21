@@ -122,21 +122,20 @@ namespace AHP.Core
         /// </summary>
         /// <param name="matrix">需要检查的判断矩阵</param>
         /// <returns>true表示符合运算要求</returns>
-        public bool CheckJudgeMatrix()
+        public void CheckJudgeMatrix()
         {
             //在求CR、CI、等之前，必须检查是否符合判断矩阵的要求
-            //如果判断矩阵包含0，说明构造不完整，不能执行相应匀速
+            //如果判断矩阵包含0，说明构造不完整，不能执行其他运算
             for (int i = 0; i < X; i++)
             {
                 for (int j = 0; j < Y; j++)
                 {
-                    if (Math.Abs((int)(this[i, j] - 0)) > Epsilon
-                        || Math.Abs((int)(this[i, j] * this[j, i] - 1)) > Epsilon)
-                        return false;
+                    if (Math.Abs(this[i, j] - 0.0) < Epsilon)
+                        throw new JudgeMatrixInvalidException("判断矩阵不能有0值！", i, j);
+                    if (Math.Abs((int) (this[i, j] * this[j, i] - 1)) > Epsilon)
+                        throw new JudgeMatrixInvalidException("判断矩阵中a[i][j]=1/a[j][i]！", i, j);
                 }
             }
-
-            return true;
         }
 
 
