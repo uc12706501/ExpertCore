@@ -39,17 +39,38 @@ namespace ExpertChooseSystem
                     ReadOnly = true,
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
                 };
+            //格式化输出
+            dgv.CellFormatting += (sender, e) =>
+            {
+                //不处理新建行
+                if (e.RowIndex != dgv.NewRowIndex)
+                {
+                    double d = double.Parse(e.Value.ToString());
+                    e.Value = d.ToString("N3");
+                }
+            };
             dgv.DataSource = _judgeMatrix.ToDataTable();
             judgeMatrixPanel.Controls.Add(dgv);
 
             //显示层次单排序权重
-            var singleSortVect = _judgeMatrix.SingleFactorWightVect().GetTranspose();
+            var singleSortVect = _judgeMatrix.SingleFactorWightVect().Transpose();
             DataGridView dgv1 = new DataGridView()
             {
                 Height = 100,
                 ReadOnly = true,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
             };
+            //对数据进行格式化输出
+            dgv1.CellFormatting += (sender, e) =>
+            {
+                //不处理新建行
+                if (e.RowIndex != dgv1.NewRowIndex)
+                {
+                    double d = double.Parse(e.Value.ToString());
+                    e.Value = d.ToString("N3");
+                }
+            };
+
             dgv1.DataSource = singleSortVect.ToDataTable();
             wightVectPanel.Controls.Add(dgv1);
 

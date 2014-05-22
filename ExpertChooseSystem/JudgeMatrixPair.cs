@@ -10,6 +10,8 @@ namespace ExpertChooseSystem
     {
         public Factor AffectedFactor { get; set; }
 
+        public IList<Factor> SubFactors { get; set; }
+
         //代表常规生成的
         public JudgeMatrix NormalGen { get; set; }
 

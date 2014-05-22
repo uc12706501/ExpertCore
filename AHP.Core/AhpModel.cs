@@ -49,6 +49,23 @@ namespace AHP.Core
             return Levels.Last();
         }
 
+        //在层次结构模型中定位某个因素在某一层
+        public Level LocateFactor(Factor toFind)
+        {
+            Level locatedLevel = null;
+            foreach (var level in Levels)
+            {
+                foreach (var factor in level.Factors)
+                {
+                    if (factor == toFind)
+                    {
+                        locatedLevel = level;
+                    }
+                }
+            }
+            return locatedLevel;
+        }
+
         public void DisplayModelInfo()
         {
             Console.WriteLine("************以下是层次结构模型的主要信息*************");
@@ -71,7 +88,6 @@ namespace AHP.Core
                 }
                 Console.WriteLine("-------------------第{0}层---------------------", i + 1);
             }
-
         }
     }
 }

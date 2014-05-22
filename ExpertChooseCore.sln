@@ -5,8 +5,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertChooseCore", "ExpertC
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AHP.Core", "AHP.Core\AHP.Core.csproj", "{E8AF44AF-1CAC-483B-96FC-49A9DDE0EFB8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AhpModelSystem", "AhpModelSystem\AhpModelSystem.csproj", "{FC273059-969C-4612-A6E4-576EF497156F}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExpertChooseSystem", "ExpertChooseSystem\ExpertChooseSystem.csproj", "{9D41E201-0FE0-4AD3-8B68-2BD26459CA1B}"
 EndProject
 Global
@@ -39,16 +37,6 @@ Global
 		{E8AF44AF-1CAC-483B-96FC-49A9DDE0EFB8}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{E8AF44AF-1CAC-483B-96FC-49A9DDE0EFB8}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{E8AF44AF-1CAC-483B-96FC-49A9DDE0EFB8}.Release|x86.ActiveCfg = Release|Any CPU
-		{FC273059-969C-4612-A6E4-576EF497156F}.Debug|Any CPU.ActiveCfg = Debug|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Debug|Mixed Platforms.Build.0 = Debug|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Debug|x86.ActiveCfg = Debug|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Debug|x86.Build.0 = Debug|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Release|Any CPU.ActiveCfg = Release|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Release|Mixed Platforms.ActiveCfg = Release|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Release|Mixed Platforms.Build.0 = Release|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Release|x86.ActiveCfg = Release|x86
-		{FC273059-969C-4612-A6E4-576EF497156F}.Release|x86.Build.0 = Release|x86
 		{9D41E201-0FE0-4AD3-8B68-2BD26459CA1B}.Debug|Any CPU.ActiveCfg = Debug|x86
 		{9D41E201-0FE0-4AD3-8B68-2BD26459CA1B}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
 		{9D41E201-0FE0-4AD3-8B68-2BD26459CA1B}.Debug|Mixed Platforms.Build.0 = Debug|x86

@@ -52,7 +52,7 @@ namespace ExpertChooseSystem
                 dataGrid.Columns.Add("column" + i.ToString(), i.ToString());
             }
             dataGrid.Rows.Add(n);
-            //填充数据
+            //将以后的数据填充到表格中
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
@@ -80,7 +80,7 @@ namespace ExpertChooseSystem
             }
             catch (JudgeMatrixInvalidException ex)
             {
-                string message = string.Format("{0}\n错误在：{1}行{2}列", ex.Message, ex.X+1, ex.Y+1);
+                string message = string.Format("{0}\n错误在：{1}行{2}列", ex.Message, ex.X + 1, ex.Y + 1);
                 MessageBox.Show(message);
                 return;
             }

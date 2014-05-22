@@ -40,17 +40,10 @@ namespace ExpertChooseSystem
 
         private void dcsSetBtn_Click(object sender, EventArgs e)
         {
-            try
-            {
-                _ahpModel.Levels[2].CheckJudgeMatrices();
-                DecisionMatrixForm decisionMatrixForm = new DecisionMatrixForm(_decisionMatrix);
-                decisionMatrixForm.DecisionMatrixSave += OnDcsMatrixUpdate;
-                decisionMatrixForm.ShowDialog();
-            }
-            catch (LevelJudgeMatrixInvaliException ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
+            //运行到这一步说明模型中所有的判断矩阵都符合要求
+            DecisionMatrixForm decisionMatrixForm = new DecisionMatrixForm(_decisionMatrix);
+            decisionMatrixForm.DecisionMatrixSave += OnDcsMatrixUpdate;
+            decisionMatrixForm.ShowDialog();
         }
 
         #region 初始化操作
@@ -190,31 +183,36 @@ namespace ExpertChooseSystem
                         {
                             AffectedFactor = _ahpModel.Levels[0].Factors[0],
                             NormalGen = new JudgeMatrix(4),
-                            ApprovedGen = new JudgeMatrix(4)
+                            ApprovedGen = new JudgeMatrix(4),
+                            SubFactors = _ahpModel.Levels[1].GetAffectFactor(_ahpModel.Levels[0].Factors[0])
                         },
                     new JudgeMatrixPair()
                         {
                             AffectedFactor = _ahpModel.Levels[1].Factors[0],
                             NormalGen = new JudgeMatrix(3),
-                            ApprovedGen = new JudgeMatrix(3)
+                            ApprovedGen = new JudgeMatrix(3),
+                            SubFactors = _ahpModel.Levels[2].GetAffectFactor(_ahpModel.Levels[1].Factors[0])
                         },
                     new JudgeMatrixPair()
                         {
                             AffectedFactor = _ahpModel.Levels[1].Factors[1],
                             NormalGen = new JudgeMatrix(4),
-                            ApprovedGen = new JudgeMatrix(4)
+                            ApprovedGen = new JudgeMatrix(4),
+                            SubFactors = _ahpModel.Levels[2].GetAffectFactor(_ahpModel.Levels[1].Factors[1])
                         },
                     new JudgeMatrixPair()
                         {
                             AffectedFactor = _ahpModel.Levels[1].Factors[2],
                             NormalGen = new JudgeMatrix(3),
-                            ApprovedGen = new JudgeMatrix(3)
+                            ApprovedGen = new JudgeMatrix(3),
+                            SubFactors = _ahpModel.Levels[2].GetAffectFactor(_ahpModel.Levels[1].Factors[2])
                         },
                     new JudgeMatrixPair()
                         {
                             AffectedFactor = _ahpModel.Levels[1].Factors[3],
                             NormalGen = new JudgeMatrix(4),
-                            ApprovedGen = new JudgeMatrix(4)
+                            ApprovedGen = new JudgeMatrix(4),
+                            SubFactors = _ahpModel.Levels[2].GetAffectFactor(_ahpModel.Levels[1].Factors[3])
                         },
                 };
         }
@@ -236,19 +234,19 @@ namespace ExpertChooseSystem
         //label的单击处理事件
         private void InfoLabelClick(object sender, EventArgs e)
         {
-            Label label = sender as Label;
-            var factor = GetFactorByLabelName(label.Name);
-            var judgeMatrix = GetJudgeMatrix(factor);
-            //使用改进的方法
-            if (isApproved)
+            try
             {
-
-            }
-            //否则使用常规方法
-            else
-            {
+                Label label = sender as Label;
+                var factor = GetFactorByLabelName(label.Name);
+                var judgeMatrix = GetJudgeMatrix(factor);
+                //验证判断矩阵是否有效
+                judgeMatrix.CheckJudgeMatrix();
                 JudgeMatrixDisplayForm judgeMatrixDisplayForm = new JudgeMatrixDisplayForm(judgeMatrix);
                 judgeMatrixDisplayForm.ShowDialog();
+            }
+            catch (JudgeMatrixInvalidException exception)
+            {
+                MessageBox.Show("您还没有设置判断矩阵，或者设置的判断矩阵无效，请先修改！");
             }
 
         }
@@ -257,17 +255,20 @@ namespace ExpertChooseSystem
         private void JudgeMatrixButtonClick(object sender, EventArgs e)
         {
             Button button = sender as Button;
+            var factor = GetFacotrByButtonName(button.Name);
+            var judgeMatrixPair = _judgeMatrixPairs.Single(x => x.AffectedFactor == factor);
             //如果确认了，则使用改进的方法
             if (isApproved)
             {
-
+                ApprovedGenForm approvedGenForm = new ApprovedGenForm(judgeMatrixPair);
+                approvedGenForm.JudgeMatrixSave += OnJudgeMatrixGenFinish;
+                approvedGenForm.ShowDialog();
             }
             //否则使用常规方法
             else
             {
-                var factor = GetFacotrByButtonName(button.Name);
-                NormalGenFrom normalGenFrom = new NormalGenFrom(_judgeMatrixPairs.Single(x => x.AffectedFactor == factor));
-                normalGenFrom.JudgeMatrixSave += OnNormalGenFinish;
+                NormalGenFrom normalGenFrom = new NormalGenFrom(judgeMatrixPair);
+                normalGenFrom.JudgeMatrixSave += OnJudgeMatrixGenFinish;
                 normalGenFrom.ShowDialog();
             }
         }
@@ -292,14 +293,25 @@ namespace ExpertChooseSystem
         //使用归一化法进行标准化处理，打印相关信息
         private void GetDcsBtnClick(object sender, EventArgs e)
         {
-            var button = sender as Button;
-            DecisionMatrixDisplayForm displayForm;
-            if (button.Name == "getDcsBtn1")
-                displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.Normalize);
-            else
-                displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.ApprovedNormalize);
+            try
+            {
+                //首先必须检测层次结构模型中的各个判断矩阵是否构造完成
+                _ahpModel.Levels[2].CheckJudgeMatrices();
 
-            displayForm.Show();
+                var button = sender as Button;
+                DecisionMatrixDisplayForm displayForm;
+                if (button.Name == "getDcsBtn1")
+                    displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.Normalize);
+                else
+                    displayForm = new DecisionMatrixDisplayForm(_decisionMatrix, Standardizer.ApprovedNormalize);
+
+                displayForm.Show();
+            }
+            catch (LevelJudgeMatrixInvaliException ex)
+            {
+                string message = string.Format("层次结构模型构造不符合计算要求\n{0}", ex.Message);
+                MessageBox.Show(message);
+            }
         }
 
         //切换当前的模式
@@ -311,7 +323,7 @@ namespace ExpertChooseSystem
             UpdateJudgeMatrix();
         }
 
-        //根据因素和当前的模式，返回判断矩阵
+        //根据被影响因素和当前的模式，返回判断矩阵
         private JudgeMatrix GetJudgeMatrix(Factor factor)
         {
             if (isApproved)
@@ -393,20 +405,13 @@ namespace ExpertChooseSystem
         }
 
         //响应常规判断矩阵构造完成时间
-        private void OnNormalGenFinish(JudgeMatrixPair judgeMatrixPair)
-        {
-            var thePair = _judgeMatrixPairs.Single(x => x.AffectedFactor == judgeMatrixPair.AffectedFactor);
-            thePair.NormalGen = judgeMatrixPair.NormalGen;
-            UpdateJudgeMatrix();
-        }
-        //响应改进判断矩阵构造完成时间
-        private void OnApprovedGenFinish(JudgeMatrixPair judgeMatrixPair)
+        private void OnJudgeMatrixGenFinish(JudgeMatrixPair judgeMatrixPair)
         {
             var thePair = _judgeMatrixPairs.Single(x => x.AffectedFactor == judgeMatrixPair.AffectedFactor);
             thePair.ApprovedGen = judgeMatrixPair.ApprovedGen;
+            thePair.NormalGen = judgeMatrixPair.NormalGen;
             UpdateJudgeMatrix();
         }
-
         #endregion
 
     }

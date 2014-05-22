@@ -85,14 +85,15 @@ namespace AHP.Core
             _parent = parent;
         }
 
-        public Level(Level parent, IList<Factor> factors, Matrix relationMatrix, Dictionary<Factor, JudgeMatrix> judgeMatrices)
+        public Level(Level parent, IList<Factor> factors, Matrix relationMatrix,
+                     Dictionary<Factor, JudgeMatrix> judgeMatrices)
         {
             //如果parent为null，说明是顶层元素，只需要设置factors即可
             if (parent == null)
             {
                 _factors = factors;
             }
-            //否则就需要社会自factors，relationMatrix，judgeMatrices
+                //否则就需要社会自factors，relationMatrix，judgeMatrices
             else
             {
                 //todo:设置之前必须检查是否符合要求啊
@@ -247,6 +248,7 @@ namespace AHP.Core
         #endregion
 
         //todo:暂不实现
+
         #region 暂不实现的功能，主要是对Level状态的修改
 
         private void SetRelation(Matrix relationMatrix)
@@ -426,7 +428,8 @@ namespace AHP.Core
             {
                 try
                 {
-                    if (Parent.JudgeMatrices != null && (Parent.JudgeMatrices != null || Parent.JudgeMatrices.Count != 0))
+                    if (Parent.JudgeMatrices != null &&
+                        (Parent.JudgeMatrices != null || Parent.JudgeMatrices.Count != 0))
                         Parent.CheckJudgeMatrices();
 
                     judgeMatrix.Value.CheckJudgeMatrix();
@@ -440,7 +443,28 @@ namespace AHP.Core
             }
         }
 
-        //#region 实现IFactorChanged接口，提供属性更改通知
+        /// <summary>
+        /// 获取指定上一层元素控制的因素
+        /// </summary>
+        /// <param name="parentFactor">指定的的上一层因素</param>
+        /// <returns>本层次中被控制的因素</returns>
+        public IList<Factor> GetAffectFactor(Factor parentFactor)
+        {
+            IList<Factor> affectFactors=new List<Factor>();
+            //表示上一层中的控制因素的索引值
+            int parendIndex = Parent.Factors.IndexOf(parentFactor);
+            for (int i = 0; i < _relationMatrix.X; i++)
+            {
+                if (_relationMatrix[i,parendIndex]!=0)
+                {
+                    affectFactors.Add(Factors[i]);
+                }
+            }
+            return affectFactors;
+        }
+    }
+
+    //#region 实现IFactorChanged接口，提供属性更改通知
 
         ////当Factor集合更改时，提供通知。本层次重新刷新关系矩阵，通知下一层次刷新
         //public event FactorChangedEventHandler FactorChaged;
@@ -453,6 +477,4 @@ namespace AHP.Core
         //}
 
         //#endregion
-
-    }
 }

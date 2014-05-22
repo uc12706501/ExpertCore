@@ -35,6 +35,7 @@
             this.ciLabel = new System.Windows.Forms.Label();
             this.riLabel = new System.Windows.Forms.Label();
             this.crLabel = new System.Windows.Forms.Label();
+            this.totalSortPanel = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.SuspendLayout();
@@ -48,6 +49,7 @@
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.label2, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 1, 1);
+            this.tableLayoutPanel1.Controls.Add(this.totalSortPanel, 1, 0);
             this.tableLayoutPanel1.Location = new System.Drawing.Point(12, 12);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 2;
@@ -123,6 +125,14 @@
             this.crLabel.TabIndex = 2;
             this.crLabel.Text = "label5";
             // 
+            // totalSortPanel
+            // 
+            this.totalSortPanel.AutoSize = true;
+            this.totalSortPanel.Location = new System.Drawing.Point(37, 4);
+            this.totalSortPanel.Name = "totalSortPanel";
+            this.totalSortPanel.Size = new System.Drawing.Size(0, 0);
+            this.totalSortPanel.TabIndex = 3;
+            // 
             // LevelDisplayForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -148,5 +158,6 @@
         private System.Windows.Forms.Label ciLabel;
         private System.Windows.Forms.Label riLabel;
         private System.Windows.Forms.Label crLabel;
+        private System.Windows.Forms.Panel totalSortPanel;
     }
 }

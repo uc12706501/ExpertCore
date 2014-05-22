@@ -574,7 +574,7 @@ namespace AHP.Core
         /// 矩阵转置
         /// </summary>
         /// <returns>转置后的矩阵</returns>
-        public Matrix GetTranspose(string resultName = null)
+        public Matrix Transpose(string resultName = null)
         {
             //设置结果矩阵的名字
             string name = resultName ?? string.Format("{0}的转置矩阵", Name);

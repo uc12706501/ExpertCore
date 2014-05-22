@@ -16,7 +16,8 @@ namespace ExpertChooseSystem
 
         private Level _level;
 
-        public LevelDisplayForm(Level level):this()
+        public LevelDisplayForm(Level level)
+            : this()
         {
             _level = level;
             Init();
@@ -31,6 +32,14 @@ namespace ExpertChooseSystem
 
         private void Init()
         {
+            DataGridView dgv = new DataGridView()
+            {
+                ReadOnly = true,
+                AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
+            };
+            dgv.DataSource = _level.GetTotalWeightVect().Transpose().ToDataTable();
+            totalSortPanel.Controls.Add(dgv);
+
             ciLabel.Text = string.Format("CI={0:f4}", _level.LevelCI);
             riLabel.Text = string.Format("CI={0:f4}", _level.LevelRI);
             crLabel.Text = string.Format("CI={0:f4}", _level.LevelCR);

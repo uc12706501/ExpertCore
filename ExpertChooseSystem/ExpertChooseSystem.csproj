@@ -94,6 +94,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="ApprovedGenForm.resx">
+      <DependentUpon>ApprovedGenForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="DecisionMatrixDisplayForm.resx">
       <DependentUpon>DecisionMatrixDisplayForm.cs</DependentUpon>
     </EmbeddedResource>

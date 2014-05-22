@@ -76,7 +76,7 @@ namespace ExpertChooseCore
             Matrix m11 = new Matrix(4, 2, "m11");
             m11.InsertDataFromList(new List<double>() { 1, 2, 4, 7, 6, 7, 8, 7, 9, 8, 7, 15, 4, 5, 8, 8, 9, 45, 5 });
             m11.DisplayMatrix(DataHelper.ConsoloOutput);
-            Matrix m12 = m11.GetTranspose();
+            Matrix m12 = m11.Transpose();
             m12.DisplayMatrix(DataHelper.ConsoloOutput);
 
             //获取m13的转置矩阵
