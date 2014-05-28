@@ -33,6 +33,7 @@
             this.expertRmvBtn = new System.Windows.Forms.Button();
             this.saveBtn = new System.Windows.Forms.Button();
             this.cancelBtn = new System.Windows.Forms.Button();
+            this.insertTestData = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGrid)).BeginInit();
             this.SuspendLayout();
             // 
@@ -86,11 +87,22 @@
             this.cancelBtn.UseVisualStyleBackColor = true;
             this.cancelBtn.Click += new System.EventHandler(this.cancelBtn_Click);
             // 
+            // insertTestData
+            // 
+            this.insertTestData.Location = new System.Drawing.Point(194, 366);
+            this.insertTestData.Name = "insertTestData";
+            this.insertTestData.Size = new System.Drawing.Size(75, 23);
+            this.insertTestData.TabIndex = 5;
+            this.insertTestData.Text = "插入测试数据";
+            this.insertTestData.UseVisualStyleBackColor = true;
+            this.insertTestData.Click += new System.EventHandler(this.insertTestData_Click);
+            // 
             // DecisionMatrixForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(737, 401);
+            this.Controls.Add(this.insertTestData);
             this.Controls.Add(this.cancelBtn);
             this.Controls.Add(this.saveBtn);
             this.Controls.Add(this.expertRmvBtn);
@@ -110,5 +122,6 @@
         private System.Windows.Forms.Button expertRmvBtn;
         private System.Windows.Forms.Button saveBtn;
         private System.Windows.Forms.Button cancelBtn;
+        private System.Windows.Forms.Button insertTestData;
     }
 }

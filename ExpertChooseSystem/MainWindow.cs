@@ -83,14 +83,14 @@ namespace ExpertChooseSystem
             //构造第三层次
             IList<Factor> factors3 = new List<Factor>
                 {
-                    new Factor("B1"),
+                    new Factor("B1"){Direction = FactorDirection.Negative},
                     new Factor("B2"),
                     new Factor("B3"),
                     new Factor("B4"),
                     new Factor("B5"),
                     new Factor("B6"),
                     new Factor("B7"),
-                    new Factor("B8"),
+                    new Factor("B8"){Direction = FactorDirection.Negative},
                     new Factor("B9"),
                     new Factor("B10"),
                     new Factor("B11"),
@@ -293,6 +293,11 @@ namespace ExpertChooseSystem
         //使用归一化法进行标准化处理，打印相关信息
         private void GetDcsBtnClick(object sender, EventArgs e)
         {
+            if (_decisionMatrix.X<1)
+            {
+                MessageBox.Show("决策矩阵中没有数据，请先输入决策数据！");
+                return;
+            }
             try
             {
                 //首先必须检测层次结构模型中的各个判断矩阵是否构造完成

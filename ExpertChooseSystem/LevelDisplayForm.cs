@@ -34,15 +34,27 @@ namespace ExpertChooseSystem
         {
             DataGridView dgv = new DataGridView()
             {
+                Width = 700,
                 ReadOnly = true,
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
             };
             dgv.DataSource = _level.GetTotalWeightVect().Transpose().ToDataTable();
+            //设置显示格式
+            dgv.CellFormatting += (sender, e) =>
+            {
+                //不处理新建行
+                if (e.RowIndex != dgv.NewRowIndex)
+                {
+                    double d = double.Parse(e.Value.ToString());
+                    e.Value = d.ToString("N3");
+                }
+            };
+
             totalSortPanel.Controls.Add(dgv);
 
             ciLabel.Text = string.Format("CI={0:f4}", _level.LevelCI);
-            riLabel.Text = string.Format("CI={0:f4}", _level.LevelRI);
-            crLabel.Text = string.Format("CI={0:f4}", _level.LevelCR);
+            riLabel.Text = string.Format("RI={0:f4}", _level.LevelRI);
+            crLabel.Text = string.Format("CR={0:f4}", _level.LevelCR);
         }
     }
 }

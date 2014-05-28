@@ -93,12 +93,18 @@ namespace ExpertChooseSystem
             dataGrid.DataSource = _experts;
         }
 
+        //插入测试数据
+        private void insertTestData_Click(object sender, EventArgs e)
+        {
+            _experts.Add(new ExpertModel(45, 91, 90, 11, 57, 68, 56, 0, 81, 80, 0.68, 0.81, 0.98, 0.98));
+            _experts.Add(new ExpertModel(50, 82, 90, 16, 68, 79, 67, 0, 91, 93, 0.71, 0.83, 1, 0.95));
+            _experts.Add(new ExpertModel(52, 93, 90, 14, 90, 84, 89, 1, 89, 90, 0.83, 0.84, 0.85, 0.85));
+            _experts.Add(new ExpertModel(38, 82, 70, 9, 59, 73, 57, 2, 84, 80, 0.62, 0.75, 0.87, 0.92));
+            _experts.Add(new ExpertModel(66, 71, 90, 21, 49, 83, 86, 0, 78, 81, 0.78, 0.90, 0.82, 0.88));
+            
+            RefreshGridDataSource();
+        }
+
         public event DecisionMatrixSaveHandler DecisionMatrixSave;
     }
-
-    public class A
-    {
-        public double B { get; set; }
-    }
-
 }

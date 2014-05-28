@@ -36,23 +36,34 @@ namespace ExpertChooseSystem
         //执行一些初始化操作
         private void Init()
         {
-            //初始化决策矩阵的显示
+            //显示决策矩阵
             DataGridView decisionMatrixGrid = new DataGridView()
                 {
                     AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
-                    Width = 650,
+                    Width = 700,
                     ReadOnly = true,
                 };
             decisionMatrixGrid.DataSource = _decisionMatrix.ToExpertList();
             panel3.Controls.Add(decisionMatrixGrid);
 
-            //初始化标准化矩阵的显示
+            //显示标准化矩阵
             DataGridView standardizeMatrixGrid = new DataGridView()
             {
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
-                Width = 650,
+                Width = 700,
                 ReadOnly = true
+
             };
+            //设置显示格式
+            standardizeMatrixGrid.CellFormatting += (sender, e) =>
+                {
+                    //不处理新建行
+                    if (e.RowIndex != standardizeMatrixGrid.NewRowIndex)
+                    {
+                        double d = double.Parse(e.Value.ToString());
+                        e.Value = d.ToString("N3");
+                    }
+                };
 
             var standizedMatrix = _decisionMatrix.GetStandardized(_standardize);
             standardizeMatrixGrid.DataSource = standizedMatrix.ToExpertList();
@@ -66,6 +77,18 @@ namespace ExpertChooseSystem
                 AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells,
                 ReadOnly = true
             };
+            //设置显示格式
+            decisionVectGrid.CellFormatting += (sender, e) =>
+            {
+                //不处理新建行
+                if (e.RowIndex != decisionVectGrid.NewRowIndex)
+                {
+                    double d = double.Parse(e.Value.ToString());
+                    e.Value = d.ToString("N3");
+                }
+            };
+
+
             decisionVectGrid.Columns.Add("Total", "总得分");
             for (int i = 0; i < _decisionMatrix.X; i++)
             {
