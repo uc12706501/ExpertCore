@@ -108,7 +108,7 @@ namespace AHP.Core
         {
             if (!dataModel.Check())
             {
-                throw new CustomeExcetpion("数据不符合要求！");
+                throw new ArgumentException("数据不符合要求！");
             }
             _parent = dataModel.Parent;
             _factors = dataModel.Factors;
@@ -254,11 +254,11 @@ namespace AHP.Core
         private void SetRelation(Matrix relationMatrix)
         {
             if (Factors.Count <= 0)
-                throw new CustomeExcetpion("还没有设置本层次的元素，请先添加本层次的元素");
+                throw new ArgumentException("还没有设置本层次的元素，请先添加本层次的元素");
             if (Parent == null)
-                throw new CustomeExcetpion("本层次为顶层，不需要设置顶层元素");
+                throw new ArgumentException("本层次为顶层，不需要设置顶层元素");
             if (relationMatrix.X < _relationMatrix.X || relationMatrix.Y < _relationMatrix.Y)
-                throw new CustomeExcetpion("传入的关系矩阵的行或者列比需要的少，则无法设置");
+                throw new ArgumentException("传入的关系矩阵的行或者列比需要的少，则无法设置");
 
             //否则，将关系设置到RelationMatrix
             for (int i = 0; i < _relationMatrix.X; i++)
@@ -388,7 +388,7 @@ namespace AHP.Core
             //检查parentFactor是否为上一层次总的因素
             if (!Parent.Factors.Contains(parentFactor))
             {
-                throw new CustomeExcetpion("上一层不包含指定的因素");
+                throw new ArgumentException("上一层不包含指定的因素");
             }
             //检查传入的判断矩阵是否符合要求
             judgeMatrix.CheckJudgeMatrix();

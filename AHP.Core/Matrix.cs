@@ -144,7 +144,7 @@ namespace AHP.Core
         {
             if (copyfrom.X != X || copyfrom.Y != Y)
             {
-                throw new CustomeExcetpion("操作的两个矩阵的维数不相同，不能进行复制");
+                throw new ArgumentException("操作的两个矩阵的维数不相同，不能进行复制");
             }
 
             for (int i = 0; i < X; i++)
@@ -175,7 +175,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new CustomeExcetpion("数据源的没有足够数量的数据用来构建矩阵");
+                throw new ArgumentException("数据源的没有足够数量的数据用来构建矩阵");
             }
         }
 
@@ -216,7 +216,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new CustomeExcetpion("两个相加的矩阵必须有相同的维数");
+                throw new ArgumentException("两个相加的矩阵必须有相同的维数");
             }
             return result;
         }
@@ -273,7 +273,7 @@ namespace AHP.Core
             }
             else
             {
-                throw new CustomeExcetpion("相乘两个矩阵中，左边矩阵的列数必须与右边矩阵的行数相等");
+                throw new ArgumentException("相乘两个矩阵中，左边矩阵的列数必须与右边矩阵的行数相等");
             }
             return result;
         }
@@ -319,7 +319,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new CustomeExcetpion("请输入一个有效区域");
+                throw new ArgumentException("请输入一个有效区域");
             }
             mx = xStart;
             my = yStart;
@@ -354,7 +354,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new CustomeExcetpion("请输入一个有效区域");
+                throw new ArgumentException("请输入一个有效区域");
             }
             mx = xStart;
             my = yStart;
@@ -408,7 +408,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new CustomeExcetpion("请输入一个有效区域");
+                throw new ArgumentException("请输入一个有效区域");
             }
             double sum = 0;
             for (int i = xStart; i <= xEnd; i++)
@@ -443,7 +443,7 @@ namespace AHP.Core
         {
             if (!RegionCheck(xStart, yStart, xEnd, yEnd))
             {
-                throw new CustomeExcetpion("请输入一个有效区域");
+                throw new ArgumentException("请输入一个有效区域");
             }
             //设置结果矩阵的名字
             string name = resultName ?? string.Format("{0}的子矩阵 ({1},{2})->({3},{4})", Name, xStart, yStart, xEnd, yEnd);
@@ -519,7 +519,7 @@ namespace AHP.Core
         {
             if (X != Y)
             {
-                throw new CustomeExcetpion("方阵才可以使用幂法求特征值和特征向量！");
+                throw new ArgumentException("方阵才可以使用幂法求特征值和特征向量！");
             }
             string name = resultName ?? string.Format("{0}的主特征向量为", Name);
 

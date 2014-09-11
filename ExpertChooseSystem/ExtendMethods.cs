@@ -21,7 +21,7 @@ namespace ExpertChooseSystem
 
             //检测维数
             if (decisionMatrix.Y < 14)
-                throw new CustomeExcetpion("维数不匹配");
+                throw new ArgumentException("维数不匹配");
 
             //依次添加每个专家的信息
             IList<ExpertModel> expertModels = new List<ExpertModel>();

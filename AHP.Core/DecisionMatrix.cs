@@ -26,7 +26,7 @@ namespace AHP.Core
         {
             //如果传入的是顶层，则抛出异常
             if (level.LevelCount == 1)
-                throw new CustomeExcetpion("不可以是顶层元素");
+                throw new ArgumentException("不可以是顶层元素");
 
             this.level = level;
         }
@@ -36,7 +36,7 @@ namespace AHP.Core
         {
             //如果传入的是顶层，则抛出异常
             if (level.LevelCount == 1)
-                throw new CustomeExcetpion("不可以是顶层元素");
+                throw new ArgumentException("不可以是顶层元素");
 
             this.level = level;
         }
