@@ -12,7 +12,7 @@ namespace GA.Core
         private IList<Expert> experts;
 
         //构造函数
-        public SubjectionTable(Project project, IList<Expert> experts, IFuzzySubjectionCalculator c)
+        public SubjectionTable(Project project, IList<Expert> experts, ISubjectionCalculator<String, String> subjectCal, ISubjectionCalculator<String, String> companyCal)
         {
             this.experts = experts;
 
@@ -27,8 +27,8 @@ namespace GA.Core
             //计算和填充隶属度
             for (int i = 0; i < ItemCount; i++)
             {
-                subjectionTable[i][0] = c.CalCompany(project.Company, experts[i].Company);
-                subjectionTable[i][1] = c.CalCompany(project.Subject, experts[i].Subject);
+                subjectionTable[i][0] = companyCal.Calculate(project.Company, experts[i].Company);
+                subjectionTable[i][1] = subjectCal.Calculate(project.Subject, experts[i].Subject);
             }
         }
 

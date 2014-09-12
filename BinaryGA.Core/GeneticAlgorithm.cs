@@ -43,9 +43,7 @@ namespace BinaryGA.Core
         private void UpdateFitness(Population population)
         {
             foreach (var chromosome in population)
-            {
                 chromosome.Fitness = _fitnessCalculator.CalculateFitness(chromosome);
-            }
         }
     }
 }
