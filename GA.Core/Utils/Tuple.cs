@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GA.Core.Utils
+namespace ExpertChoose.BinaryGA.Impl.Utils
 {
     public class Tuple<T1, T2, T3>
     {

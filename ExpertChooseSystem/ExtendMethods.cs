@@ -4,9 +4,9 @@ using System.ComponentModel;
 using System.Data;
 using System.Linq;
 using System.Text;
-using AHP.Core;
+using ExpertChoose.AHP.Core;
 
-namespace ExpertChooseSystem
+namespace ExpertChoose.AHP.WinformSystem
 {
     public static class ExtendMethods
     {

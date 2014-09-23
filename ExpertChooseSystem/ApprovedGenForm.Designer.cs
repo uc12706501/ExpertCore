@@ -1,4 +1,4 @@
-﻿namespace ExpertChooseSystem
+﻿namespace ExpertChoose.AHP.WinformSystem
 {
     partial class ApprovedGenForm
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AHP.Core
+namespace ExpertChoose.AHP.Core
 {
     //ahp需要的数据的一个模型
     public class LevelDataModel

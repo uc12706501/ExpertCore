@@ -8,7 +8,7 @@
     <ProjectGuid>{9C7D966E-283D-4EFA-ABF3-6234D0162734}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BinaryGA.Core</RootNamespace>
+    <RootNamespace>ExpertChoose.BinaryGA.Impl</RootNamespace>
     <AssemblyName>BinaryGA.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BinaryGA.Core;
-using GA.Core.Utils;
+using ExpertChoose.BinaryGA.Impl;
+using ExpertChoose.BinaryGA.Impl.Utils;
 
-namespace GA.Core
+namespace ExpertChoose.BinaryGA.Impl
 {
     public class TwoPointsCrossOver : ICrossOverOperator
     {

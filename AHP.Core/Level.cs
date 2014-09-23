@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
-using AHP.Core.Annotations;
+using ExpertChoose.AHP.Core.Annotations;
 
-namespace AHP.Core
+namespace ExpertChoose.AHP.Core
 {
     public class Level : Identified
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace GA.Core.Interface
+namespace ExpertChoose.BinaryGA.Impl.Interface
 {
     public interface ISubjectionCalculator<T1, T2>
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AHP.Core;
+using ExpertChoose.AHP.Core;
 
-namespace ExpertChooseCore
+namespace ExpertChoose.AHP.ConsoleSystem
 {
     class Program
     {

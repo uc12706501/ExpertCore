@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using AHP.Core;
+using ExpertChoose.AHP.Core;
 
-namespace ExpertChooseSystem
+namespace ExpertChoose.AHP.WinformSystem
 {
     //表示专家模型
     public class ExpertModel

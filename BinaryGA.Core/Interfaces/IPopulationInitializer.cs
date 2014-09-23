@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace BinaryGA.Core
+namespace ExpertChoose.BinaryGA.Impl
 {
     public interface IPopulationInitializer
     {

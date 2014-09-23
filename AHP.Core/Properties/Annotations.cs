@@ -17,7 +17,7 @@
 using System;
 using System.ComponentModel;
 
-namespace AHP.Core.Annotations
+namespace ExpertChoose.AHP.Core.Annotations
 {
   /// <summary>
   /// Indicates that marked element should be localized or not.

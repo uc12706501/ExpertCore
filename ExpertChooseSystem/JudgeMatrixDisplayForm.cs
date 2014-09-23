@@ -6,9 +6,9 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Windows.Forms;
-using AHP.Core;
+using ExpertChoose.AHP.Core;
 
-namespace ExpertChooseSystem
+namespace ExpertChoose.AHP.WinformSystem
 {
     public partial class JudgeMatrixDisplayForm : Form
     {

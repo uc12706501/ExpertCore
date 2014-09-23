@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BinaryGA.Core;
+using ExpertChoose.BinaryGA.Impl;
 
-namespace GA.Core
+namespace ExpertChoose.BinaryGA.Impl
 {
     public class BoundaryMutation : IMutateOperator
     {

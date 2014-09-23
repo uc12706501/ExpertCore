@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AHP.Core
+namespace ExpertChoose.AHP.Core
 {
     public class DataHelper
     {

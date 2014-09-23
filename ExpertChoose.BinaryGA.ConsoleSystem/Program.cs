@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using BinaryGA.Core;
-using GA.Core;
-using GA.Core.GAImpl;
+using ExpertChoose.BinaryGA.Impl;
+using ExpertChoose.BinaryGA.Impl.GAImpl;
+using ExpertChoose.BinaryGA.Impl.Models;
 
 namespace ExpertChoose.BinaryGA.ConsoleSystem
 {

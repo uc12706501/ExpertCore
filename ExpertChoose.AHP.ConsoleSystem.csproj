@@ -8,7 +8,7 @@
     <ProjectGuid>{2ED46A6C-F3E4-4D98-8908-BF9682B98D42}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ExpertChooseCore</RootNamespace>
+    <RootNamespace>ExpertChoose.AHP.ConsoleSystem</RootNamespace>
     <AssemblyName>ExpertChooseCore</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>

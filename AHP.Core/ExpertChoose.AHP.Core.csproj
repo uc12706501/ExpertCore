@@ -8,7 +8,7 @@
     <ProjectGuid>{E8AF44AF-1CAC-483B-96FC-49A9DDE0EFB8}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AHP.Core</RootNamespace>
+    <RootNamespace>ExpertChoose.AHP.Core</RootNamespace>
     <AssemblyName>AHP.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

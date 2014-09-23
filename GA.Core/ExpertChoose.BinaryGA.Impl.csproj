@@ -8,7 +8,7 @@
     <ProjectGuid>{2705F5A2-3B8F-498F-A472-282A3BEB0C1A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>GA.Core</RootNamespace>
+    <RootNamespace>ExpertChoose.BinaryGA.Impl</RootNamespace>
     <AssemblyName>GA.Core</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

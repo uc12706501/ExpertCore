@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using GA.Core.Interface;
+using ExpertChoose.BinaryGA.Impl.Interface;
+using ExpertChoose.BinaryGA.Impl.Models;
 
-namespace GA.Core
+namespace ExpertChoose.BinaryGA.Impl
 {
     public class SubjectionTable
     {

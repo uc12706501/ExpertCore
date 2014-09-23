@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using BinaryGA.Core;
+using ExpertChoose.BinaryGA.Impl;
 
-namespace GA.Core
+namespace ExpertChoose.BinaryGA.Impl
 {
     //轮盘赌选择复制
     public class RouleteeCopy : ICopyOperator

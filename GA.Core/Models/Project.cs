@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace GA.Core
+namespace ExpertChoose.BinaryGA.Impl.Models
 {
     public class Project
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace ExpertChooseSystem
+namespace ExpertChoose.AHP.WinformSystem
 {
     static class Program
     {

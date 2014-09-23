@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AHP.Core
+namespace ExpertChoose.AHP.Core
 {
     /// <summary>
     /// 加入了CI、RI、权重向量等判断矩阵的特性
