@@ -293,7 +293,7 @@ namespace ExpertChooseSystem
         //使用归一化法进行标准化处理，打印相关信息
         private void GetDcsBtnClick(object sender, EventArgs e)
         {
-            if (_decisionMatrix.X<1)
+            if (_decisionMatrix.X < 1)
             {
                 MessageBox.Show("决策矩阵中没有数据，请先输入决策数据！");
                 return;

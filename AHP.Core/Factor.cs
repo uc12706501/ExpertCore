@@ -24,10 +24,12 @@ namespace AHP.Core
         public string Name { get; set; }
 
         public FactorDirection Direction { get; set; }
+
+        public double MaxValue { get; set; }
     }
 
     public enum FactorDirection
     {
-        Positive, Negative
+        Positive, Negative, Middle
     }
 }

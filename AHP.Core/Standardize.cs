@@ -5,36 +5,43 @@ using System.Text;
 
 namespace AHP.Core
 {
-    public delegate DecisionMatrix Standardize(DecisionMatrix toBeStandardize);
+    public delegate DecisionMatrix Standardize(DecisionMatrix toBeStandardized);
 
     public class Standardizer
     {
-        public static DecisionMatrix ApprovedNormalize(DecisionMatrix toBeStandardize)
+        public static DecisionMatrix ApprovedNormalize(DecisionMatrix toBeStandardized)
         {
             //归一化之后的矩阵
-            DecisionMatrix standardized = new DecisionMatrix(toBeStandardize.Level, toBeStandardize.X);
-            //将原始数据头填充到新数据中，所有操作都不改变原来的判断矩阵
-            standardized.InsertFromMatrix(toBeStandardize);
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Level, toBeStandardized.X);
+            //将原始数据填充到新数据中，所有操作都不改变原来的判断矩阵
+            standardized.InsertFromMatrix(toBeStandardized);
 
-            var factors = toBeStandardize.Level.Factors;
+            var factors = standardized.Level.Factors;
             int m = standardized.X;
             //标准化按照指标值，逐列进行的
             for (int j = 0; j < factors.Count; j++)
             {
-                //每一列的最大值和最小值
-                double columnMax = toBeStandardize.GetColumnMaxValue(j);
-                double columnMin = toBeStandardize.GetColumnMinValue(j);
 
-                //1. 如果是逆向指标，就执行
-                if (factors[j].Direction == FactorDirection.Negative)
+                //新增规则：考虑中间最大的情况
+                if (factors[j].Direction == FactorDirection.Middle)
                 {
-                    for (int i = 0; i < toBeStandardize.X; i++)
+                    for (int i = 0; i < standardized.X; i++)
                     {
-                        standardized[i, j] = columnMax - toBeStandardize[i, j] + columnMin;
+                        if (standardized[i, j] > factors[j].MaxValue)
+                            standardized[i, j] = 2 * factors[j].MaxValue - standardized[i, j];
                     }
                 }
 
-                //2. 如果指标值包含负数，就执行
+                //1. 如果是逆向指标，就改为正向指标
+                if (factors[j].Direction == FactorDirection.Negative)
+                {
+                    for (int i = 0; i < standardized.X; i++)
+                    {
+                        standardized[i, j] = standardized.GetColumnMaxValue(j) - standardized[i, j] + standardized.GetColumnMinValue(j);
+                    }
+                }
+
+                //2. 如果指标值包含负数，就修改为正数
                 bool containsNegative = false;
                 for (int i = 0; i < standardized.X; i++)
                 {
@@ -49,7 +56,7 @@ namespace AHP.Core
                 {
                     for (int i = 0; i < standardized.X; i++)
                     {
-                        standardized[i, j] = standardized[i, j] - columnMin;
+                        standardized[i, j] = standardized[i, j] - standardized.GetColumnMinValue(j);
                     }
                 }
 
@@ -66,14 +73,14 @@ namespace AHP.Core
 
         }
 
-        public static DecisionMatrix Normalize(DecisionMatrix toBeStandardize)
+        public static DecisionMatrix Normalize(DecisionMatrix toBeStandardized)
         {
             //归一化之后的矩阵
-            DecisionMatrix standardized = new DecisionMatrix(toBeStandardize.Level, toBeStandardize.X);
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Level, toBeStandardized.X);
             //将原始数据头填充到新数据中，所有操作都不改变原来的判断矩阵
-            standardized.InsertFromMatrix(toBeStandardize);
+            standardized.InsertFromMatrix(toBeStandardized);
 
-            var factors = toBeStandardize.Level.Factors;
+            var factors = toBeStandardized.Level.Factors;
             for (int j = 0; j < factors.Count; j++)
             {
                 //执行标准的归一化操作
