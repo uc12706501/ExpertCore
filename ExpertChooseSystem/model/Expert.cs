@@ -2,13 +2,30 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AHP.Core;
 
 namespace ExpertChooseSystem.Model
 {
-    class Expert
+    public class Expert
     {
-        public String Field { get; set; }
+        private static int _count = 0;
+        public static int Count
+        {
+            get { return _count; }
+        }
+
+        private Expert()
+        {
+        }
+
+        public static Expert Create()
+        {
+            _count++;
+            return new Expert();
+        }
+
         public String Name { get; set; }
+        public String Field { get; set; }
 
         #region 排序属性
 

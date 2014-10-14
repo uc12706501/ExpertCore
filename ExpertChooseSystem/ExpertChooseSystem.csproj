@@ -67,6 +67,9 @@
     <Compile Include="EventHandler.cs" />
     <Compile Include="ExpertModel.cs" />
     <Compile Include="ExtendMethods.cs" />
+    <Compile Include="Helper\ExpertHelper.cs" />
+    <Compile Include="Helper\ProjectHelper.cs" />
+    <Compile Include="Helper\RandomHelper.cs" />
     <Compile Include="JudgeMatrixDisplayForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,12 +83,20 @@
     <Compile Include="LevelDisplayForm.Designer.cs">
       <DependentUpon>LevelDisplayForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="AhpMainWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AhpMainWindow.Designer.cs">
+      <DependentUpon>AhpMainWindow.cs</DependentUpon>
+    </Compile>
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Model\Expert.cs" />
+    <Compile Include="Model\Project.cs" />
     <Compile Include="NormalGenFrom.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="LevelDisplayForm.resx">
       <DependentUpon>LevelDisplayForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="AhpMainWindow.resx">
+      <DependentUpon>AhpMainWindow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow.resx">
       <DependentUpon>MainWindow.cs</DependentUpon>
