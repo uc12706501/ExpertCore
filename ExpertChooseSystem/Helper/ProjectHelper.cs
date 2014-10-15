@@ -27,6 +27,7 @@ namespace ExpertChooseSystem.Helper
             Project project = Project.Craete();
             project.Field = randomHelper.NextField();
             project.Name = "Project#" + Project.Count;
+            project.MasterName = "Master";
 
             return project;
         }

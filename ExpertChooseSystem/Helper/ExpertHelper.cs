@@ -39,7 +39,7 @@ namespace ExpertChooseSystem.Helper
             expert.H = random.Next(20);
             expert.ProjectRank = random.Next(60, 100);
             expert.AwardRank = random.Next(60, 100);
-            expert.AwardRank = random.Next(60, 100);
+            expert.PatentRank = random.Next(60, 100);
 
             //生成道德修养指标
             expert.AcademicMoralityCount = random.Next(5);

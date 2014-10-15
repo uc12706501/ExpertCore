@@ -25,6 +25,7 @@ namespace ExpertChooseSystem.Model
 
         public String Name { get; set; }
         public String Field { get; set; }
+        public String MasterName { get; set; }
         public List<Expert> ReviewExperts { get; set; }
     }
 }
