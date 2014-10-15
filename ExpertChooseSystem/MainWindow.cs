@@ -28,12 +28,12 @@ namespace ExpertChooseSystem
         {
             _projects = new ProjectHelper().GetProjects(400);
             _experts = new ExpertHelper().GetExperts(110);
-            dataGridView1.DataSource = _projects;
-            dataGridView2.DataSource = _experts;
+            DataGridViewHelper.SetDataSourceAndHeader(dataGridView1, _projects, ProjectHelper.GetPropertyNames());
+            DataGridViewHelper.SetDataSourceAndHeader(dataGridView2, _experts, ExpertHelper.GetFullPropertyNames());
 
             _wights = new List<double>();
             for (int i = 0; i < 14; i++)
-                _wights.Add(0);
+                _wights.Add(1.0 / 14);
         }
 
         //点击设置属性的权重

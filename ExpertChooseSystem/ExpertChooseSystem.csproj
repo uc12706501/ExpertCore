@@ -67,6 +67,7 @@
     <Compile Include="EventHandler.cs" />
     <Compile Include="ExpertModel.cs" />
     <Compile Include="ExtendMethods.cs" />
+    <Compile Include="Helper\DataGridViewHelper.cs" />
     <Compile Include="Helper\ExpertHelper.cs" />
     <Compile Include="Helper\ProjectHelper.cs" />
     <Compile Include="Helper\RandomHelper.cs" />

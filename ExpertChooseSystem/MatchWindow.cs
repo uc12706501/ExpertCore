@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using AHP.Core;
+using ExpertChooseSystem.Helper;
 using ExpertChooseSystem.Model;
 
 namespace ExpertChooseSystem
@@ -28,27 +29,30 @@ namespace ExpertChooseSystem
 
         private void Init()
         {
-            dataGridView1.DataSource = new List<Project>() { _project };
-            dataGridView2.DataSource = _candidates;
+            DataGridViewHelper.SetDataSourceAndHeader(dataGridView1, new List<Project>() { _project }, ProjectHelper.GetPropertyNames());
+            DataGridViewHelper.SetDataSourceAndHeader(dataGridView2, _candidates, ExpertHelper.GetFullPropertyNames());
 
             var ranks = CalculateRanks();
             for (int i = 0; i < _candidates.Count; i++)
-            {
                 _candidates[i].SetRank(ranks[i]);
-            }
 
             var selectedExpert =
-                _candidates.OrderBy(x => x.GetRank()).Select(x => new { Name = x.Name, Rank = x.GetRank() });
+                _candidates.OrderByDescending(x => x.GetRank())
+                .Select(x => new { Name = x.Name, Rank = x.GetRank() })
+                .Take(3)
+                .ToList();
 
-            dataGridView3.DataSource = selectedExpert;
+            DataGridViewHelper.SetDataSourceAndHeader(dataGridView3, selectedExpert, ExpertHelper.GetBriefPropertyNames());
         }
 
         private IList<double> CalculateRanks()
         {
-            var weightVect = new Matrix( _weights.Count,1);
-
+            var weightVect = new Matrix(_weights.Count, 1);
             weightVect.InsertDataFromList(_weights);
+
             DecisionMatrix decisionMatrix = new DecisionMatrix(GetFactors(), _candidates.Count, weightVect);
+            var data = ExpertHelper.ExpertsToList(_candidates);
+            decisionMatrix.InsertDataFromList(data);
             return decisionMatrix.GetDecisionVect(Standardizer.ApprovedNormalize).ExportToList();
         }
 
@@ -65,7 +69,7 @@ namespace ExpertChooseSystem
                 new Factor("AwardRank"),
                 new Factor("PatentRank"),
 
-                new Factor("AcademicMoralityCount"),
+                new Factor("AcademicMoralityCount",FactorDirection.Negative),
                 new Factor("AttitudeRank "),
                 new Factor("StyleOfWorkRank"),
 

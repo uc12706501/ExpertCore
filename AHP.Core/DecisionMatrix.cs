@@ -30,8 +30,8 @@ namespace AHP.Core
         public DecisionMatrix(IList<Factor> factors, int rowCount, Matrix weightVect)
             : base(rowCount, factors.Count)
         {
-            this._factors = factors;
-            this._weightVect = weightVect;
+            _factors = factors;
+            _weightVect = weightVect;
         }
 
         public DecisionMatrix(IList<Factor> factors, int rowCount, Matrix weightVect, String name)

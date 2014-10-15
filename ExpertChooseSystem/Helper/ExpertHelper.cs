@@ -54,5 +54,52 @@ namespace ExpertChooseSystem.Helper
 
             return expert;
         }
+
+        public static IList<double> ExpertsToList(IList<Expert> experts)
+        {
+            var compoundData = new List<double>();
+            foreach (var expert in experts)
+                compoundData.AddRange(ExpertToList(expert));
+            return compoundData;
+        }
+
+        public static IList<double> ExpertToList(Expert expert)
+        {
+            IList<double> data = new List<double>()
+            {
+                expert.Age,
+                expert.TitleRank, 
+                expert.DegreeRank, 
+                
+                expert.H, 
+                expert.ProjectRank, 
+                expert.AwardRank, 
+                expert.PatentRank, 
+                
+                expert.AcademicMoralityCount, 
+                expert.AttitudeRank, 
+                expert.StyleOfWorkRank, 
+                
+                expert.ParticipationRate, 
+                expert.DisperseRate, 
+                expert.HitRate, 
+                expert.SuccessRate
+            };
+
+            return data;
+        }
+
+        public static IList<string> GetFullPropertyNames()
+        {
+            return new List<string>()
+            {
+                "姓名","二级学科","年龄","职称","学历","H指数","项目情况","获奖情况","发明专利","道德累计数","科研态度","工作作风","参与率","离散率","命中率","成功率"
+            };
+        }
+
+        public static IList<string> GetBriefPropertyNames()
+        {
+            return new List<string>() { "专家姓名", "评价值" };
+        }
     }
 }

@@ -31,5 +31,15 @@ namespace ExpertChooseSystem.Helper
 
             return project;
         }
+
+        public static IList<string> GetPropertyNames()
+        {
+            return new List<string>()
+            {
+                "项目名称","二级学科","项目主持人"
+            }
+            ;
+        }
     }
+
 }
