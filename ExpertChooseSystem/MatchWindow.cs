@@ -46,6 +46,7 @@ namespace ExpertChooseSystem
         private IList<double> CalculateRanks()
         {
             var weightVect = new Matrix( _weights.Count,1);
+
             weightVect.InsertDataFromList(_weights);
             DecisionMatrix decisionMatrix = new DecisionMatrix(GetFactors(), _candidates.Count, weightVect);
             return decisionMatrix.GetDecisionVect(Standardizer.ApprovedNormalize).ExportToList();
