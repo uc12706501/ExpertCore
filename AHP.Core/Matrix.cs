@@ -61,7 +61,7 @@ namespace AHP.Core
         /// </summary>
         /// <param name="x">矩阵的行数</param>
         /// <param name="y">矩阵的列数</param>
-        public Matrix(int x, int y)
+        public  Matrix(int x, int y)
             : base()
         {
             this._x = x;

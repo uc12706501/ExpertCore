@@ -52,5 +52,18 @@ namespace ExpertChooseSystem.Model
         public double SuccessRate { get; set; }
 
         #endregion
+
+        //用于存储专家的打分
+        private double _rank = 0;
+
+        public void SetRank(double rank)
+        {
+            this._rank = rank;
+        }
+
+        public double GetRank()
+        {
+            return _rank;
+        }
     }
 }

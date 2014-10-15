@@ -7,6 +7,12 @@ namespace AHP.Core
 {
     public class Factor
     {
+        public Factor(string name, double maxValue)
+            : this(name, FactorDirection.Middle)
+        {
+            MaxValue = maxValue;
+        }
+
         public Factor(string name, FactorDirection direction)
         {
             Name = name;

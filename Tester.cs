@@ -358,7 +358,7 @@ namespace ExpertChooseCore
             //选择待评价的元素
             int elementCount = DataHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
             //建立空的决策矩阵
-            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel], elementCount, "决策矩阵");
+            DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel].Factors, elementCount, ahpModel.Levels[selectLevel].GetTotalWeightVect(), "决策矩阵");
             //读入决策矩阵数据
             decisionMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
             //打印决策矩阵
