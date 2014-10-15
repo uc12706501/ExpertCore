@@ -12,11 +12,11 @@ namespace AHP.Core
         public static DecisionMatrix ApprovedNormalize(DecisionMatrix toBeStandardized)
         {
             //归一化之后的矩阵
-            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Level, toBeStandardized.X);
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Factors, toBeStandardized.X, toBeStandardized.WeightVect);
             //将原始数据填充到新数据中，所有操作都不改变原来的判断矩阵
             standardized.InsertFromMatrix(toBeStandardized);
 
-            var factors = standardized.Level.Factors;
+            var factors = standardized.Factors;
             int m = standardized.X;
             //标准化按照指标值，逐列进行的
             for (int j = 0; j < factors.Count; j++)
@@ -76,11 +76,11 @@ namespace AHP.Core
         public static DecisionMatrix Normalize(DecisionMatrix toBeStandardized)
         {
             //归一化之后的矩阵
-            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Level, toBeStandardized.X);
+            DecisionMatrix standardized = new DecisionMatrix(toBeStandardized.Factors, toBeStandardized.X, toBeStandardized.WeightVect);
             //将原始数据头填充到新数据中，所有操作都不改变原来的判断矩阵
             standardized.InsertFromMatrix(toBeStandardized);
 
-            var factors = toBeStandardized.Level.Factors;
+            var factors = toBeStandardized.Factors;
             for (int j = 0; j < factors.Count; j++)
             {
                 //执行标准的归一化操作

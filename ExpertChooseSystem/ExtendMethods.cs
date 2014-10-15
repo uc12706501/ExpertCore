@@ -52,7 +52,7 @@ namespace ExpertChooseSystem
         //将ExpertList的数据导入到决策矩阵中
         public static DecisionMatrix SetDecisionMatrix(this DecisionMatrix decisionMatrix, IList<ExpertModel> expertModels)
         {
-            DecisionMatrix newDecisionMatrix = new DecisionMatrix(decisionMatrix.Level, expertModels.Count);
+            DecisionMatrix newDecisionMatrix = new DecisionMatrix(decisionMatrix.Factors, expertModels.Count, decisionMatrix.WeightVect);
 
             for (int i = 0; i < expertModels.Count; i++)
             {
