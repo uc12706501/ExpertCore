@@ -38,9 +38,9 @@
             this.button5 = new System.Windows.Forms.Button();
             this.dataGridView2 = new System.Windows.Forms.DataGridView();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button7 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -83,7 +83,7 @@
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(75, 23);
             this.button4.TabIndex = 2;
-            this.button4.Text = "button4";
+            this.button4.Text = "删除";
             this.button4.UseVisualStyleBackColor = true;
             // 
             // button3
@@ -92,7 +92,7 @@
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 1;
-            this.button3.Text = "button3";
+            this.button3.Text = "添加";
             this.button3.UseVisualStyleBackColor = true;
             // 
             // dataGridView1
@@ -122,7 +122,7 @@
             this.button6.Name = "button6";
             this.button6.Size = new System.Drawing.Size(75, 23);
             this.button6.TabIndex = 2;
-            this.button6.Text = "button6";
+            this.button6.Text = "删除";
             this.button6.UseVisualStyleBackColor = true;
             // 
             // button5
@@ -131,7 +131,7 @@
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(75, 23);
             this.button5.TabIndex = 1;
-            this.button5.Text = "button5";
+            this.button5.Text = "添加";
             this.button5.UseVisualStyleBackColor = true;
             // 
             // dataGridView2
@@ -152,6 +152,17 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(581, 32);
             this.panel1.TabIndex = 2;
+            // 
+            // button7
+            // 
+            this.button7.AutoSize = true;
+            this.button7.Location = new System.Drawing.Point(129, 4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(105, 25);
+            this.button7.TabIndex = 2;
+            this.button7.Text = "使用AHP确定权重";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button2
             // 
@@ -174,17 +185,6 @@
             this.button1.Text = "输入排序属性权重";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
-            // button7
-            // 
-            this.button7.AutoSize = true;
-            this.button7.Location = new System.Drawing.Point(129, 4);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(105, 25);
-            this.button7.TabIndex = 2;
-            this.button7.Text = "使用AHP确定权重";
-            this.button7.UseVisualStyleBackColor = true;
-            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // MainWindow
             // 
