@@ -16,7 +16,7 @@ namespace ExpertChooseSystem
     {
         private IList<Project> _projects;
         private IList<Expert> _experts;
-        private IList<double> _wights;
+        private IList<double> _weights;
 
         public MainWindow()
         {
@@ -31,15 +31,15 @@ namespace ExpertChooseSystem
             DataGridViewHelper.SetDataSourceAndHeader(dataGridView1, _projects, ProjectHelper.GetPropertyNames());
             DataGridViewHelper.SetDataSourceAndHeader(dataGridView2, _experts, ExpertHelper.GetFullPropertyNames());
 
-            _wights = new List<double>();
+            _weights = new List<double>();
             for (int i = 0; i < 14; i++)
-                _wights.Add(1.0 / 14);
+                _weights.Add(1.0 / 14);
         }
 
         //点击设置属性的权重
         private void button1_Click(object sender, EventArgs e)
         {
-            WightInputWindow wightInputWindow = new WightInputWindow(_wights);
+            WightInputWindow wightInputWindow = new WightInputWindow(_weights);
             wightInputWindow.ShowDialog();
         }
 
@@ -54,8 +54,20 @@ namespace ExpertChooseSystem
             Project selectedProject = _projects.First(x => x.Name.Equals(selectedProjectName));
             IList<Expert> candidates = _experts.Where(x => x.Field.Equals(selectedProject.Field) && !x.Name.Equals(selectedProject.MasterName)).ToList();
 
-            MatchWindow matchWindow = new MatchWindow(selectedProject, candidates, _wights);
+            MatchWindow matchWindow = new MatchWindow(selectedProject, candidates, _weights);
             matchWindow.ShowDialog();
+        }
+
+        private void button7_Click(object sender, EventArgs e)
+        {
+            AhpMainWindow ahpMainWindow = new AhpMainWindow();
+            ahpMainWindow.Save += AhpWindowSave;
+            ahpMainWindow.ShowDialog();
+        }
+
+        public void AhpWindowSave(IList<double> weights)
+        {
+            _weights = weights;
         }
     }
 }

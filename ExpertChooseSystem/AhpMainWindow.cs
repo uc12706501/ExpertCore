@@ -419,5 +419,19 @@ namespace ExpertChooseSystem
         }
         #endregion
 
+        #region 与其他系统通信，调用事件处理函数
+
+        private void buttonSave_Click(object sender, EventArgs e)
+        {
+            Save(_ahpModel.Levels[2].GetTotalWeightVect().ExportToList());
+            Close();
+        }
+
+        public delegate void SaveHandler(IList<double> weights);
+
+        public event SaveHandler Save;
+
+        #endregion
+
     }
 }

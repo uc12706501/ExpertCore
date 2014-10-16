@@ -33,7 +33,6 @@
             this.testBtn = new System.Windows.Forms.Button();
             this.getDcsBtn1 = new System.Windows.Forms.Button();
             this.getDcsBtn2 = new System.Windows.Forms.Button();
-            this.judgeMatrixSwitchBtn = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
             this.contentTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -70,6 +69,8 @@
             this.labelA2 = new System.Windows.Forms.Label();
             this.labelA1 = new System.Windows.Forms.Label();
             this.labelZ = new System.Windows.Forms.Label();
+            this.judgeMatrixSwitchBtn = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.contentTable.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -87,6 +88,7 @@
             this.flowLayoutPanel1.Controls.Add(this.getDcsBtn1);
             this.flowLayoutPanel1.Controls.Add(this.getDcsBtn2);
             this.flowLayoutPanel1.Controls.Add(this.judgeMatrixSwitchBtn);
+            this.flowLayoutPanel1.Controls.Add(this.buttonSave);
             this.flowLayoutPanel1.Location = new System.Drawing.Point(4, 358);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
             this.flowLayoutPanel1.Size = new System.Drawing.Size(577, 33);
@@ -100,6 +102,7 @@
             this.dcsSetBtn.TabIndex = 0;
             this.dcsSetBtn.Text = "设置决策矩阵";
             this.dcsSetBtn.UseVisualStyleBackColor = true;
+            this.dcsSetBtn.Visible = false;
             this.dcsSetBtn.Click += new System.EventHandler(this.dcsSetBtn_Click);
             // 
             // testBtn
@@ -121,6 +124,7 @@
             this.getDcsBtn1.TabIndex = 2;
             this.getDcsBtn1.Text = "获得决策值#1";
             this.getDcsBtn1.UseVisualStyleBackColor = true;
+            this.getDcsBtn1.Visible = false;
             this.getDcsBtn1.Click += new System.EventHandler(this.GetDcsBtnClick);
             // 
             // getDcsBtn2
@@ -131,17 +135,8 @@
             this.getDcsBtn2.TabIndex = 3;
             this.getDcsBtn2.Text = "获得决策值#2";
             this.getDcsBtn2.UseVisualStyleBackColor = true;
+            this.getDcsBtn2.Visible = false;
             this.getDcsBtn2.Click += new System.EventHandler(this.GetDcsBtnClick);
-            // 
-            // judgeMatrixSwitchBtn
-            // 
-            this.judgeMatrixSwitchBtn.Location = new System.Drawing.Point(405, 3);
-            this.judgeMatrixSwitchBtn.Name = "judgeMatrixSwitchBtn";
-            this.judgeMatrixSwitchBtn.Size = new System.Drawing.Size(75, 28);
-            this.judgeMatrixSwitchBtn.TabIndex = 4;
-            this.judgeMatrixSwitchBtn.Text = "button1";
-            this.judgeMatrixSwitchBtn.UseVisualStyleBackColor = true;
-            this.judgeMatrixSwitchBtn.Click += new System.EventHandler(this.judgeMatrixSwitchBtn_Click);
             // 
             // labelTitle
             // 
@@ -572,13 +567,33 @@
             this.labelZ.Text = "总目标Z";
             this.labelZ.Click += new System.EventHandler(this.InfoLabelClick);
             // 
-            // MainWindow
+            // judgeMatrixSwitchBtn
+            // 
+            this.judgeMatrixSwitchBtn.Location = new System.Drawing.Point(405, 3);
+            this.judgeMatrixSwitchBtn.Name = "judgeMatrixSwitchBtn";
+            this.judgeMatrixSwitchBtn.Size = new System.Drawing.Size(75, 28);
+            this.judgeMatrixSwitchBtn.TabIndex = 4;
+            this.judgeMatrixSwitchBtn.Text = "button1";
+            this.judgeMatrixSwitchBtn.UseVisualStyleBackColor = true;
+            this.judgeMatrixSwitchBtn.Click += new System.EventHandler(this.judgeMatrixSwitchBtn_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(486, 3);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 28);
+            this.buttonSave.TabIndex = 5;
+            this.buttonSave.Text = "确定";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // AhpMainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(609, 419);
             this.Controls.Add(this.contentTable);
-            this.Name = "MainWindow";
+            this.Name = "AhpMainWindow";
             this.Text = "专家遴选系统";
             this.flowLayoutPanel1.ResumeLayout(false);
             this.contentTable.ResumeLayout(false);
@@ -640,6 +655,7 @@
         private System.Windows.Forms.Button getDcsBtn1;
         private System.Windows.Forms.Button getDcsBtn2;
         private System.Windows.Forms.Button judgeMatrixSwitchBtn;
+        private System.Windows.Forms.Button buttonSave;
 
     }
 }

@@ -40,6 +40,7 @@
             this.panel1 = new System.Windows.Forms.Panel();
             this.button2 = new System.Windows.Forms.Button();
             this.button1 = new System.Windows.Forms.Button();
+            this.button7 = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
@@ -144,6 +145,7 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.button7);
             this.panel1.Controls.Add(this.button2);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Location = new System.Drawing.Point(3, 427);
@@ -154,7 +156,7 @@
             // button2
             // 
             this.button2.AutoSize = true;
-            this.button2.Location = new System.Drawing.Point(128, 2);
+            this.button2.Location = new System.Drawing.Point(474, 3);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(101, 27);
             this.button2.TabIndex = 1;
@@ -169,9 +171,20 @@
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(118, 27);
             this.button1.TabIndex = 0;
-            this.button1.Text = "设置排序属性权重";
+            this.button1.Text = "输入排序属性权重";
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // button7
+            // 
+            this.button7.AutoSize = true;
+            this.button7.Location = new System.Drawing.Point(129, 4);
+            this.button7.Name = "button7";
+            this.button7.Size = new System.Drawing.Size(105, 25);
+            this.button7.TabIndex = 2;
+            this.button7.Text = "使用AHP确定权重";
+            this.button7.UseVisualStyleBackColor = true;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // MainWindow
             // 
@@ -206,6 +219,7 @@
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.DataGridView dataGridView2;
+        private System.Windows.Forms.Button button7;
 
     }
 }
