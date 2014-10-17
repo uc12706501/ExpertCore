@@ -50,7 +50,7 @@ namespace ExpertChooseSystem.Helper
             expert.ParticipationRate = random.NextDouble();
             expert.DisperseRate = random.NextDouble();
             expert.HitRate = random.NextDouble();
-            expert.SuccessRate = random.Next();
+            expert.SuccessRate = random.NextDouble();
 
             return expert;
         }
