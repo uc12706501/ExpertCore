@@ -33,6 +33,8 @@
             this.testBtn = new System.Windows.Forms.Button();
             this.getDcsBtn1 = new System.Windows.Forms.Button();
             this.getDcsBtn2 = new System.Windows.Forms.Button();
+            this.judgeMatrixSwitchBtn = new System.Windows.Forms.Button();
+            this.buttonSave = new System.Windows.Forms.Button();
             this.labelTitle = new System.Windows.Forms.Label();
             this.contentTable = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
@@ -69,8 +71,6 @@
             this.labelA2 = new System.Windows.Forms.Label();
             this.labelA1 = new System.Windows.Forms.Label();
             this.labelZ = new System.Windows.Forms.Label();
-            this.judgeMatrixSwitchBtn = new System.Windows.Forms.Button();
-            this.buttonSave = new System.Windows.Forms.Button();
             this.flowLayoutPanel1.SuspendLayout();
             this.contentTable.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
@@ -137,6 +137,26 @@
             this.getDcsBtn2.UseVisualStyleBackColor = true;
             this.getDcsBtn2.Visible = false;
             this.getDcsBtn2.Click += new System.EventHandler(this.GetDcsBtnClick);
+            // 
+            // judgeMatrixSwitchBtn
+            // 
+            this.judgeMatrixSwitchBtn.Location = new System.Drawing.Point(405, 3);
+            this.judgeMatrixSwitchBtn.Name = "judgeMatrixSwitchBtn";
+            this.judgeMatrixSwitchBtn.Size = new System.Drawing.Size(75, 28);
+            this.judgeMatrixSwitchBtn.TabIndex = 4;
+            this.judgeMatrixSwitchBtn.Text = "button1";
+            this.judgeMatrixSwitchBtn.UseVisualStyleBackColor = true;
+            this.judgeMatrixSwitchBtn.Click += new System.EventHandler(this.judgeMatrixSwitchBtn_Click);
+            // 
+            // buttonSave
+            // 
+            this.buttonSave.Location = new System.Drawing.Point(486, 3);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 28);
+            this.buttonSave.TabIndex = 5;
+            this.buttonSave.Text = "确定";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // labelTitle
             // 
@@ -363,7 +383,7 @@
             this.label11.Name = "label11";
             this.label11.Size = new System.Drawing.Size(25, 90);
             this.label11.TabIndex = 23;
-            this.label11.Text = "B11命中率";
+            this.label11.Text = "B11参与率";
             // 
             // label10
             // 
@@ -566,26 +586,6 @@
             this.labelZ.TabIndex = 0;
             this.labelZ.Text = "总目标Z";
             this.labelZ.Click += new System.EventHandler(this.InfoLabelClick);
-            // 
-            // judgeMatrixSwitchBtn
-            // 
-            this.judgeMatrixSwitchBtn.Location = new System.Drawing.Point(405, 3);
-            this.judgeMatrixSwitchBtn.Name = "judgeMatrixSwitchBtn";
-            this.judgeMatrixSwitchBtn.Size = new System.Drawing.Size(75, 28);
-            this.judgeMatrixSwitchBtn.TabIndex = 4;
-            this.judgeMatrixSwitchBtn.Text = "button1";
-            this.judgeMatrixSwitchBtn.UseVisualStyleBackColor = true;
-            this.judgeMatrixSwitchBtn.Click += new System.EventHandler(this.judgeMatrixSwitchBtn_Click);
-            // 
-            // buttonSave
-            // 
-            this.buttonSave.Location = new System.Drawing.Point(486, 3);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 28);
-            this.buttonSave.TabIndex = 5;
-            this.buttonSave.Text = "确定";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // AhpMainWindow
             // 
