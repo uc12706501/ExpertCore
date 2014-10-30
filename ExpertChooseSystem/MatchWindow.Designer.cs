@@ -106,7 +106,7 @@
             this.groupBox3.Size = new System.Drawing.Size(464, 125);
             this.groupBox3.TabIndex = 2;
             this.groupBox3.TabStop = false;
-            this.groupBox3.Text = "选择的专家";
+            this.groupBox3.Text = "专家总评价值";
             // 
             // dataGridView3
             // 

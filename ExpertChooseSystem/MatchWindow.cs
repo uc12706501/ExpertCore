@@ -39,7 +39,7 @@ namespace ExpertChooseSystem
             var selectedExpert =
                 _candidates.OrderByDescending(x => x.GetRank())
                 .Select(x => new { Name = x.Name, Rank = x.GetRank() })
-                .Take(3)
+                //.Take(3)
                 .ToList();
 
             DataGridViewHelper.SetDataSourceAndHeader(dataGridView3, selectedExpert, ExpertHelper.GetBriefPropertyNames());
