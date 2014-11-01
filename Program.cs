@@ -13,7 +13,7 @@ namespace ExpertChooseCore
             //Tester.JudgeMatrixTest();
             //Tester.MatrixTest();
             //Tester.AhpModelTest();
-            Tester.AhpModelSample();
+            Tester.AhpModelTestWithFile();
             Console.ReadKey();
         }
     }
