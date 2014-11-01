@@ -612,42 +612,5 @@ namespace ExpertChooseCore
         //}
         #endregion
 
-        #region 使用文件测试层次分析法
-
-        public static string InputFile = "D:\\SourceCode\\Projects\\ExpertCore\\input.txt";
-        public static string OutputFile = "D:\\SourceCode\\Projects\\ExpertCore\\output.txt";
-        private static int cursor = 0;
-
-        public static void AhpModelTestWithFile()
-        {
-            /* var contents = File.ReadLines(InputFile);
-             if (File.Exists(OutputFile))
-             {
-                 File.Delete(OutputFile);
-                 var newOutputFile= File.Create(OutputFile);
-                 newOutputFile.Close();
-             }
-             foreach (var content in contents)
-             {
-                 File.AppendAllText(OutputFile, content + "\n");
-             }*/
-            string source = "1 2 3 4 5";
-            var ints = ConvertTo<int>(source.Split(' '));
-            foreach (var i in ints)
-            {
-                Console.Write(i+" ");
-            }
-        }
-        public static IList<T> ConvertTo<T>(IList<string> values)
-        {
-            IList<T> trueValues = new List<T>();
-            foreach (var value in values)
-            {
-                trueValues.Add((T)Convert.ChangeType(value, typeof(T)));
-            }
-            return trueValues;
-        }
-
-        #endregion
     }
 }
