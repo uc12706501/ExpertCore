@@ -22,6 +22,9 @@ namespace AHP.Core
             for (int j = 0; j < factors.Count; j++)
             {
 
+                if (j == 7)
+                    Console.Write(1);
+
                 //新增规则：考虑中间最大的情况
                 if (factors[j].Direction == FactorDirection.Middle)
                 {
@@ -35,9 +38,11 @@ namespace AHP.Core
                 //1. 如果是逆向指标，就改为正向指标
                 if (factors[j].Direction == FactorDirection.Negative)
                 {
+                    double max = standardized.GetColumnMaxValue(j);
+                    double min = standardized.GetColumnMinValue(j);
                     for (int i = 0; i < standardized.X; i++)
                     {
-                        standardized[i, j] = standardized.GetColumnMaxValue(j) - standardized[i, j] + standardized.GetColumnMinValue(j);
+                        standardized[i, j] = max - standardized[i, j] + min;
                     }
                 }
 

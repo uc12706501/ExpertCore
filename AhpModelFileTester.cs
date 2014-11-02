@@ -66,10 +66,8 @@ namespace ExpertChooseCore
             int selectLevel = 2;
             //输入待评价的元素数量
             int elementCount = ConvertTo<int>(ReadNextLine())[0];
-            //建立空的决策矩阵
             DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel].Factors, elementCount, ahpModel.Levels[selectLevel].GetTotalWeightVect(), "决策矩阵");
-            //读入决策矩阵数据
-            decisionMatrix.InsertDataFromList(ConvertTo<double>(ReadNextLine()));
+            PopulateDecisionMatrix(elementCount, decisionMatrix);
             //打印决策矩阵
             WriteContents(decisionMatrix.PrintMatrix());
             //使用改进的标准化方法处理决策矩阵
@@ -82,7 +80,30 @@ namespace ExpertChooseCore
 
         }
 
-        #region TODO
+        private void PopulateDecisionMatrix(int elementCount, DecisionMatrix decisionMatrix)
+        {
+            for (int i = 0; i < elementCount; i++)
+            {
+                var values = ConvertTo<double>(ReadNextLine());
+                decisionMatrix[i, 0] = values[0];
+                decisionMatrix[i, 1] = values[1];
+                decisionMatrix[i, 2] = values[2];
+
+                decisionMatrix[i, 3] = values[3];
+                decisionMatrix[i, 4] = values[4] * 5 + values[5] * 3 + values[6]*2;
+                decisionMatrix[i, 5] = values[7] * 5 + values[8] * 3 + values[9] * 2;
+                decisionMatrix[i, 6] = values[10] * 5 + values[11] * 3 + values[12] * 2;
+                
+                decisionMatrix[i, 7] = values[13];
+                decisionMatrix[i, 8] = values[14];
+                decisionMatrix[i, 9] = values[15];
+                
+                decisionMatrix[i, 10] = values[16]/values[15];
+                decisionMatrix[i, 11] = values[17]/values[16];
+                decisionMatrix[i, 12] = values[18]/values[16];
+            }
+        }
+
         //处理决策矩阵，打印出决策矩阵的标准化值，以及最终的决策向量
         public void ManipulateDecisionMatrix(DecisionMatrix decisionMatrix, Standardize standardize)
         {
@@ -96,7 +117,6 @@ namespace ExpertChooseCore
             decisionVect.Name = "总评价值向量为：";
             WriteContents(decisionVect.PrintMatrix());
         }
-        #endregion
 
 
         //初始化AHP模型
