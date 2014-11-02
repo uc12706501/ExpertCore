@@ -66,28 +66,34 @@ namespace AHP.Core
             return locatedLevel;
         }
 
-        public void DisplayModelInfo()
+        public string PrintModelInfo()
         {
-            Console.WriteLine("************以下是层次结构模型的主要信息*************");
-            for (int i = 0; i < this.Levels.Count; i++)
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine("************以下是层次结构模型的主要信息*************");
+            for (int i = 0; i < Levels.Count; i++)
             {
                 if (i > 0)
                 {
-                    var level = this.GetLevelInfo(i);
+                    var level = GetLevelInfo(i);
                     foreach (var judgeMatrix in level.JudgeMatrices)
                     {
-                        Console.WriteLine("{0}的判断矩阵", judgeMatrix.Key.Name);
-                        judgeMatrix.Value.DisplayMatrix(DataHelper.ConsoloOutput);
+                        sb.AppendFormat("{0}的判断矩阵", judgeMatrix.Key.Name);
+                        sb.Append(judgeMatrix.Value.PrintMatrix());
                     }
-                    level.GetTotalWeightVect().DisplayMatrix(DataHelper.ConsoloOutput);
-                    Console.WriteLine("CI={0},RI={1},CR={2}", level.LevelCI, level.LevelRI, level.LevelCR);
+                    sb.Append(level.GetTotalWeightVect().PrintMatrix());
+                    sb.AppendFormat("CI={0},RI={1},CR={2}", level.LevelCI, level.LevelRI, level.LevelCR);
+                    sb.AppendLine();
                 }
                 else
                 {
-                    Console.WriteLine("顶层没有数据");
+                    sb.AppendLine("顶层没有数据");
                 }
-                Console.WriteLine("-------------------第{0}层---------------------", i + 1);
+                sb.AppendFormat("------------------->>以上为第{0}层<<---------------------", i + 1);
+                sb.AppendLine();
+                sb.AppendLine();
             }
+            sb.AppendLine(new string('*',100));
+            return sb.ToString();
         }
     }
 }

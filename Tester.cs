@@ -352,7 +352,7 @@ namespace ExpertChooseCore
             }
 
             //打印层次结构模型中的相关信息
-            ahpModel.DisplayModelInfo();
+            ahpModel.PrintModelInfo();
 
             //选择用以生成决策矩阵的层次
             //读入的数要-1

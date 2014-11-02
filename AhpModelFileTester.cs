@@ -9,20 +9,21 @@ namespace ExpertChooseCore
 {
     internal class AhpModelFileTester
     {
-        private string _inputFile = "D:\\SourceCode\\Projects\\ExpertCore\\input.txt";
-        private string _outputFile = "D:\\SourceCode\\Projects\\ExpertCore\\output.txt";
+        private string filename = "data";
+        private string _inputFile;
+        private string _outputFile;
         private int _cursor = 0;
-        private IList<string> _contents;
+        private IList<string> _contents = new List<string>();
 
-        public AhpModelFileTester(string inputFile, string outputFile)
+        public AhpModelFileTester(string filename)
         {
-            _inputFile = inputFile;
-            _outputFile = outputFile;
+            this.filename = filename;
             Init();
         }
 
         public AhpModelFileTester()
         {
+            SetFilePath();
             Init();
         }
 
@@ -45,49 +46,55 @@ namespace ExpertChooseCore
             }
         }
 
+        private void SetFilePath()
+        {
+            string path = Environment.CurrentDirectory;
+            path = path.Substring(0, path.IndexOf("bin") - 1);
+            _inputFile = string.Format("{0}\\{1}_input.txt", path, filename);
+            _outputFile = string.Format("{0}\\{1}_output.txt", path, filename);
+        }
+
         public void Run()
         {
+            //创建层次结构模型
             AhpModel ahpModel = InitialAhpModel();
-
-            #region TODO
-
+            AddLevels(ahpModel);
             //打印层次结构模型中的相关信息
-            ahpModel.DisplayModelInfo();
+            WriteContents(ahpModel.PrintModelInfo());
 
-            //选择用以生成决策矩阵的层次
-            //读入的数要-1
-            int selectLevel = DataHelper.ReadValus<int>(string.Format("请从第1层到第{0}层中选择一层来创建决策矩阵", ahpModel.Levels.Count))[0] - 1;
-            //选择待评价的元素
-            int elementCount = DataHelper.ReadValus<int>("请问一共有多少待评价元素？")[0];
+            //选择用最下层生成决策矩阵的层次
+            int selectLevel = 2;
+            //输入待评价的元素数量
+            int elementCount = ConvertTo<int>(ReadNextLine())[0];
             //建立空的决策矩阵
             DecisionMatrix decisionMatrix = new DecisionMatrix(ahpModel.Levels[selectLevel].Factors, elementCount, ahpModel.Levels[selectLevel].GetTotalWeightVect(), "决策矩阵");
             //读入决策矩阵数据
-            decisionMatrix.InsertMatrix(DataHelper.ConsoleArrayInput);
+            decisionMatrix.InsertDataFromList(ConvertTo<double>(ReadNextLine()));
             //打印决策矩阵
-            decisionMatrix.DisplayMatrix(DataHelper.ConsoloOutput);
+            WriteContents(decisionMatrix.PrintMatrix());
             //使用改进的标准化方法处理决策矩阵
-            Console.WriteLine("使用改进的归一化法对决策矩阵进行标准化法");
+            WriteContents("使用改进的归一化法对决策矩阵进行标准化法：\n");
             ManipulateDecisionMatrix(decisionMatrix, Standardizer.ApprovedNormalize);
             //使用常规归一化法处理决策矩阵
-            Console.WriteLine("使用常规的归一化法对决策矩阵进行标准化");
+            WriteContents("使用常规的归一化法对决策矩阵进行标准化：\n");
             ManipulateDecisionMatrix(decisionMatrix, Standardizer.Normalize);
 
-            #endregion
 
         }
 
         #region TODO
         //处理决策矩阵，打印出决策矩阵的标准化值，以及最终的决策向量
-        public static void ManipulateDecisionMatrix(DecisionMatrix decisionMatrix, Standardize standardize)
+        public void ManipulateDecisionMatrix(DecisionMatrix decisionMatrix, Standardize standardize)
         {
             //获得并打印标准化矩阵
             var standardized = decisionMatrix.GetStandardized(standardize);
             standardized.Name = "决策矩阵的标准化矩阵";
-            standardized.DisplayMatrix(DataHelper.ConsoloOutput);
-            //获得决策向量
+            WriteContents(standardized.PrintMatrix());
+
+            //获得并打印决策向量
             var decisionVect = decisionMatrix.GetDecisionVect(standardize);
-            //打印决策结果
-            decisionVect.DisplayMatrix(DataHelper.ConsoloOutput);
+            decisionVect.Name = "总评价值向量为：";
+            WriteContents(decisionVect.PrintMatrix());
         }
         #endregion
 
@@ -159,7 +166,6 @@ namespace ExpertChooseCore
             dataModel.Parent = model.GetLastLevel();
             Matrix relationMatrix = new Matrix(dataModel.Factors.Count, dataModel.Parent.Factors.Count);
             relationMatrix.InsertDataFromList(relationData);
-            //relationMatrix.InsertMatrix(DataHelper.ConsoloInput);
             dataModel.RelationMatrix = relationMatrix;
             return relationMatrix;
         }
@@ -224,7 +230,7 @@ namespace ExpertChooseCore
                 var readRate = ConvertTo<int>(ReadNextLine());
                 rateTable.Add(readRate);
                 //获取p
-                int p = DataHelper.ReadValus<int>(ReadNextLine())[0];
+                int p = ConvertTo<int>(ReadNextLine())[0];
                 pList.Add(p);
 
 
@@ -271,11 +277,16 @@ namespace ExpertChooseCore
 
         }
 
-
         //读取游标所指向的当前行，读完之后游标指向下一行
         private string ReadNextLine()
         {
             return _contents[_cursor++];
+        }
+
+        //写入数据
+        private void WriteContents(string contents)
+        {
+            File.AppendAllText(_outputFile, contents);
         }
 
         //将输入的字符串按照空格分隔之后，转换成对应的T列表

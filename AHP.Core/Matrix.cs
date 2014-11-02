@@ -61,7 +61,7 @@ namespace AHP.Core
         /// </summary>
         /// <param name="x">矩阵的行数</param>
         /// <param name="y">矩阵的列数</param>
-        public  Matrix(int x, int y)
+        public Matrix(int x, int y)
             : base()
         {
             this._x = x;
@@ -130,6 +130,28 @@ namespace AHP.Core
         public void DisplayMatrix(MatrixOutputer outputer)
         {
             outputer(this);
+        }
+
+        public String PrintMatrix()
+        {
+            StringBuilder sb = new StringBuilder();
+            string matrixName = Name ?? "#未命名矩阵";
+            sb.AppendFormat("{0}#{1}", matrixName, Id);
+            sb.AppendLine();
+
+
+            for (int i = 0; i < X; i++)
+            {
+                for (int j = 0; j < Y; j++)
+                {
+                    sb.AppendFormat("{0,8:F3}\t", this[i, j]);
+                }
+                sb.AppendLine();
+            }
+
+            sb.AppendLine();
+
+            return sb.ToString();
         }
 
         #endregion
